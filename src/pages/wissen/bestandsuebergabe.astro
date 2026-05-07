@@ -1,0 +1,73 @@
+---
+// Wissens-Artikel 2: Saubere Bestandsübergabe
+// Stand 03.05.2026, Phase 4 Bau-Block 6.
+//
+// Quelle eins-zu-eins (Verbot 7 strikt):
+//   03_Themen-Hub_Artikel-2_Bestandsuebergabe_2026-04-27.md
+//
+// Cross-Link-Matrix laut Bauauftrag:
+//   Bestandsübergabe → Verwalterwechsel und Maklerprovision
+
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+
+const title = 'Wie eine saubere Bestandsübergabe kaufmännisch und technisch abläuft';
+const description = 'Stichtag-Logik, kaufmännische Übergabe von Mietverträgen bis Mietkautionen, technische Übergabe von Plänen bis Schlüsselbestand und der Umgang mit nicht-kooperativer Vor-Verwaltung.';
+---
+
+<ArticleLayout
+  title={title}
+  description={description}
+  slug="bestandsuebergabe"
+  leseDauer="6 min"
+  crossLinks={[
+    { href: '/wissen/verwalterwechsel', label: 'Was Eigentümer beim Wechsel der Hausverwaltung prüfen sollten' },
+    { href: '/wissen/maklerprovision', label: 'Wie die Maklerprovision nach § 656c BGB konkret gerechnet wird' },
+  ]}
+>
+
+  <h2>Warum die Übergabe das eigentliche Fundament ist:</h2>
+  <p>Eine Hausverwaltung wird im Übergabe-Schritt entschieden, nicht im Erstgespräch. Was hier sauber dokumentiert, eingefordert und nachgehalten wird, trägt die nächsten Jahre. Was hier liegen bleibt, kommt im ersten Streitfall, in der ersten Betriebskostenabrechnung oder beim ersten Mieterwechsel zurück. Eigentümer unterschätzen diesen Schritt regelmäßig, weil er weder spektakulär ist noch unmittelbar Geld kostet. Der Aufwand für eine saubere Übergabe ist trotzdem die einzige Versicherung gegen spätere Datenlöcher.</p>
+
+  <h2>Die Stichtag-Logik</h2>
+  <p>Eine Übergabe braucht einen verbindlichen Stichtag. Bis zu diesem Datum ist die alte Verwaltung verantwortlich, ab diesem Datum die neue. Der Stichtag ist nicht der Tag der Vertragsunterzeichnung mit dem neuen Verwalter, sondern liegt typischerweise mehrere Wochen später, am Beginn eines Kalendermonats. Diese Frist ist nötig, damit die Datenübergabe vorbereitet werden kann, ohne den laufenden Betrieb zu stören. Mietzahlungen, Lastschriften, Wartungsverträge und Versicherungen werden im Hintergrund auf den neuen Verwalter umgestellt, die Mieter werden informiert, und am Stichtag ist die Lage geordnet.</p>
+
+  <h2>Kaufmännische Übergabe</h2>
+  <p>Die kaufmännische Übergabe deckt alles ab, was mit Geld, Vertrag und Buchhaltung zu tun hat. Vier Bereiche stehen dabei im Mittelpunkt.</p>
+
+  <h3>Mietverträge und Mieterakten</h3>
+  <p>Der neue Verwalter erhält die vollständigen Mietverträge mit allen Nachträgen, sämtlichen Index- oder Staffelmieten-Vereinbarungen, Sonderabreden zu Garagen, Stellplätzen, Kellerräumen, Balkonen oder Gewerbeflächen. Dazu die laufende Korrespondenz mit den Mietern, soweit für die zukünftige Verwaltung relevant: Mahnungen, Ratenvereinbarungen, Mängelanzeigen, vereinbarte Modernisierungen. Was hier fehlt, fehlt auf Jahre. Eine seriöse Vor-Verwaltung übergibt die Akten nach einer klaren Liste, eine seriöse neue Verwaltung quittiert sie nach derselben Liste.</p>
+
+  <h3>Offene Posten und Zahlungsstände</h3>
+  <p>Zum Stichtag wird der genaue Zahlungsstand jedes Mieters ausgewiesen. Welche Mieten sind voll bezahlt, welche teilweise, welche ausstehend, welche ratenweise vereinbart, welche eingeklagt, welche Titel liegen vor. Ohne diesen Stichtag-Stand kann der neue Verwalter weder die nächste Mahnstufe einleiten noch die Betriebskostenabrechnung sauber stellen. Die Übergabe enthält außerdem die offenen Forderungen gegenüber Dienstleistern und die noch nicht bezahlten Rechnungen aus dem laufenden Wirtschaftsjahr.</p>
+
+  <h3>Mietkautionen</h3>
+  <p>Mietkautionen sind treuhänderisches Geld und müssen separat übergeben werden, mit Angabe des Kontos, der Höhe je Mieter, des Standes der Verzinsung und der Zinsabführung an den Mieter. Bei Übertragung auf ein neues Treuhandkonto ist eine Bestätigung über den Übergang zwingend, weil hier am ehesten Vertrauensbrüche entstehen, wenn Vorgänge nicht dokumentiert sind.</p>
+
+  <h3>Betriebskosten und laufende Verbrauchsabrechnungen</h3>
+  <p>Bei einer Übernahme während eines laufenden Wirtschaftsjahres muss die Frage geklärt werden, wer die Betriebskostenabrechnung für das laufende Jahr erstellt. Üblich ist, dass die Vor-Verwaltung das anteilige Wirtschaftsjahr bis zum Stichtag in einer Endabrechnung übergibt und der neue Verwalter den Rest fortführt. Verbrauchsabrechnungen für Heizung und Wasser laufen typischerweise über externe Dienstleister, deren Verträge mit Adressänderung auf den neuen Verwalter umgestellt werden müssen.</p>
+
+  <h2>Technische Übergabe</h2>
+  <p>Die technische Übergabe deckt alles ab, was mit dem Gebäude und seiner Bewirtschaftung zu tun hat.</p>
+
+  <h3>Pläne, Wartungen, Prüfungen</h3>
+  <p>Bauunterlagen, Grundrisse, Lagepläne, Energieausweis, Brandschutzgutachten, Aufzugsabnahmen, Heizungsprüfungen, Trinkwasser-Probennahmen, Schornsteinfeger-Bescheide, Sicherheitsprüfungen elektrischer Anlagen. Jedes dieser Dokumente hat einen Wartungs- oder Prüfrhythmus, der lückenlos dokumentiert sein muss, weil hier Haftungsfragen entstehen.</p>
+
+  <h3>Schlüssel und Zutrittsrechte</h3>
+  <p>Eine vollständige Schlüsselliste mit Zuordnung zu Wohnungen, Kellern, Hausmeisterräumen, Technikräumen, gegebenenfalls Schließanlage und Generalschlüssel. Wer hat welchen Schlüssel, wann wurden welche Schlüssel ausgegeben, welche sind verloren gemeldet. Ohne diese Liste fehlt die Grundlage für jeden Mieterwechsel.</p>
+
+  <h3>Zustand und bekannte Mängel</h3>
+  <p>Eine Begehung am oder vor dem Stichtag dokumentiert den sichtbaren Zustand des Gebäudes mit Fotos und Notizen. Bekannte Mängel werden ausdrücklich benannt, offene Reparaturaufträge mit Auftragsnummer und Auftragnehmer übergeben. Was zum Stichtag dokumentiert ist, ist die Ausgangslage für jede spätere Nachweisführung gegenüber Versicherern, Mietern und Eigentümern.</p>
+
+  <h2>Mieter-Information</h2>
+  <p>Vor dem Stichtag erhalten alle Mieter ein Informationsschreiben mit den neuen Kontaktwegen, dem neuen Mietkonto und dem Hinweis, dass bestehende Lastschriftvereinbarungen entweder direkt umgestellt werden oder ein neuer Auftrag erforderlich ist. Diese Information geht schriftlich, mit klarem Datum, ohne Werbe-Geräusch. Auch die Notfall-Erreichbarkeit für Mieter wird in dieser Information benannt, getrennt von der Eigentümer-Erreichbarkeit.</p>
+
+  <h2>Übergang in den laufenden Betrieb</h2>
+  <p>Am Stichtag laufen die Mietzahlungen über das neue Konto, die Mängelmeldungen kommen an die neue Tickets-Adresse, das Reporting startet im vereinbarten Rhythmus. In den ersten Wochen nach dem Stichtag ist die Frequenz der Eigentümer-Information höher als später, weil offene Detailfragen aus der Übergabe nachlaufend geklärt werden.</p>
+
+  <h2>Wenn die Vor-Verwaltung nicht kooperiert</h2>
+  <p>Nicht jede Übergabe verläuft kooperativ. Wenn Unterlagen verzögert oder unvollständig kommen, wird das schriftlich dokumentiert, mit Datum und Empfänger. Mieten und Kautionen müssen zum Stichtag übergeben werden, das ist keine Kulanzfrage. Bei dauerhafter Blockade ist die rechtliche Klärung über einen Anwalt oder die Beschwerde bei der zuständigen Gewerbeaufsicht der nächste Schritt. Eine seriöse neue Verwaltung dokumentiert in dieser Situation lückenlos, was wann angefordert und was wann geliefert wurde.</p>
+
+  <h2>Wenn Sie eine Bestandsübergabe an Proimma erwägen</h2>
+  <p>Proimma führt die Übergabe nach einer festen Liste, gespiegelt zwischen kaufmännischem und technischem Strang, mit dokumentiertem Stichtag und nachvollziehbarer Mieter-Information. Wenn Sie eine Übergabe planen, schreiben Sie an <a href="mailto:info@proimma.de" data-cta="kontakt-mail">info@proimma.de</a> oder buchen Sie ein Erstgespräch online über unseren Cal.com-Kalender. Die Vorbereitung dauert mehrere Wochen. Diese Zeit braucht eine ordentliche Übergabe.</p>
+
+</ArticleLayout>

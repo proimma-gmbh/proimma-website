@@ -1,0 +1,323 @@
+---
+// Basis-Layout für alle Seiten — Editorial Bold
+// Stand 05.05.2026, OG-Bild Einbau Schritt 2 (v20).
+//
+// Liefert Meta-Tags pro Seite (Title-Schema "Seitenfokus. Proimma GmbH Rostock"
+// mit Punkt-Trenner, sechzig Zeichen, Meta-Description einhundertfünfzig bis
+// einhundertsechzig Zeichen), Open Graph plus Twitter Card mit vollständigem
+// Pflicht-Tag-Set (image, image:alt, image:width, image:height, image:type),
+// LocalBusiness und RealEstateAgent kombiniert als Site-Root-Schema mit image-
+// Verweis, optional ein zweites Seiten-spezifisches Schema (Service, Person,
+// Article, BreadcrumbList) als Slot-übergebenes JSON-LD, Plausible-Script-Stub
+// (data-domain auf relaunch.proimma.de in der Bauphase).
+//
+// OG-Bild-Default: /og-images/og-default.png (reine Typografie-Komposition,
+// Wortmarke "Proimma" plus Subline "Hausverwaltung und Maklerei in Rostock"
+// auf Off-White-Hintergrund, gemäß BRIEFS.md Sektion 1.15, Stand 06.05.2026).
+// Frühere Foto-OG-Variante (DSC01323 mit Vignette-Blur) am 06.05.2026 abgelöst.
+// Pro-Seite-Override per ogImage und ogImageAlt Props möglich.
+//
+// Sticky-Mobile-Bar wurde bereits in Phase 1 entfernt (WIREFRAMES.md
+// vom 29.04.2026 als bewusste Nicht-Übernahme).
+
+import '@/styles/global.css';
+import Header from '@/components/Header.astro';
+import Footer from '@/components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogImageAlt?: string;
+  /** Open-Graph-Typ. Default "website"; Article-Layout setzt "article". */
+  ogType?: 'website' | 'article';
+  /** Pflicht für ogType="article": ISO-Datum der Erstveröffentlichung. */
+  articlePublishedTime?: string;
+  /** Optional für ogType="article": absolute URL des Autors (Default: /ueber-proimma/). */
+  articleAuthor?: string;
+  /** Optional für ogType="article": Sektions-Bezeichnung (z. B. "Wissen für Eigentümer"). */
+  articleSection?: string;
+  noindex?: boolean;
+  /** Optionales seiten-spezifisches JSON-LD-Schema (Service, Person, Article, BreadcrumbList). */
+  pageSchema?: Record<string, unknown> | Record<string, unknown>[];
+}
+
+const DEFAULT_OG_IMAGE = '/og-images/og-default.png';
+// Default-Alt-Text auf die neue Typografie-Komposition angepasst (06.05.2026).
+// Pro-Seite-Override über ogImageAlt-Prop möglich.
+const DEFAULT_OG_IMAGE_ALT =
+  'Vorschau-Kachel der Proimma GmbH mit Wortmarke Proimma GmbH und Subline Hausverwaltung und Maklerei in Rostock auf Off-White-Hintergrund.';
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = DEFAULT_OG_IMAGE,
+  ogImageAlt = DEFAULT_OG_IMAGE_ALT,
+  ogType = 'website',
+  articlePublishedTime,
+  articleAuthor,
+  articleSection,
+  noindex = true,
+  pageSchema,
+} = Astro.props;
+
+// Default-Autor-URL für Article-Layouts: Inhaber-Seite, gebildet über Astro.site
+// damit der DNS-Schwenk auf www.proimma.de ohne Code-Eingriff greift.
+const articleAuthorUrl = articleAuthor ?? new URL('/ueber-proimma/', Astro.site).toString();
+
+const siteName = 'Proimma GmbH';
+// Title-Schema gemäß DESIGN.md Sektion 8: "Seitenfokus. Proimma GmbH Rostock"
+// mit Punkt-Trenner. Der übergebene title ist die linke Hälfte ("Seitenfokus").
+// Wenn er bereits "Proimma" enthält, wird er unverändert übernommen.
+const fullTitle = title.includes('Proimma') ? title : `${title}. Proimma GmbH Rostock`;
+const url = canonical ?? new URL(Astro.url.pathname, Astro.site).toString();
+// OG-Image-URL absolut über Astro.site — damit greift der spätere DNS-Schwenk
+// auf www.proimma.de ohne erneuten Code-Eingriff.
+const ogImageUrl = new URL(ogImage, Astro.site).toString();
+
+// LocalBusiness und RealEstateAgent kombiniert als Site-Root-Schema.
+// Geo-Koordinaten Bremer Straße 12 verifiziert am 04.05.2026 über
+// Google-Maps-Rechtsklick: 54.08978 Breite / 12.09865 Länge
+// (siehe projekt-status.md, Eintrag 04.05.2026 nachmittags).
+// GeoRadius des bedienten Gebiets hundert Kilometer um diesen Punkt.
+// FoundingDate Eintragung HRB 16077 am 21.08.2024.
+// SameAs-Felder enthalten den LinkedIn-Profil-Link (freigegeben durch André am
+// 06.05.2026). Google-Unternehmensprofil-URL wird zu einem späteren Zeitpunkt
+// ergänzt, sobald die Karten-Anzeige im Profil den korrekten Standort
+// Bremer Straße 12, 18057 Rostock zeigt (aktuell noch Ziesendorf).
+// image-Feld zeigt auf das Default-OG-Bild als Marken-Visitenkarte (v5-Stand
+// 05.05.2026 freigegeben).
+const rootSchema = {
+  '@context': 'https://schema.org',
+  '@type': ['LocalBusiness', 'RealEstateAgent'],
+  '@id': 'https://www.proimma.de/#organization',
+  name: 'Proimma GmbH',
+  url: 'https://www.proimma.de/',
+  image: new URL(DEFAULT_OG_IMAGE, Astro.site).toString(),
+  telephone: '+49-173-6335917',
+  email: 'info@proimma.de',
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Bremer Straße 12',
+    postalCode: '18057',
+    addressLocality: 'Rostock',
+    addressCountry: 'DE',
+  },
+  openingHoursSpecification: {
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+    opens: '09:00',
+    closes: '17:00',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: '54.08978',
+    longitude: '12.09865',
+  },
+  areaServed: [
+    { '@type': 'City', name: 'Rostock' },
+    {
+      '@type': 'GeoCircle',
+      geoMidpoint: {
+        '@type': 'GeoCoordinates',
+        latitude: '54.08978',
+        longitude: '12.09865',
+      },
+      geoRadius: '100000',
+    },
+  ],
+  founder: {
+    '@type': 'Person',
+    name: 'André Dieckmann',
+    jobTitle: 'Inhaber und Geschäftsführer',
+    sameAs: [
+      'https://www.linkedin.com/in/andr%C3%A9-dieckmann-8b4640377/',
+    ],
+  },
+  foundingDate: '2024-08-21',
+  sameAs: [
+    'https://www.linkedin.com/in/andr%C3%A9-dieckmann-8b4640377/',
+  ],
+  knowsAbout: [
+    'Mietenverwaltung',
+    'Mehrfamilienhaus-Verwaltung',
+    'Wohnimmobilien-Vermarktung',
+    '§ 34c GewO',
+    '§ 656c BGB',
+  ],
+};
+
+// pageSchema kann ein einzelnes Objekt oder ein Array sein. Wir normalisieren
+// es zu einem Array und filtern leere Werte heraus, damit das Map sauber rendert.
+const pageSchemas = pageSchema
+  ? Array.isArray(pageSchema)
+    ? pageSchema
+    : [pageSchema]
+  : [];
+---
+
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="theme-color" content="#FAFAF8" />
+    {/*
+      Klassisches Inline-Script (kein type="module"). Zwei Branches:
+      file://-Branch für Andres lokale Doppelklick-Sichtkontrolle und
+      http(s)-Branch für die Live-Domain.
+
+      Bei file://: js-Klasse wird NICHT gesetzt, sodass das CSS-Default
+      .reveal { opacity:1; ... } greift und die Sektionen sofort sichtbar
+      sind. Zusätzlich werden alle internen Routen-Links (a[href^="/"])
+      auf relative Pfade umgeschrieben, damit Andre auch lokal mit dem
+      Menü zwischen den elf Seiten navigieren kann. Tiefe wird aus dem
+      "upload-vN"-Segment im Pfad abgeleitet.
+
+      Bei http(s)://: js-Klasse setzt den Reveal-Initial-Stand auf
+      unsichtbar, IntersectionObserver mit threshold 0.12 setzt .in
+      beim Sichtbarwerden, Routen-Links bleiben absolut für die
+      Live-Domain. Fallback für sehr alte Browser ohne IO.
+
+      Korrektur 03.05.2026 (Nachschärfung v18).
+    */}
+    <script is:inline>
+      if (window.location.protocol === 'file:') {
+        document.addEventListener('DOMContentLoaded', function () {
+          // Reveal-Animation deaktivieren, alles sofort sichtbar
+          document.querySelectorAll('.reveal').forEach(function (el) {
+            el.classList.add('in');
+          });
+
+          // Tiefe relativ zum upload-vN-Vorschau-Root berechnen
+          var pathSegments = window.location.pathname.split('/').filter(function (p) {
+            return p && p !== 'index.html';
+          });
+          var rootIndex = pathSegments.findIndex(function (p) {
+            return p.indexOf('upload-v') === 0;
+          });
+          var depth = rootIndex >= 0 ? pathSegments.length - rootIndex - 1 : 0;
+          var up = depth === 0 ? './' : new Array(depth + 1).join('../');
+
+          // Interne Routen-Links auf relative Pfade umschreiben
+          document.querySelectorAll('a[href^="/"]').forEach(function (a) {
+            var href = a.getAttribute('href');
+            if (!href || href.indexOf('//') === 0 || href === '#'
+                || href.indexOf('mailto:') === 0 || href.indexOf('tel:') === 0) return;
+            if (href === '/') {
+              a.setAttribute('href', up + 'index.html');
+            } else {
+              a.setAttribute('href', up + href.substring(1) + '/index.html');
+            }
+          });
+        });
+      } else {
+        document.documentElement.classList.add('js');
+        document.addEventListener('DOMContentLoaded', function () {
+          var revealEls = document.querySelectorAll('.reveal');
+          if ('IntersectionObserver' in window) {
+            var io = new IntersectionObserver(function (entries) {
+              entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                  e.target.classList.add('in');
+                  io.unobserve(e.target);
+                }
+              });
+            }, { threshold: 0.12 });
+            revealEls.forEach(function (el) { io.observe(el); });
+          } else {
+            // Fallback für sehr alte Browser ohne IntersectionObserver
+            revealEls.forEach(function (el) { el.classList.add('in'); });
+          }
+        });
+      }
+    </script>
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    <link rel="canonical" href={url} />
+
+    {/* Open Graph Pflicht-Tag-Set v20 (OG-Bild-Einbau-Schritt) */}
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={url} />
+    <meta property="og:locale" content="de_DE" />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:image" content={ogImageUrl} />
+    <meta property="og:image:alt" content={ogImageAlt} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    {ogType === 'article' && articlePublishedTime && (
+      <meta property="article:published_time" content={articlePublishedTime} />
+    )}
+    {ogType === 'article' && (
+      <meta property="article:author" content={articleAuthorUrl} />
+    )}
+    {ogType === 'article' && articleSection && (
+      <meta property="article:section" content={articleSection} />
+    )}
+
+    {/* Twitter Card Pflicht-Tag-Set */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImageUrl} />
+    <meta name="twitter:image:alt" content={ogImageAlt} />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <script type="application/ld+json" set:html={JSON.stringify(rootSchema)} />
+    {pageSchemas.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
+
+    {/*
+      Plausible-Script-Stub. data-domain wird in der Bauphase auf
+      relaunch.proimma.de gesetzt, vor Go-Live auf www.proimma.de umgestellt.
+      Während der Bauphase mit noindex=true bleibt das Script auskommentiert,
+      sodass keine Bau-Daten Plausible erreichen, bis Andre es freischaltet.
+      <script defer data-domain="proimma.de" src="https://plausible.io/js/script.tagged-events.outbound-links.js"></script>
+    */}
+  </head>
+
+  <body data-page-slug={Astro.url.pathname.replace(/^\//, '').split('/')[0] || 'startseite'}>
+    <a href="#main" class="skip-link">Zum Hauptinhalt springen</a>
+
+    <Header />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
+
+    {/*
+      Reveal-Choreographie wurde am 03.05.2026 (v17) ins klassische Inline-
+      Script im Head verschoben, damit sie auch unter file:// in Chrome
+      läuft. Hier kein Module-Script mehr für .reveal — würde sonst
+      doppelt aufrufen.
+    */}
+  </body>
+</html>
+
+<style is:global>
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--color-fg-primary);
+    color: var(--color-bg-primary);
+    padding: 12px 16px;
+    z-index: 100;
+    font-weight: 500;
+  }
+  .skip-link:focus {
+    left: 16px;
+    top: 16px;
+  }
+</style>

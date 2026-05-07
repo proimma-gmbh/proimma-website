@@ -1,0 +1,183 @@
+---
+// Cal.eu-Termin-Sektion — Editorial Bold
+// Stand 03.05.2026, Phase 2 Bau-Block 6.
+//
+// Wiederverwendbare Termin-Buchungs-Sektion für die drei Detail-Seiten
+// /hausverwaltung, /maklerei, /ueber-proimma sowie /kontakt. Auf der
+// Startseite ist der Termin-Block direkt in index.astro umgesetzt.
+//
+// IntersectionObserver lädt den iFrame erst beim Scroll in Sicht
+// (DSGVO-Zwei-Klick-Logik wird im Datenschutz-Text als Verarbeitung erklärt).
+// Klartext-Fallback unterhalb des iFrames mit data-cta-Tracking.
+
+interface Props {
+  /** Editorial-Index der Sektion auf der jeweiligen Seite. */
+  edIndex: string;
+  /** Eindeutiger Suffix für die DOM-IDs (mehrere Mounts auf einer Seite vermeiden). */
+  mountId?: string;
+}
+
+const { edIndex, mountId = 'cal-mount-detail' } = Astro.props;
+const loadingId = `${mountId}-loading`;
+---
+
+<section class="termin termin-detail" id="kontakt" data-sektion="cal-embed">
+  <div class="container-page termin-inner">
+    <div class="termin-head reveal">
+      <div class="ed-index">{edIndex}</div>
+      <h2 class="termin-headline">Erstgespräch vereinbaren.</h2>
+    </div>
+    <div class="termin-points reveal">
+      <div class="termin-point">
+        <div class="termin-point-value nums">30 Min</div>
+        <div class="termin-point-label">Dauer</div>
+      </div>
+      <div class="termin-point">
+        <div class="termin-point-value">Kostenfrei</div>
+        <div class="termin-point-label">Investition</div>
+      </div>
+      <div class="termin-point">
+        <div class="termin-point-value">Online</div>
+        <div class="termin-point-label">Format</div>
+      </div>
+    </div>
+    <div
+      class="termin-frame-wrap reveal"
+      id={mountId}
+      data-cal-mount
+      data-cal-url="https://cal.eu/proimma/30min"
+      data-loading-id={loadingId}
+    >
+      <div class="termin-loading" id={loadingId}>Termin-Anzeige wird geladen.</div>
+    </div>
+    <p class="termin-fallback">
+      Falls die Termin-Anzeige nicht lädt, schreiben Sie an
+      <a href="mailto:info@proimma.de" data-cta="kontakt-mail">info@proimma.de</a>
+      oder rufen Sie unter
+      <a href="tel:+491736335917" data-cta="kontakt-tel">0173 6335917</a>
+      an. Eine erste Rückmeldung erhalten Sie innerhalb eines Werktages.
+    </p>
+    <p class="termin-cta-row">
+      <a href="/kontakt" class="link-arrow" data-cta="erstgespraech-cta-detail">Zur Kontakt-Seite</a>
+    </p>
+  </div>
+</section>
+
+<style>
+  .termin-detail {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+    background: var(--color-bg-primary);
+  }
+  .termin-inner { max-width: 880px; margin-inline: auto; }
+  .termin-head { margin-bottom: 48px; }
+  .termin-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-top: 8px;
+    color: var(--color-fg-primary);
+  }
+  .termin-points {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--color-line);
+  }
+  .termin-point {
+    padding-inline: 24px;
+    border-right: 1px solid var(--color-line-faint);
+  }
+  .termin-point:first-child { padding-left: 0; }
+  .termin-point:last-child { padding-right: 0; border-right: none; }
+  .termin-point-value {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    color: var(--color-fg-primary);
+  }
+  .termin-point-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg-secondary);
+  }
+  .termin-frame-wrap {
+    aspect-ratio: 1 / 1;
+    min-height: 600px;
+    background: var(--color-line-faint);
+    position: relative;
+  }
+  .termin-loading {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--color-fg-secondary);
+    font-size: 0.9375rem; text-align: center; padding: 24px;
+  }
+  .termin-frame-wrap iframe {
+    width: 100%; height: 100%; border: 0; display: block;
+    position: relative; z-index: 2;
+  }
+  .termin-fallback {
+    margin-top: 24px;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-fg-secondary);
+  }
+  .termin-fallback a {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+    transition: border-color 0.2s ease;
+  }
+  .termin-fallback a:hover { border-bottom-color: var(--color-fg-primary); }
+  .termin-cta-row { margin-top: 24px; }
+
+  @media (max-width: 1024px) {
+    .termin-detail { padding-block: 80px; }
+    .termin-points { grid-template-columns: 1fr; gap: 24px; }
+    .termin-point {
+      padding-inline: 0; border-right: none;
+      border-bottom: 1px solid var(--color-line-faint);
+      padding-bottom: 24px;
+    }
+    .termin-point:last-child { border-bottom: none; padding-bottom: 0; }
+    .termin-frame-wrap { min-height: 720px; }
+  }
+</style>
+
+<script>
+  // IntersectionObserver pro CalEmbed-Mount (mehrere auf einer Seite möglich,
+  // jeder mit eigener Loading-Anzeige). Threshold 0.1, RootMargin 200px,
+  // Datenschutz-Zwei-Klick-Lösung gemäß tools-workflows.md.
+  document.querySelectorAll<HTMLElement>('[data-cal-mount]').forEach((mount) => {
+    if (mount.dataset.calLoaded === 'true') return;
+    const io = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => {
+        if (!e.isIntersecting) return;
+        const url = mount.dataset.calUrl;
+        if (!url) return;
+        const iframe = document.createElement('iframe');
+        iframe.src = url;
+        iframe.title = 'Termin-Buchung Erstgespräch';
+        iframe.loading = 'lazy';
+        iframe.allow = 'fullscreen';
+        mount.appendChild(iframe);
+        iframe.addEventListener('load', () => {
+          const loadingId = mount.dataset.loadingId;
+          if (loadingId) {
+            const loading = document.getElementById(loadingId);
+            if (loading) loading.style.display = 'none';
+          }
+        });
+        mount.dataset.calLoaded = 'true';
+        obs.unobserve(mount);
+      });
+    }, { threshold: 0.1, rootMargin: '200px' });
+    io.observe(mount);
+  });
+</script>

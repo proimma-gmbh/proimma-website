@@ -1,0 +1,197 @@
+---
+// Article-Layout für Wissens-Artikel — Editorial Bold
+// Stand 03.05.2026, Phase 4 Bau-Block 6.
+//
+// Liefert:
+//   01 Article-Hero mit Editorial-Index, Titel und Lese-Dauer
+//   02 Article-Inhalt als Slot (eigene Workspace-Text-Inhalte pro Seite)
+//   03 Wissens-Cluster-Verlinkung (Pillar plus zwei Schwester-Artikel)
+//   04 Article-Schema und BreadcrumbList als JSON-LD
+//
+// Cross-Link-Matrix wird pro Seite übergeben, sachlich-beschreibende Anker.
+// datePublished bleibt als TODO bis Live-Gang.
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CrossLinks from '@/components/CrossLinks.astro';
+
+interface CrossLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  title: string;
+  description: string;
+  slug: string;
+  leseDauer: string;
+  crossLinks: CrossLink[];
+  /** Optionales ISO-Datum der Erstveröffentlichung (Default: Bau-Stempel 2026-05-03,
+      wird beim Live-Gang pro Artikel auf das tatsächliche Datum gesetzt). */
+  publishedTime?: string;
+}
+
+const {
+  title,
+  description,
+  slug,
+  leseDauer,
+  crossLinks,
+  publishedTime = '2026-05-03',
+} = Astro.props;
+
+const articleUrl = `https://www.proimma.de/wissen/${slug}`;
+
+const articleSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  '@id': `${articleUrl}#article`,
+  headline: title,
+  description: description,
+  url: articleUrl,
+  author: { '@id': 'https://www.proimma.de/ueber-proimma#person' },
+  publisher: { '@id': 'https://www.proimma.de/#organization' },
+  // datePublished wird beim Live-Gang auf das tatsächliche Veröffentlichungs-
+  // Datum gesetzt; in der Bauphase als 2026-05-03 als Bau-Stempel verwendet,
+  // damit Schema-Validierer keine Pflichtfeld-Meldung werfen. Vor Live-Gang
+  // pro Artikel auf das tatsächliche Datum prüfen (TODO).
+  datePublished: publishedTime,
+  inLanguage: 'de-DE',
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.proimma.de/' },
+    { '@type': 'ListItem', position: 2, name: 'Wissen für Eigentümer', item: 'https://www.proimma.de/wissen' },
+    { '@type': 'ListItem', position: 3, name: title, item: articleUrl },
+  ],
+};
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  pageSchema={[articleSchema, breadcrumbSchema]}
+  ogType="article"
+  articlePublishedTime={publishedTime}
+  articleSection="Wissen für Eigentümer"
+>
+
+  <!-- 01 ARTICLE-HERO -->
+  <section class="article-hero" data-sektion={`hero-${slug}`}>
+    <div class="container-page article-hero-grid">
+      <div class="article-hero-strich"><div class="ed-strich"></div></div>
+      <p class="article-meta">
+        <a href="/wissen" class="article-meta-link">Wissen für Eigentümer</a>
+        <span class="article-meta-sep" aria-hidden="true">·</span>
+        <span class="article-meta-lese nums">{leseDauer} Lesezeit</span>
+      </p>
+      <h1 class="article-headline">{title}</h1>
+    </div>
+  </section>
+
+  <!-- 02 HAUPTINHALT als Slot -->
+  <article class="article-body container-page" data-sektion={`article-${slug}`}>
+    <slot />
+  </article>
+
+  <!-- 03 WISSENS-CLUSTER-VERLINKUNG (Pillar plus zwei Schwester-Artikel) -->
+  <CrossLinks
+    edIndex="Wissen vertiefen"
+    headline="Verwandte Beiträge."
+    links={[
+      ...crossLinks,
+      { href: '/wissen', label: 'Zurück zur Übersicht Wissen für Eigentümer' },
+    ]}
+  />
+
+</BaseLayout>
+
+<style>
+  .article-hero { padding-block: 80px 64px; }
+  .article-hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 11fr;
+  }
+  .article-hero-strich,
+  .article-meta,
+  .article-headline { grid-column: 2; }
+  .article-hero-strich .ed-strich { margin-bottom: 24px; }
+  .article-meta {
+    font-size: 0.8125rem;
+    letter-spacing: 0.06em;
+    color: var(--color-fg-secondary);
+    margin: 0 0 32px 0;
+  }
+  .article-meta-link {
+    color: var(--color-fg-secondary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .article-meta-link:hover {
+    color: var(--color-fg-primary);
+    border-bottom-color: var(--color-fg-primary);
+  }
+  .article-meta-sep { margin: 0 12px; }
+  .article-headline {
+    font-size: clamp(2.25rem, 5vw, 4.25rem);
+    line-height: 1.1;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    color: var(--color-fg-primary);
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  @media (max-width: 1024px) {
+    .article-hero { padding-block: 56px 40px; }
+    .article-hero-grid { grid-template-columns: 1fr; }
+    .article-hero-strich,
+    .article-meta,
+    .article-headline { grid-column: 1; }
+  }
+
+  .article-body {
+    padding-block: 48px 144px;
+    max-width: 760px;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: var(--color-fg-primary);
+  }
+  @media (max-width: 1024px) {
+    .article-body { padding-block: 32px 80px; font-size: 1.0625rem; }
+  }
+</style>
+
+<style is:global>
+  /* Globale Article-Body-Styles, sodass die Slot-Inhalte konsistent
+     gerendert werden, ohne dass jede Article-Seite ihre eigenen Styles
+     wiederholen muss. */
+  .article-body h2 {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.2;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--color-fg-primary);
+    margin: 56px 0 20px 0;
+  }
+  .article-body h2:first-child { margin-top: 0; }
+  .article-body h3 {
+    font-size: 1.25rem;
+    line-height: 1.3;
+    font-weight: 500;
+    color: var(--color-fg-primary);
+    margin: 40px 0 14px 0;
+  }
+  .article-body p {
+    margin: 0 0 22px 0;
+    color: var(--color-fg-primary);
+  }
+  .article-body p:last-child { margin-bottom: 0; }
+  .article-body a.inline-link,
+  .article-body a {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .article-body a:hover { border-bottom-color: var(--color-fg-primary); }
+</style>

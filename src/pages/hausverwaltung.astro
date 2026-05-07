@@ -1,0 +1,629 @@
+---
+// Detail-Seite Hausverwaltung — Editorial Bold
+// Stand 03.05.2026, Phase 2 Bau-Block 6.
+//
+// Quellen eins-zu-eins (Verbot 7 strikt):
+//   01_Hausverwaltung_2026-04-27.md
+//   13_Anleitung-Verwalterwechsel-Anmeldung_2026-04-29.md
+//
+// Soll-Stack laut Bauauftrag Phase 2 bis 4 Stufe 2:
+//   01 Editorial-Hero
+//   02 Was Mietenverwaltung bei Proimma bedeutet
+//   03 Wie wir arbeiten (Leistungsumfang, Eigentümer-Ansprechen)
+//   04 Verwalterwechsel-Sequenz (Bestandsaufnahme, Übergabe, Mieter-Information,
+//      laufender Betrieb) als Editorial-Sequenz
+//   05 Was wir nicht machen
+//   06 Pakete-Aussage ohne Preise
+//   07 Lead-Magnet "Hausverwalter wechseln. Fünf Schritte als Anleitung." mit
+//      Brevo-Anmelde-Formular (Honeypot-Spamschutz, Doppelt-Opt-In)
+//   08 Cross-Links auf Wissens-Cluster (Verwalterwechsel, Bestandsübergabe)
+//   09 Cal.eu-Termin-Sektion
+//   10 Footer (über BaseLayout)
+//
+// Schema.org pro Seite: Service-Schema "Property Management" plus
+// BreadcrumbList. Title sechzig Zeichen, Meta-Description ein- bis sechzig.
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CalEmbed from '@/components/CalEmbed.astro';
+import CrossLinks from '@/components/CrossLinks.astro';
+
+const title = 'Hausverwaltung Rostock';
+const description = 'Mietenverwaltung von Mehrfamilienhäusern und Wohn- und Geschäftshäusern für Eigentümer in Rostock und Umgebung. Inhabergeführt, mit Hausverwalter-Wechsel-Anleitung als kostenloses PDF.';
+// Seitenspezifisches OG-Bild gemäß BRIEFS.md Sektion 1.6 bis 1.10, Stand 06.05.2026.
+const ogImage = '/og-images/og-hausverwaltung.png';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': 'https://www.proimma.de/hausverwaltung#service',
+  serviceType: 'Property Management',
+  name: 'Mietenverwaltung Mehrfamilienhäuser Rostock',
+  description: 'Mietenverwaltung von Mehrfamilienhäusern sowie von Wohn- und Geschäftshäusern für private Eigentümer in Rostock und Umgebung.',
+  provider: { '@id': 'https://www.proimma.de/#organization' },
+  areaServed: [
+    { '@type': 'City', name: 'Rostock' },
+    {
+      '@type': 'GeoCircle',
+      geoMidpoint: { '@type': 'GeoCoordinates', latitude: '54.08978', longitude: '12.09865' },
+      geoRadius: '100000',
+    },
+  ],
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.proimma.de/' },
+    { '@type': 'ListItem', position: 2, name: 'Hausverwaltung', item: 'https://www.proimma.de/hausverwaltung' },
+  ],
+};
+
+// Vier Service-Punkte aus 01_Hausverwaltung Sektion "Was im Leistungsumfang
+// enthalten ist" plus die Übergabe-Aussage als eigener vierter Punkt.
+const leistungen = [
+  {
+    nummer: '01',
+    name: 'Kaufmännische Verwaltung',
+    text: 'Sollstellung und laufende Buchung der Mieten, Pflege der Mieterkonten, offene Posten und Mahnwesen, Erstellung der jährlichen Betriebskostenabrechnung mit nachvollziehbarer Aufgliederung jedes Postens, Verwaltung von Mietkautionen mit getrennter Kontenführung auf Wunsch, Mietanpassungen nach Index oder Vergleichsmiete im Rahmen des gesetzlich Zulässigen, Eigentümer-Reporting in einem mit Ihnen festgelegten Rhythmus, vollständige digitale Dokumentenablage in der Verwaltungssoftware Immocloud mit jederzeit zugänglichem Eigentümer- und Mieterportal.',
+  },
+  {
+    nummer: '02',
+    name: 'Technische Verwaltung',
+    text: 'Annahme und Bearbeitung von Mängelmeldungen, Begleitung größerer Instandsetzungen mit Angebotseinholung und Auftragsbegleitung, Pflege der wiederkehrenden Wartungen und Prüfungen am Objekt, Begehungen nach Vereinbarung. Übergaben und Abnahmen bei Mieterwechseln werden als gesonderte Leistung mit Protokoll und Foto-Dokumentation durchgeführt.',
+  },
+  {
+    nummer: '03',
+    name: 'Handwerker und Hausmeister',
+    text: 'Bei jeder Mängelmeldung beauftragen wir gezielt ausgewählte Handwerker. Koordinierender Partner für die laufende Hausmeisterarbeit ist ein fester Hausmeisterdienst aus dem Rostocker Umland. Spezialaufträge wählen wir aus dem beruflichen Netzwerk des Inhabers aus und überführen die belastbarsten Kontakte schrittweise in einen festen Dienstleisterpool.',
+  },
+];
+
+// Vier-Schritte-Sequenz aus 01_Hausverwaltung Sektion "Wie die Übernahme abläuft"
+const wechsel = [
+  {
+    nummer: '01',
+    name: 'Bestandsaufnahme',
+    text: 'Im ersten Schritt erfassen wir gemeinsam mit Ihnen den Stand des Objekts. Welche Mietverhältnisse bestehen? Welche Verträge laufen? Welcher Pflege- und Reparaturzustand liegt vor? Welche Zahlungsstände stehen offen? Welche Vereinbarungen sind mit Mietern und Dienstleistern getroffen? Dieser Schritt ist nüchterne Bestandsaufnahme, keine Bewertung Ihrer Vor-Verwaltung.',
+  },
+  {
+    nummer: '02',
+    name: 'Kaufmännische und technische Übergabe',
+    text: 'Im zweiten Schritt fordern wir bei Ihrer bisherigen Verwaltung die vollständigen Unterlagen an und gleichen sie gegen unsere Bestandsaufnahme ab. Mietverträge, Mieterakten, Hausgeldabrechnungen sofern vorhanden, Wartungsverträge, Versicherungsdokumente, Pläne, Energieausweise, Schlüsselbestände. Was fehlt, dokumentieren wir und holen es nach. Erst wenn die Datenlage steht, übernehmen wir den laufenden Betrieb.',
+  },
+  {
+    nummer: '03',
+    name: 'Mieter-Information',
+    text: 'Im dritten Schritt informieren wir die Mieter Ihres Objekts schriftlich über den Verwalterwechsel. Klar, sachlich, mit den neuen Kontaktwegen und mit der Bitte, ab dem vereinbarten Stichtag die Miete an das neue Konto zu überweisen oder den neuen Lastschriftauftrag zu unterzeichnen. Auch die Notfall-Erreichbarkeit für Mieter wird in dieser Information benannt.',
+  },
+  {
+    nummer: '04',
+    name: 'Laufender Betrieb',
+    text: 'Im vierten Schritt geht das Objekt in den regulären Verwaltungsbetrieb über. Mietzahlungen laufen über das neue Konto, Mängelmeldungen kommen an unsere Tickets, das Reporting startet im vereinbarten Rhythmus. Der Übergang ist damit nicht ein Stichtag, sondern ein gemeinsamer Pfad über mehrere Wochen.',
+  },
+];
+
+const verzicht = [
+  'Keine Eigentümergemeinschaften aus mehreren Einzeleigentümern.',
+  'Keine reinen Gewerbeobjekte.',
+  'Keine Mandate, deren Bewirtschaftung sich auf eine kurzfristige Abwicklung beschränkt.',
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  pageSchema={[serviceSchema, breadcrumbSchema]}
+>
+
+  <!-- 01 EDITORIAL-HERO -->
+  <section class="hero-detail" data-sektion="hero-hausverwaltung">
+    <div class="container-page hero-detail-grid">
+      <div class="hero-detail-strich"><div class="ed-strich"></div></div>
+      <div class="ed-index">01 Hausverwaltung</div>
+      <h1 class="hero-detail-headline">Mietenverwaltung in Rostock.</h1>
+      <p class="hero-detail-subline">Mehrfamilienhäuser sowie Wohn- und Geschäftshäuser. Inhabergeführt mit direktem Ansprechpartner und dokumentiertem Übernahme-Prozess.</p>
+    </div>
+  </section>
+
+  <!-- 02 WAS MIETENVERWALTUNG BEI PROIMMA BEDEUTET -->
+  <section class="section-block" data-sektion="hausverwaltung-bedeutet">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal">
+        <div class="ed-index">02 Auftrag</div>
+      </div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Was Mietenverwaltung bei Proimma bedeutet:</h2>
+        <div class="section-body">
+          <p>Proimma übernimmt für Eigentümer in Rostock und Umgebung die Mietenverwaltung von Mehrfamilienhäusern sowie von Wohn- und Geschäftshäusern. Der Auftrag lautet, das Haus als Ganzes wirtschaftlich und technisch zu betreiben. Sie übertragen uns die laufende Verantwortung für das Objekt im vereinbarten Umfang. Wir führen die laufende Bewirtschaftung im Sinne Ihrer Vorgaben.</p>
+          <p>Verwaltet werden Substanz und Betrieb des Gebäudes für einen Eigentümer oder eine Eigentümergesellschaft. Sie übergeben uns die laufende Verantwortung im vereinbarten Umfang, wir führen das Objekt im Sinne Ihrer Vorgaben. Bei jedem Auftrag bleibt der Inhaber Ansprechpartner.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 WIE WIR ARBEITEN: ZIELGRUPPE PLUS LEISTUNGSUMFANG -->
+  <section class="section-block" data-sektion="hausverwaltung-arbeit">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal">
+        <div class="ed-index">03 Wie wir arbeiten</div>
+      </div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Welche Eigentümer wir ansprechen:</h2>
+        <div class="section-body">
+          <p>Sie sind Eigentümer eines oder mehrerer Mehrfamilienhäuser vorrangig in Rostock und Umgebung, mit Schwerpunkt im Umkreis von etwa 100 Kilometern? Mandate über diesen Umkreis hinaus übernehmen wir auf Anfrage. Sie halten Ihre Objekte als Kapitalanlage, haben sie geerbt oder im Rahmen einer Objektgesellschaft erworben? Sie suchen einen Verwalter, der nicht nur Buchhaltung und Mieterverwaltung macht, sondern Ihr Objekt mit derselben Aufmerksamkeit führt, mit der Sie es aufgebaut oder übernommen haben?</p>
+          <p>Auch Wohn- und Geschäftshäuser mit gemischter Nutzung gehören in unser Aufgabengebiet. Wenn ein Objekt überwiegend Wohnnutzung mit ergänzenden Gewerbeflächen im Erdgeschoss verbindet, ist die Mechanik der Mietenverwaltung dieselbe.</p>
+        </div>
+
+        <h3 class="leistungen-headline">Was im Leistungsumfang enthalten ist:</h3>
+        <div class="leistungen-list">
+          {leistungen.map((item) => (
+            <div class="leistung-row">
+              <span class="leistung-num nums">{item.nummer}</span>
+              <div>
+                <div class="leistung-name">{item.name}</div>
+                <p class="leistung-text">{item.text}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <h3 class="leistungen-headline" style="margin-top: 64px;">Wie Sie uns erreichen:</h3>
+        <div class="section-body">
+          <p>Eigentümer-Anliegen landen direkt bei André Dieckmann als Inhaber und Geschäftsführer. Es gibt keine Sachbearbeiter-Ebene, durch die ein Anliegen erst geleitet werden muss, und keine Weiterleitung über mehrere Mitarbeiter. Diese Direktheit ist eine Strukturentscheidung der inhabergeführten Proimma GmbH, kein Übergangszustand der Aufbauphase.</p>
+          <p>Auf Eigentümer-Anfragen erhalten Sie eine erste Rückmeldung innerhalb eines Werktages. Wenn eine Rückmeldung mehr Zeit braucht, weil eine Frage tiefer abgeklärt werden muss, sagen wir Ihnen das ausdrücklich und nennen einen realistischen Termin.</p>
+          <p>Für Mieter Ihrer Objekte besteht eine separate Notfall-Erreichbarkeit. Rohrbruch, Heizungsausfall, Stromausfall, Sicherheitsvorfall, das sind die Lagen, in denen die reguläre Bürozeit nicht der richtige Maßstab ist. Diese Notfall-Erreichbarkeit ist von der Eigentümer-Erreichbarkeit getrennt, damit Akquise- und Eigentümer-Themen nicht in der Mieter-Hotline untergehen und umgekehrt.</p>
+          <p>Reguläre Bürozeit Montag bis Freitag von 9 bis 17 Uhr. Kontaktwege Telefon, E-Mail an info@proimma.de, das Eigentümer- und Mieterportal in der Verwaltungssoftware Immocloud. Termine für Erstgespräche buchen Sie direkt online über unseren Cal.com-Kalender.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 VERWALTERWECHSEL-SEQUENZ (Editorial-Sequenz mit nummerierten Stationen) -->
+  <section class="section-block sequenz" data-sektion="hausverwaltung-wechsel-sequenz">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal">
+        <div class="ed-index">04 Wechsel-Sequenz</div>
+      </div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Wie ein Verwalterwechsel bei Proimma abläuft:</h2>
+        <p class="lead">Eine saubere Übernahme entscheidet über die nächsten Jahre. Wir trennen den Prozess in vier klar abgegrenzte Schritte und machen jeden Schritt für Sie nachvollziehbar.</p>
+        <ol class="sequenz-list">
+          {wechsel.map((step) => (
+            <li class="sequenz-row">
+              <span class="sequenz-num nums">{step.nummer}</span>
+              <div>
+                <div class="sequenz-name">{step.name}</div>
+                <p class="sequenz-text">{step.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 WAS WIR NICHT MACHEN -->
+  <section class="section-block" data-sektion="hausverwaltung-verzicht">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal">
+        <div class="ed-index">05 Verzicht</div>
+      </div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Was wir nicht machen:</h2>
+        <p class="lead">Wir nennen die Aufgaben offen, die wir nicht übernehmen, weil die Klarheit für Sie als Eigentümer wertvoller ist als ein Allesanbieter-Versprechen.</p>
+        <ol class="verzicht-list-detail">
+          {verzicht.map((text, idx) => (
+            <li class="verzicht-row-detail">
+              <span class="verzicht-num-detail nums">{String(idx + 1).padStart(2, '0')}</span>
+              <span class="verzicht-text-detail">{text}</span>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 PAKETE OHNE PREISE
+       Externe Kommunikationsregel: keine Pakete-Namen LIGHT/BASIS/PLUS/PREMIUM,
+       stattdessen "individuelles Angebot nach Objektgröße und Leistungsumfang". -->
+  <section class="section-block" data-sektion="hausverwaltung-pakete">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal">
+        <div class="ed-index">06 Angebot</div>
+      </div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Wie ein Erstgespräch bei uns aussieht:</h2>
+        <div class="section-body">
+          <p>Im Erstgespräch beginnen wir bei Ihrem Objekt und Ihrer Situation. Wir hören zu, fragen das Wesentliche ab, ordnen ein, was machbar ist und was nicht. Erst nach dieser Bestandsaufnahme bekommen Sie ein individuelles Angebot nach Objektgröße und Leistungsumfang. Wir nennen keine pauschalen Preisspannen im Erstgespräch, weil pauschale Preise vom konkreten Aufwand wegführen und Ihnen nicht helfen.</p>
+          <p>Für die Tätigkeit als Wohnimmobilienverwalter besteht nach § 15 MaBV die Pflicht zur Vermögensschadenhaftpflicht-Versicherung. Die einheitliche gewerberechtliche Erlaubnis nach § 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 GewO wurde der Proimma GmbH durch die Hanse- und Universitätsstadt Rostock am 31.03.2026 erteilt.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 LEAD-MAGNET BREVO-FORMULAR
+       Drei Pflichtfelder Vorname, Nachname, E-Mail-Adresse plus zwei
+       optionale Felder Telefonnummer und Anliegen-Textarea (v22-Erweiterung
+       laut Andre-Auftrag 05.05.2026; Datenschutz-Hinweis-Mikrocopy
+       entsprechend um die zwei Datenkategorien erweitert).
+       Form-Submission auf /api/anleitung mit Server-seitiger Brevo-Übergabe.
+       Aria-Required, aria-describedby für Mikrocopy-Verknüpfung, inputmode
+       für mobile Tastatur-Optimierung der Telefonnummer, Honeypot mit
+       aria-hidden und tabindex -1 versteckt vor Screen-Readern und Tab-Navigation. -->
+  <section class="anleitung" data-sektion="anleitung-download-form">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal">
+        <div class="ed-index">07 Anleitung</div>
+      </div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Hausverwalter wechseln. Fünf Schritte als Anleitung:</h2>
+        <div class="section-body">
+          <p>Ein Verwalterwechsel ist eine Entscheidung mit Folgen für die nächsten Jahre. Welche Frist gilt für die Kündigung der bestehenden Verwaltung? Welche Unterlagen müssen Sie vom alten Verwalter anfordern? Wie sieht eine saubere Übergabe an die neue Verwaltung aus? Welche Information bekommen die Mieter und ab wann?</p>
+          <p>Die Anleitung beantwortet diese Fragen in fünf konkreten Schritten. Sie geht jeden Schritt mit prüfbaren Hinweisen durch: zur Frist und Form der Kündigung, zu den Unterlagen, die der alte Verwalter herausgeben muss, zur Stichtag-Logik der Übergabe, zur sachlichen Mieter-Information und zur sauberen ersten Abrechnung nach dem Wechsel. Sachlich, ohne Werbung, ohne Versprechen, die wir nicht halten können.</p>
+          <p>Wenn Sie nach der Lektüre der Anleitung mit uns sprechen möchten, finden Sie alle Kontaktwege auf der Kontakt-Seite. Wenn Sie sich nach der Lektüre für eine andere Verwaltung entscheiden, hat die Anleitung Ihnen trotzdem geholfen. Beides ist in Ordnung.</p>
+          <p>Tragen Sie Ihren Namen und Ihre E-Mail-Adresse ein, optional auch Telefonnummer und Anliegen, dann senden wir Ihnen die Anleitung als PDF zu. Eine Bestätigungs-Mail mit dem Download-Link wird im Doppelt-Opt-In-Verfahren versandt. Ihre Daten werden nicht für Werbung Dritter verwendet, Details in der <a href="/datenschutz" class="inline-link">Datenschutzerklärung</a>.</p>
+        </div>
+
+        <form
+          class="form-grid"
+          method="POST"
+          action="/api/anleitung"
+          aria-label="Anmeldung Anleitung Hausverwalter wechseln"
+          novalidate
+        >
+          {/* fieldset-legend-Gruppen-Markierung (v23-Schärfung): semantischer
+              Standard für Screen-Reader, sodass die fünf Felder als Gruppe
+              angesagt werden. Legend visuell versteckt via .sr-only, weil
+              die Sektions-Headline „Hausverwalter wechseln. Fünf Schritte
+              als Anleitung:" bereits sichtbar als visueller Anker dient.
+              fieldset-Default-Browser-Styling im scoped style zurückgesetzt. */}
+          <fieldset class="form-fieldset">
+            <legend class="sr-only">Anmeldung Anleitung Hausverwalter wechseln</legend>
+
+          <div class="field">
+            <label for="anleitung-vorname">Vorname <span aria-hidden="true">*</span></label>
+            <input type="text" id="anleitung-vorname" name="vorname" required aria-required="true" autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label for="anleitung-nachname">Nachname <span aria-hidden="true">*</span></label>
+            <input type="text" id="anleitung-nachname" name="nachname" required aria-required="true" autocomplete="family-name" />
+          </div>
+          <div class="field field-full">
+            <label for="anleitung-mail">E-Mail-Adresse <span aria-hidden="true">*</span></label>
+            <input type="email" id="anleitung-mail" name="email" required aria-required="true" aria-describedby="anleitung-mail-hint" autocomplete="email" inputmode="email" />
+            <p id="anleitung-mail-hint" class="field-hint">Wir senden den Bestätigungslink an diese Adresse.</p>
+          </div>
+
+          {/* Optional: Telefonnummer (v22-Erweiterung).
+              type="tel" plus inputmode="tel" für mobile Telefon-Tastatur. */}
+          <div class="field field-full">
+            <label for="anleitung-telefon">Telefonnummer (optional)</label>
+            <input type="tel" id="anleitung-telefon" name="telefon" autocomplete="tel" inputmode="tel" />
+          </div>
+
+          {/* Optional: Anliegen oder Frage als Freitext (v22-Erweiterung).
+              Vier Zeilen Default-Höhe, vergrößerbar per resize-vertical. */}
+          <div class="field field-full">
+            <label for="anleitung-anliegen">Anliegen oder Frage (optional)</label>
+            <textarea id="anleitung-anliegen" name="anliegen" rows="4" maxlength="1000"></textarea>
+          </div>
+
+          {/* Honeypot-Feld: Bots füllen es aus, echte Nutzer sehen es nicht.
+              Server in /api/anleitung verwirft Submissions mit nicht-leerem Wert. */}
+          <div class="honeypot" aria-hidden="true">
+            <label for="anleitung-website">Bitte leer lassen.</label>
+            <input type="text" id="anleitung-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="field field-full">
+            <button type="submit" class="btn-primary" data-cta="anleitung-download">Anleitung anfordern</button>
+          </div>
+          <p class="form-status" role="status" aria-live="polite"></p>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 CROSS-LINKS auf relevante Wissens-Artikel -->
+  <CrossLinks
+    edIndex="08 Wissen vertiefen"
+    headline="Lesen Sie weiter zum Thema Verwalterwechsel."
+    links={[
+      { href: '/wissen/verwalterwechsel', label: 'Anleitung Verwalterwechsel im Detail' },
+      { href: '/wissen/bestandsuebergabe', label: 'Was bei der Bestandsübergabe sauber dokumentiert wird' },
+    ]}
+  />
+
+  <!-- 09 CAL.EU-TERMIN-SEKTION -->
+  <CalEmbed edIndex="09 Erstgespräch" mountId="cal-mount-hausverwaltung" />
+
+</BaseLayout>
+
+<style>
+  /* ---------- HERO DETAIL ----------
+     Asymmetrisches Editorial-Layout mit schmaler Strich-Spalte links
+     und breiter Inhalt-Spalte rechts. */
+  .hero-detail {
+    padding-block: 96px 144px;
+  }
+  .hero-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 11fr;
+    gap: 0;
+  }
+  .hero-detail-strich,
+  .hero-detail .ed-index,
+  .hero-detail-headline,
+  .hero-detail-subline {
+    grid-column: 2;
+  }
+  .hero-detail-strich .ed-strich { margin-bottom: 32px; }
+  .hero-detail .ed-index { margin-bottom: 24px; }
+  .hero-detail-headline {
+    font-size: clamp(2.75rem, 6.4vw, 6.5rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    max-width: 18ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+  .hero-detail-subline {
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+    line-height: 1.45;
+    font-weight: 300;
+    color: var(--color-fg-secondary);
+    max-width: 56ch;
+  }
+  @media (max-width: 1024px) {
+    .hero-detail { padding-block: 56px 80px; }
+    .hero-detail-grid { grid-template-columns: 1fr; }
+    .hero-detail-strich,
+    .hero-detail .ed-index,
+    .hero-detail-headline,
+    .hero-detail-subline { grid-column: 1; }
+  }
+
+  /* ---------- SECTION-BLOCK Magazin-Band (für 02, 03, 04, 05, 06) ----------
+     Asymmetrisches 4 zu 8 Raster, sticky Editorial-Index links. */
+  .section-block {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+  .section-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .section-meta {
+    position: sticky;
+    top: 120px;
+  }
+  .section-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    max-width: 22ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+  .section-body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-secondary);
+    max-width: 62ch;
+  }
+  .section-body p { margin-bottom: 24px; }
+  .section-body p:last-child { margin-bottom: 0; }
+  /* v25-Compliance Paket 5: inline-Link für Datenschutzerklärung-Verweis
+     im Anleitungs-Form-Mikrocopy. Klasse wird scoped pro Seite gehalten,
+     analog zu .inline-link in /maklerei. */
+  .section-body .inline-link {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .section-body .inline-link:hover {
+    border-bottom-color: var(--color-fg-primary);
+  }
+  .leistungen-headline {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.3;
+    color: var(--color-fg-primary);
+    margin-top: 64px;
+    margin-bottom: 32px;
+  }
+  .leistungen-list { margin-top: 0; }
+  .leistung-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 24px;
+    border-top: 1px solid var(--color-line);
+  }
+  .leistung-row:last-child { border-bottom: 1px solid var(--color-line); }
+  .leistung-num {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    color: var(--color-fg-secondary);
+    padding-top: 6px;
+  }
+  .leistung-name {
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-fg-primary);
+  }
+  .leistung-text {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-fg-secondary);
+    margin-top: 8px;
+    max-width: 56ch;
+  }
+  @media (max-width: 1024px) {
+    .section-block { padding-block: 80px; }
+    .section-grid { grid-template-columns: 1fr; gap: 32px; }
+    .section-meta { position: static; }
+  }
+
+  /* ---------- SEQUENZ-LIST (für 04 Wechsel-Sequenz) ---------- */
+  .sequenz-list {
+    list-style: none;
+    padding: 0;
+    margin-top: 56px;
+  }
+  .sequenz-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 32px;
+    border-top: 1px solid var(--color-line);
+  }
+  .sequenz-row:last-child { border-bottom: 1px solid var(--color-line); }
+  .sequenz-num {
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    color: var(--color-accent);
+    padding-top: 8px;
+  }
+  .sequenz-name {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--color-fg-primary);
+  }
+  .sequenz-text {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-fg-secondary);
+    margin-top: 12px;
+    max-width: 62ch;
+  }
+
+  /* ---------- VERZICHTS-LIST DETAIL (für 05) ---------- */
+  .verzicht-list-detail {
+    list-style: none;
+    padding: 0;
+    margin-top: 32px;
+  }
+  .verzicht-row-detail {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 24px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+  .verzicht-row-detail:last-child { border-bottom: 1px solid var(--color-line-faint); }
+  .verzicht-num-detail {
+    font-size: 0.8125rem;
+    letter-spacing: 0.18em;
+    color: var(--color-fg-secondary);
+    font-weight: 500;
+    padding-top: 6px;
+  }
+  .verzicht-text-detail {
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    color: var(--color-fg-primary);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  /* ---------- ANLEITUNG-FORM (Brevo) ---------- */
+  .anleitung {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+    background: var(--color-bg-elevated);
+  }
+  /* v23: form-grid übernimmt nur Container-Position (margin-top, max-width),
+     das tatsächliche 2-Spalten-Layout sitzt jetzt am fieldset, weil das
+     fieldset das einzige direkte Form-Kind ist. */
+  .form-grid {
+    margin-top: 56px;
+    max-width: 56ch;
+  }
+  /* fieldset-Default-Browser-Styling zurücksetzen plus 2-Spalten-Grid
+     übernehmen (war vorher am form-grid). Damit bleibt das visuelle
+     Form-Erscheinungsbild byte-identisch zu v22. */
+  .form-fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    min-inline-size: 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field-full { grid-column: 1 / -1; }
+  .field label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-fg-primary);
+  }
+  .field input,
+  .field textarea {
+    font: inherit;
+    font-size: 1rem;
+    padding: 14px 16px;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg-primary);
+    color: var(--color-fg-primary);
+    min-height: 48px;
+    border-radius: 0;
+  }
+  .field textarea {
+    /* v22: Textarea optisch byte-identisch zum input, nur vertikal größer
+       und vom Nutzer noch vergrößerbar. min-height auf vier-Zeilen-Default
+       angepasst, sodass das Feld auf Mobile ausreichende Tap-Zone hat. */
+    resize: vertical;
+    min-height: 112px;
+    line-height: 1.5;
+    font-family: inherit;
+  }
+  .field input:focus-visible,
+  .field textarea:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-color: var(--color-fg-primary);
+  }
+  .field-hint {
+    font-size: 0.8125rem;
+    color: var(--color-fg-secondary);
+    margin-top: 4px;
+  }
+  .form-status {
+    grid-column: 1 / -1;
+    font-size: 0.9375rem;
+    color: var(--color-fg-secondary);
+    margin: 0;
+    min-height: 1.5em;
+  }
+
+  /* Honeypot: visuell und für Screen-Reader versteckt, aber nicht display:none
+     (sonst würden manche Bots es überspringen). */
+  .honeypot {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    height: 0;
+    width: 0;
+    overflow: hidden;
+  }
+
+  @media (max-width: 1024px) {
+    .anleitung { padding-block: 80px; }
+    .form-fieldset { grid-template-columns: 1fr; }
+  }
+</style>

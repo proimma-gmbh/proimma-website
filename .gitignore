@@ -1,0 +1,27 @@
+# Build outputs
+dist/
+upload-v*/
+probelauf-*/
+
+# Dependencies
+node_modules/
+
+# macOS
+.DS_Store
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Astro
+.astro/

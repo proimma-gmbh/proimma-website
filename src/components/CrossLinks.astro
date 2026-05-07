@@ -1,0 +1,102 @@
+---
+// Wissens-Cluster-Verlinkungs-Block — Editorial Bold
+// Stand 03.05.2026, Phase 2 Bau-Block 6.
+//
+// Liefert eine sachliche, nicht-werbliche Verlinkung auf zwei oder drei
+// thematisch verwandte Wissens-Artikel oder zurück zur Pillar-Seite /wissen.
+// Anker-Texte sind beschreibend (nicht "hier klicken"), Hellblau ausschließlich
+// als Hover-Pfeil. Eingesetzt am Ende der Detail-Seiten (Hausverwaltung,
+// Maklerei) und am Ende jedes Erstartikels (Wissens-Cluster-Architektur).
+
+interface CrossLink {
+  href: string;
+  label: string;
+}
+
+interface Props {
+  edIndex: string;
+  headline: string;
+  links: CrossLink[];
+}
+
+const { edIndex, headline, links } = Astro.props;
+---
+
+<section class="crosslinks" data-sektion="cross-links">
+  <div class="container-page">
+    <div class="crosslinks-head reveal">
+      <div class="ed-index">{edIndex}</div>
+      <h2 class="crosslinks-headline">{headline}</h2>
+    </div>
+    <ul class="crosslinks-list reveal">
+      {links.map((link) => (
+        <li>
+          <a href={link.href} class="crosslinks-item" data-cta="cross-link">
+            <span class="crosslinks-label">{link.label}</span>
+            <span class="crosslinks-arrow" aria-hidden="true">→</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<style>
+  .crosslinks {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+  .crosslinks-head { margin-bottom: 56px; max-width: 36ch; }
+  .crosslinks-headline {
+    font-size: clamp(1.875rem, 3.2vw, 2.75rem);
+    line-height: 1.1;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    color: var(--color-fg-primary);
+  }
+  .crosslinks-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .crosslinks-item {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 32px;
+    align-items: center;
+    padding-block: 28px;
+    border-top: 1px solid var(--color-line);
+    transition: padding-left 0.3s ease, border-color 0.3s ease;
+    color: var(--color-fg-primary);
+    min-height: 64px;
+  }
+  .crosslinks-list li:last-child .crosslinks-item {
+    border-bottom: 1px solid var(--color-line);
+  }
+  .crosslinks-item:hover {
+    padding-left: 12px;
+    border-top-color: var(--color-fg-primary);
+  }
+  .crosslinks-item:hover + li .crosslinks-item {
+    border-top-color: var(--color-fg-primary);
+  }
+  .crosslinks-item:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+  .crosslinks-label {
+    font-size: clamp(1.0625rem, 1.5vw, 1.25rem);
+    line-height: 1.4;
+    font-weight: 400;
+  }
+  .crosslinks-arrow {
+    font-size: 1.25rem;
+    color: var(--color-accent);
+    transition: transform 0.3s ease;
+  }
+  .crosslinks-item:hover .crosslinks-arrow { transform: translateX(6px); }
+
+  @media (max-width: 1024px) {
+    .crosslinks { padding-block: 80px; }
+  }
+</style>

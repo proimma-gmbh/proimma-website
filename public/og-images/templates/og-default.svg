@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Default-OG-Bild gemäß BRIEFS.md Sektion 1.15.
+  Reine Typografie-Komposition, kein Foto, kein Editorial-Index.
+  Wortmarke "Proimma" zentriert in display-l.
+  Subline "Hausverwaltung und Maklerei in Rostock" zentriert in body-l.
+  Hinweis: Subline wird im Build-Script in Hanken Grotesk Light statt Regular
+  gerendert, weil Light und Regular beide unter dem Family-Name
+  "Hanken Grotesk" geführt werden und in einem Resvg-Aufruf nicht
+  koexistieren können. Visuell minimale Abweichung von Sektion 1.15-Wortlaut.
+  Stand 06.05.2026, OG-Bilder-Bauauftrag.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#FAFAF8"/>
+  <text x="600" y="320" font-family="Hanken Grotesk" font-size="96" font-weight="300" letter-spacing="-2" fill="#1A1A1A" text-anchor="middle">Proimma GmbH</text>
+  <text x="600" y="380" font-family="Hanken Grotesk" font-size="28" font-weight="300" letter-spacing="-0.4" fill="#1A1A1A" text-anchor="middle">Hausverwaltung und Maklerei in Rostock</text>
+</svg>

@@ -1,0 +1,392 @@
+---
+// Detail-Seite Über Proimma — Editorial Bold
+// Stand 03.05.2026, Phase 2 Bau-Block 6.
+//
+// Quelle eins-zu-eins (Verbot 7 strikt):
+//   08_Ueber-Proimma_2026-04-28.md
+//
+// Soll-Stack laut Bauauftrag Phase 2 bis 4 Stufe 2:
+//   01 Inhaberbrief als Eröffnungs-Block (kein zusätzlicher Hero-Floskel-Block davor)
+//      Quelle: Sektion "Wer hinter Proimma steht" aus Workspace-Text 08;
+//      signiert mit "André Dieckmann, Inhaber und Geschäftsführer".
+//   02 Warum Proimma als eigenständige Marke
+//   03 Vier Pfeiler (Inhabergeführt, Spezialisiert, Direkt, Transparent)
+//   04 Rechtlicher Rahmen (§ 34c-Wortlaut ausgeschrieben, Aktenzeichen NUR im Impressum)
+//   05 Bewertungsprofil (Verweis auf Maklerei-Detailseite, niemals erfundene Stimmen)
+//   06 Stand des Bestands in der Mietenverwaltung (keine Bestandszahlen extern)
+//   07 Wenn Sie mit Proimma sprechen wollen
+//   08 Editorial-Personenprofil mit DSC01323 in Farbe (gespeichert als andre-portrait.jpg)
+//   09 Cal.eu-Termin-Sektion
+//   10 Footer (über BaseLayout)
+//
+// Singular "für einen dänischen Fonds" durchgehend (Stufe-1-Korrektur 4
+// in der Inhaberbiografie sichergestellt).
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CalEmbed from '@/components/CalEmbed.astro';
+
+const title = 'Über Proimma';
+const description = 'Inhabergeführte Hausverwaltung und Maklerei in Rostock. André Dieckmann mit mehr als zwanzig Jahren Branchenerfahrung als alleiniger Ansprechpartner für Eigentümer.';
+// Seitenspezifisches OG-Bild gemäß BRIEFS.md Sektion 1.6 bis 1.10, Stand 06.05.2026.
+const ogImage = '/og-images/og-ueber-proimma.png';
+
+const personSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://www.proimma.de/ueber-proimma#person',
+  name: 'André Dieckmann',
+  jobTitle: 'Inhaber und Geschäftsführer',
+  image: 'https://www.proimma.de/img/andre-portrait.jpg',
+  worksFor: { '@id': 'https://www.proimma.de/#organization' },
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.proimma.de/' },
+    { '@type': 'ListItem', position: 2, name: 'Über Proimma', item: 'https://www.proimma.de/ueber-proimma' },
+  ],
+};
+
+const pfeiler = [
+  {
+    nummer: '01',
+    name: 'Inhabergeführt',
+    text: 'Verantwortung liegt beim Inhaber. Kein Franchise, keine Konzernbindung, keine Hierarchiekette zwischen Eigentümer und Entscheidungsträger. Diese Struktur ist eine bewusste Wahl, kein Übergangszustand der Aufbauphase.',
+  },
+  {
+    nummer: '02',
+    name: 'Spezialisiert',
+    text: 'Bei Proimma sind es zwei Geschäftsbereiche, sonst nichts. Mietenverwaltung von Mehrfamilienhäusern sowie von Wohn- und Geschäftshäusern und Vermarktung von Wohnimmobilien aus dem vollen Spektrum: Einfamilienhäuser, Doppel- und Reihenhäuser, Eigentumswohnungen, Mehrfamilienhäuser, Grundstücke. Reine Gewerbeimmobilien-Verwaltung wird nicht angeboten, Eigentümergemeinschaften aus mehreren Einzeleigentümern werden nicht verwaltet.',
+  },
+  {
+    nummer: '03',
+    name: 'Direkt mit Backup-Netzwerk',
+    text: 'Eigentümer sprechen bei Proimma direkt mit dem Inhaber, ohne Sachbearbeiter-Ebene und ohne Weiterleitung über mehrere Mitarbeiter. Diese Direktheit ist gestützt auf ein Backup-Netzwerk, das nach Geschäftsbereich getrennt ist. Für die Hausverwaltung steht ein fester Hausmeisterdienst aus dem Rostocker Umland sowie ergänzend ausgewählte Handwerker aus dem beruflichen Netzwerk des Inhabers bereit. Für die Maklerei sind es ausgewählte Handwerker aus demselben beruflichen Netzwerk. Backup ist Teil der Struktur, nicht Reaktion auf den Einzelfall.',
+  },
+  {
+    nummer: '04',
+    name: 'Transparent',
+    text: 'Die Mechanik der Arbeit wird offen erklärt, statt hinter Schlagworten versteckt. Übernahme-Prozess in der Hausverwaltung in vier dokumentierten Schritten, Vermarktungsprozess in der Maklerei in fünf dokumentierten Schritten, Provisionslogik nach § 656c BGB sichtbar dargestellt mit konkreten Werten. Stamm-Daten der Firma sind im Footer und im Impressum prüfbar abgelegt.',
+  },
+];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  pageSchema={[personSchema, breadcrumbSchema]}
+>
+
+  <!-- 01 INHABERBRIEF als Eröffnungs-Block (ersetzt generische Hero-Headline)
+       Workspace-Text 08, Sektion "Wer hinter Proimma steht" eins-zu-eins.
+       Singular "für einen dänischen Fonds". Signatur am Ende mit Inhaber-Rolle.
+       Editorial-Bold: Hellblau-Akzentstrich, kein Foto im Inhaberbrief selbst,
+       Foto folgt unten in Sektion 08. -->
+  <section class="inhaberbrief" data-sektion="inhaberbrief">
+    <div class="container-page brief-grid">
+      <div class="brief-col-left">
+        <div class="ed-strich" style="margin-bottom: 32px;"></div>
+        <div class="ed-index">01 Inhaberbrief</div>
+      </div>
+      <div class="brief-col-right">
+        <h1 class="brief-headline">Wer hinter Proimma steht.</h1>
+        <div class="brief-body">
+          <p>Proimma wird geführt von André Dieckmann. Er ist seit mehr als zwanzig Jahren in der Immobilienwirtschaft tätig.</p>
+          <p>André Dieckmann ist ausgebildeter Immobilienkaufmann. Daran schloss langjährige Tätigkeit in Verkauf und Vermietung im Auftrag Dritter an. Mehrere Jahre war er Asset Manager für einen dänischen Fonds. Es folgten der Mitaufbau einer Hausverwaltung von der Gründungsphase bis in den laufenden Betrieb sowie mehrjährige Tätigkeit als Hausverwalter und Bewirtschafter in Anstellung.</p>
+          <p>Diese Stationen sind die fachliche Grundlage, auf der die Proimma GmbH heute geführt wird.</p>
+        </div>
+        <p class="brief-signatur">André Dieckmann<br /><span class="brief-rolle">Inhaber und Geschäftsführer</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 WARUM PROIMMA ALS EIGENSTÄNDIGE MARKE -->
+  <section class="section-block" data-sektion="ueber-marke">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">02 Marke</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Warum Proimma als eigenständige Marke:</h2>
+        <div class="section-body">
+          <p>Die heutige Proimma GmbH wurde 2020 als Einzelunternehmen unter dem Namen Projekt Immobilien Marketing André Dieckmann gegründet. 2022 folgte die Umwandlung in die Proimma UG (haftungsbeschränkt); seitdem wird der Markenname Proimma geführt. 2024 ist die UG durch identitätswahrenden Formwechsel zur Proimma GmbH erweitert worden. Die Maklertätigkeit besteht damit seit 2020 in einer rechtlich kontinuierlichen Linie unter durchgehender Inhaberschaft. Das öffentliche Bewertungsprofil sammelt die Stimmen früherer Auftraggeber aus dieser durchgehenden Maklertätigkeit und ist die belastbare Referenz für die Maklertätigkeit der Proimma GmbH heute.</p>
+          <p>Die Entscheidung, die Aktivitäten unter Proimma als eigenständiger Marke zu bündeln, folgt einer einfachen Logik. Hausverwaltung als Mietenverwaltung und Wohnimmobilien-Maklerei sind zwei eng verwandte Geschäftsbereiche, die in einer fokussierten inhabergeführten Struktur eine andere Tiefe erlauben als unter dem Dach eines breiten Dienstleistungsanbieters. Proimma ist dafür die Form.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 VIER PFEILER -->
+  <section class="section-block" data-sektion="ueber-pfeiler">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">03 Markenkern</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Vier Pfeiler.</h2>
+        <p class="lead">Der Markenkern von Proimma ruht auf vier Aussagen. Auf dieser Seite ist Inhabergeführt der zentrale Pfeiler, die anderen drei tragen unterstützend.</p>
+        <ol class="pfeiler-list">
+          {pfeiler.map((p) => (
+            <li class="pfeiler-row">
+              <span class="pfeiler-num nums">{p.nummer}</span>
+              <div>
+                <div class="pfeiler-name">{p.name}</div>
+                <p class="pfeiler-text">{p.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 RECHTLICHER RAHMEN
+       § 34c ausgeschrieben. Aktenzeichen wird hier bewusst NICHT genannt
+       (Pflichtwortlaut: Aktenzeichen ausschließlich im Impressum). -->
+  <section class="section-block" data-sektion="ueber-recht">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">04 Rahmen</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Rechtlicher Rahmen.</h2>
+        <div class="section-body">
+          <p>Proimma ist Inhaberin der einheitlichen gewerberechtlichen Erlaubnis nach § 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 GewO der Hanse- und Universitätsstadt Rostock. Die einheitliche Form deckt Maklertätigkeit und Wohnimmobilienverwaltung in einer Bescheinigung ab und entspricht dem Spektrum der zwei Geschäftsbereiche, die Proimma führt.</p>
+          <p>Für die Tätigkeit besteht eine Vermögensschadenhaftpflicht-Versicherung nach § 15 MaBV. Die Erwähnung dieser Versicherung erfolgt sachlich, weil sie zur seriösen Außendarstellung gehört, nicht weil sie ein Verkaufsargument wäre.</p>
+          <p>Die vollständigen Stamm-Daten der Firma sowie die Aktenzeichen-Angaben finden Sie im <a href="/impressum" class="inline-link">Impressum</a>.</p>
+          <p>Die Tätigkeit erfolgt vorrangig in Rostock und Umgebung, mit Schwerpunkt im Umkreis von etwa 100 Kilometern, Einzelmandate auch darüber hinaus auf Anfrage.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 BEWERTUNGSPROFIL: Verweis auf Maklerei-Detailseite, niemals erfundene Stimmen -->
+  <section class="section-block" data-sektion="ueber-bewertung">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">05 Bewertung</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Bewertungsprofil.</h2>
+        <div class="section-body">
+          <p>Wie es ist, Proimma als Makler zu beauftragen, beschreiben frühere Auftraggeber selbst im öffentlichen Google-Profil. Drei dieser Stimmen lesen Sie wörtlich auf der <a href="/maklerei" class="inline-link">Maklerei-Seite</a>, alle weiteren direkt im Google-Profil.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 STAND DES BESTANDS: keine Bestandszahlen extern -->
+  <section class="section-block" data-sektion="ueber-bestand">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">06 Aufbau</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Stand des Bestands in der Mietenverwaltung.</h2>
+        <div class="section-body">
+          <p>Die Mietenverwaltung der Proimma GmbH wird gerade neu aufgebaut. Erste Eigentümer-Stimmen aus diesem neuen Bereich werden ergänzt, sobald sie vorliegen. Die fachliche Grundlage für diesen Aufbau ist die mehr als zwanzigjährige Branchenerfahrung des Inhabers, festgehalten in den oben genannten Stationen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 WENN SIE MIT PROIMMA SPRECHEN WOLLEN -->
+  <section class="section-block" data-sektion="ueber-sprechen">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">07 Kontakt</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Wenn Sie mit Proimma sprechen wollen.</h2>
+        <div class="section-body">
+          <p>Erstgespräche per E-Mail an <a href="mailto:info@proimma.de" data-cta="kontakt-mail" class="inline-link">info@proimma.de</a> oder direkt online über unseren Cal.com-Kalender. Auf Eigentümer-Anfragen erhalten Sie eine erste Rückmeldung innerhalb eines Werktages.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 EDITORIAL-PERSONENPROFIL mit Foto in Farbe (kein Schwarzweiß-Filter) -->
+  <section class="person" data-sektion="ueber-portrait">
+    <div class="container-page person-grid">
+      <figure class="person-portrait reveal">
+        <img
+          src="/img/andre-portrait.jpg"
+          alt="André Dieckmann, Inhaber und Geschäftsführer der Proimma GmbH, Editorial-Portrait."
+          loading="lazy"
+          width="640"
+          height="800"
+        />
+      </figure>
+      <div class="person-content reveal">
+        <div class="ed-index">08 Inhaber</div>
+        <h2 class="person-headline">André Dieckmann</h2>
+        <div class="person-role">Inhaber und Geschäftsführer</div>
+        <p class="person-lead">Mehr als zwanzig Jahre Branchenerfahrung, ausgebildeter Immobilienkaufmann, Asset Manager für einen dänischen Fonds, Mitaufbau einer Hausverwaltung sowie Hausverwalter und Bewirtschafter in Anstellung.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 CAL.EU-TERMIN-SEKTION -->
+  <CalEmbed edIndex="09 Erstgespräch" mountId="cal-mount-ueber" />
+
+</BaseLayout>
+
+<style>
+  /* INHABERBRIEF — eigene Behandlung, kein generischer Hero darüber */
+  .inhaberbrief {
+    padding-block: 96px 144px;
+  }
+  .brief-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .brief-col-left {
+    position: sticky;
+    top: 120px;
+  }
+  .brief-headline {
+    font-size: clamp(2.75rem, 5.6vw, 5rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 48px;
+    max-width: 18ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+  .brief-body {
+    font-size: 1.1875rem;
+    line-height: 1.65;
+    color: var(--color-fg-primary);
+    max-width: 56ch;
+  }
+  .brief-body p { margin-bottom: 24px; }
+  .brief-body p:last-child { margin-bottom: 0; }
+  .brief-signatur {
+    margin-top: 48px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-line-faint);
+    font-size: 1.0625rem;
+    line-height: 1.5;
+    color: var(--color-fg-primary);
+    font-weight: 500;
+  }
+  .brief-rolle {
+    font-weight: 400;
+    color: var(--color-fg-secondary);
+    font-size: 0.9375rem;
+  }
+  @media (max-width: 1024px) {
+    .inhaberbrief { padding-block: 56px 80px; }
+    .brief-grid { grid-template-columns: 1fr; gap: 32px; }
+    .brief-col-left { position: static; }
+  }
+
+  /* SECTION-BLOCK identisch mit anderen Detail-Seiten */
+  .section-block {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+  .section-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .section-meta { position: sticky; top: 120px; }
+  .section-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    max-width: 22ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+  .section-body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-secondary);
+    max-width: 62ch;
+  }
+  .section-body p { margin-bottom: 24px; }
+  .section-body p:last-child { margin-bottom: 0; }
+  .inline-link {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .inline-link:hover { border-bottom-color: var(--color-fg-primary); }
+  @media (max-width: 1024px) {
+    .section-block { padding-block: 80px; }
+    .section-grid { grid-template-columns: 1fr; gap: 32px; }
+    .section-meta { position: static; }
+  }
+
+  /* PFEILER-LIST */
+  .pfeiler-list { list-style: none; padding: 0; margin-top: 56px; }
+  .pfeiler-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 32px;
+    border-top: 1px solid var(--color-line);
+  }
+  .pfeiler-row:last-child { border-bottom: 1px solid var(--color-line); }
+  .pfeiler-num {
+    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.18em;
+    color: var(--color-accent); padding-top: 8px;
+  }
+  .pfeiler-name {
+    font-size: 1.5rem; font-weight: 400; line-height: 1.25;
+    color: var(--color-fg-primary);
+  }
+  .pfeiler-text {
+    font-size: 1.0625rem; line-height: 1.65;
+    color: var(--color-fg-secondary); margin-top: 12px; max-width: 62ch;
+  }
+
+  /* PERSON-PORTRAIT (in Farbe, kein Schwarzweiß-Filter) */
+  .person {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+  .person-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .person-portrait {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    background: var(--color-line-faint);
+    overflow: hidden;
+  }
+  .person-portrait img {
+    width: 100%; height: 100%;
+    object-fit: cover; object-position: center 28%;
+    display: block;
+  }
+  .person-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--color-fg-primary);
+  }
+  .person-role {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-fg-secondary);
+    margin-bottom: 32px;
+  }
+  .person-lead {
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    color: var(--color-fg-primary);
+    max-width: 54ch;
+    font-weight: 400;
+  }
+  @media (max-width: 1024px) {
+    .person { padding-block: 80px; }
+    .person-grid { grid-template-columns: 1fr; gap: 40px; }
+  }
+</style>

@@ -1,0 +1,58 @@
+---
+// Wissens-Artikel 4: Verkauf einer Wohnimmobilie in Rostock
+// Stand 03.05.2026, Phase 4 Bau-Block 6.
+//
+// Quelle eins-zu-eins (Verbot 7 strikt):
+//   05_Themen-Hub_Artikel-4_Verkauf-Wohnimmobilie_2026-04-27.md
+//
+// Cross-Link-Matrix laut Bauauftrag:
+//   Verkauf-Wohnimmobilie → Maklerprovision und Bestandsübergabe
+
+import ArticleLayout from '@/layouts/ArticleLayout.astro';
+
+const title = 'Was Eigentümer beim Verkauf einer Wohnimmobilie in Rostock erwarten dürfen';
+const description = 'Der Immobilienverkauf als Prozess in mehreren Phasen. Vorbereitung, Vermarktungsphase, Beurkundung, Übergabe, Nettoerlös und drei häufige Fehlannahmen.';
+---
+
+<ArticleLayout
+  title={title}
+  description={description}
+  slug="verkauf-wohnimmobilie"
+  leseDauer="6 min"
+  crossLinks={[
+    { href: '/wissen/maklerprovision', label: 'Wie die Maklerprovision nach § 656c BGB konkret gerechnet wird' },
+    { href: '/wissen/bestandsuebergabe', label: 'Wie eine saubere Bestandsübergabe kaufmännisch und technisch abläuft' },
+  ]}
+>
+
+  <h2>Worum es in diesem Beitrag geht:</h2>
+  <p>Ein Immobilienverkauf ist nicht in einem Termin erledigt, sondern ein Prozess in mehreren Phasen. Zwischen Entscheidung und Eigentumsumschreibung liegen Vorbereitungsaufgaben, Vermarktungsphase, Beurkundung beim Notar, Kaufpreiszahlung und Übergabe. Wer als Eigentümer realistische Erwartungen hat, kommt mit dem Tempo, der Mechanik und der Verteilung der Aufgaben besser zurecht als jemand, der mit Werbeformeln gerechnet hat. Dieser Beitrag ordnet ein, was Sie am Rostocker Markt erwarten dürfen, ohne überzogene Versprechen.</p>
+
+  <h2>Die Ausgangslage in Rostock und Umgebung</h2>
+  <p>Rostock ist Universitäts- und Hafenstadt mit einer gemischten Käufergruppe. Eigennutzer aus dem norddeutschen Raum, regionale und überregionale Anleger, Familien, die zurückkehren oder zuziehen, sowie ältere Eigentümer, die innerhalb der Stadt umziehen. Die Lagen sind sehr unterschiedlich, von der Stadtmitte über die Stadtteile Reutershagen und Lichtenhagen bis nach Warnemünde, ins Umland und an die Ostseeküste. Diese Spannweite bedeutet: Vermarktungsdynamik, Käuferprofil und realistische Preisspanne unterscheiden sich je nach Objekt und Lage. Pauschale Aussagen darüber, was eine Wohnimmobilie in Rostock kostet oder wie lange ein Verkauf dauert, sind ohne Sichtkontrolle des Objekts wenig wert.</p>
+
+  <h2>Was vor der Vermarktung sinnvoll vorbereitet wird:</h2>
+  <p>Vollständige Unterlagen sind keine rechtliche Voraussetzung dafür, dass eine Vermarktung beginnen darf. Sie verkürzen aber die Vermarktungsphase spürbar und schaffen Vertrauen bei Käufern. Sinnvollerweise sollten frühzeitig vorliegen: Grundbuchauszug, Flurkarte, Bauunterlagen oder Grundrisse, Wohnflächenberechnung, bei vermieteten Objekten die laufenden Mietverträge, bei Eigentumswohnungen die Teilungserklärung mit Gemeinschaftsordnung sowie die letzten Hausgeldabrechnungen oder Eigentümerabrechnungen, bei einer Erbsituation der Erbnachweis und gegebenenfalls eine Grundbuch-Berichtigung. Der Energieausweis muss nach § 80 Gebäudeenergiegesetz spätestens zur ersten Besichtigung vorliegen, eine Vermarktung mit dem Vermerk „Energieausweis in Bearbeitung" ist möglich.</p>
+  <p>Wenn der wahrscheinliche Marktwert nicht klar einzuordnen ist, gehört eine Wertorientierung an den Anfang. Bei Erteilung eines Maklerauftrags ist diese Wertorientierung Teil der Vorbereitung.</p>
+
+  <h2>Was die Vermarktungsphase tatsächlich umfasst:</h2>
+  <p>Die Vermarktungsphase beginnt bei Proimma mit einem hochwertigen Exposé und professioneller Fotografie. Bei jeder Vermarktung wird zusätzlich ein eigenes Video von der Immobilie gedreht und Interessenten ausschließlich in einem Videocall persönlich präsentiert. Diese Kombination ist im Rostocker Markt eigenständig.</p>
+  <p>Veröffentlicht wird auf den jeweils passenden Immobilienportalen, abgestimmt auf Objekt, Zielgruppe und Vermarktungsstrategie.</p>
+  <p>Daran schließt die Anfragebearbeitung an. Interessenten werden vorqualifiziert, Besichtigungen organisiert, Rückfragen zu Objekt und Unterlagen beantwortet, Bonitätsnachweise von kaufwilligen Interessenten angefordert. Bei mehreren ernsthaften Interessenten wird verhandelt. Diese Phase hängt von Lage, Preisansatz, Objektzustand und allgemeiner Marktlage ab. Konkrete Aussagen zur Dauer sind erst nach Sichtkontrolle des Objekts seriös.</p>
+
+  <h2>Was die Beurkundungs- und Übergabe-Phase umfasst:</h2>
+  <p>Wenn ein Käufer gefunden ist, wird der Notar ausgewählt, ein Vertragsentwurf erstellt und beiden Parteien zur Prüfung übergeben. Zwischen dem Erhalt des Entwurfs und dem Beurkundungstermin müssen für Verbraucher gesetzlich mindestens vierzehn Tage liegen. Beim Beurkundungstermin wird der Vertrag verlesen und unterzeichnet, anschließend reicht der Notar die Auflassungsvormerkung beim Grundbuchamt ein und sorgt für die Voraussetzungen der Kaufpreiszahlung. Nach Eingang des Kaufpreises erfolgt die Übergabe der Immobilie mit Protokoll, Schlüsselübergabe und Ablesung von Zählerständen. Die Eigentumsumschreibung im Grundbuch erfolgt einige Wochen nach vollständiger Vertragsabwicklung.</p>
+
+  <h2>Was Sie als Verkäufer netto erhalten:</h2>
+  <p>Aus dem Kaufpreis fallen auf Verkäuferseite typischerweise zwei Posten heraus. Erstens eine etwaige Vorfälligkeitsentschädigung an die finanzierende Bank, wenn ein laufendes Darlehen vor Ablauf der Zinsbindung abgelöst wird. Zweitens der Verkäufer-Anteil der Maklerprovision in Höhe von 3,57 Prozent inklusive Mehrwertsteuer nach § 656c BGB. Notarkosten und Grunderwerbsteuer trägt üblicherweise der Käufer. Steuerliche Fragen wie die Spekulationsfrist nach § 23 EStG sind keine Maklerthemen, sondern gehören zu Ihrem Steuerberater.</p>
+
+  <h2>Realistische Erwartungen zur Dauer</h2>
+  <p>Die Vorbereitungsphase mit Unterlagensichtung, Wertorientierung, Exposé-Erstellung und Fotografie dauert in der Regel zwei bis vier Wochen, abhängig davon, ob einzelne Unterlagen neu erstellt werden müssen. Die anschließende Vermarktungsphase nimmt im Normalfall etwa sechs Monate in Anspruch. Zwischen der Beurkundung beim Notar und dem Übergang von Nutzen und Lasten, dem sogenannten Nutzen-Lastenübergang, liegen in der Regel etwa sechs Wochen.</p>
+
+  <h2>Drei häufige Fehlannahmen</h2>
+  <p>Drei Fehlannahmen begegnen am häufigsten. Erstens: ein zu hoch angesetzter Angebotspreis bringt am Ende einen höheren Verkaufspreis. Tatsächlich kann ein zu hoch angesetzter Preis die Vermarktung verlängern, unter Umständen qualifizierte Interessenten abschrecken und Preisreduzierungen nach sich ziehen, die das Objekt zusätzlich entwerten können. Zweitens: ein Schnellverkauf zum Höchstpreis ist möglich. Diese Versprechung ist eine Werbeformel ohne Substanz; der Markt sortiert ein Objekt selbstständig ein. Drittens: eine verlässliche Wertaussage ist ohne Sichtkontrolle möglich. Tatsächlich ist eine verlässliche Wertaussage ohne Sichtkontrolle nicht möglich. Online-Bewertungstools liefern grobe Spannen und ersetzen keine professionelle Einordnung.</p>
+
+  <h2>Wenn Sie mit Proimma vermarkten wollen</h2>
+  <p>Proimma vermittelt Einfamilienhäuser, Doppel- und Reihenhäuser, Eigentumswohnungen, Mehrfamilienhäuser und Grundstücke vorrangig in Rostock und Umgebung, mit Schwerpunkt im Umkreis von etwa 100 Kilometern, Einzelmandate auch darüber hinaus auf Anfrage. Wenn Sie eine Vermarktung erwägen, schreiben Sie an <a href="mailto:info@proimma.de" data-cta="kontakt-mail">info@proimma.de</a> oder buchen Sie einen Termin online über unseren Cal.com-Kalender. Der Maklervertrag wird Ihnen vor Auftragserteilung zur Sichtung vorgelegt, der Provisionssatz ist transparent dargestellt, Vorbereitung und Vermarktungsphase werden Ihnen anhand Ihres konkreten Objekts erklärt.</p>
+
+</ArticleLayout>

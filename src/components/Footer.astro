@@ -1,0 +1,214 @@
+---
+// Footer Proimma Relaunch — Editorial Bold
+// Stand 02.05.2026, Bau-Block 1.
+// Dunkelblau (#242E4F) ausschließlich hier, nirgendwo sonst auf der Webseite.
+// Vollständige Pflichtwortlaute aus Probebau 30.04.2026:
+//  - HRB 16077, USt-IdNr DE359185515, Adresse, Kontakt
+//  - § 34c-Aktenzeichen vollständig (gew-1270-2024-AD3231)
+//  - § 15 MaBV Vermögensschadenhaftpflicht
+//  - Erreichbarkeits-Versprechen plus Notfall-Hinweis
+//  - Cookie-Klartext-Hinweis
+// EU-Online-Streitbeilegung am 05.05.2026 (v25-Compliance) ersatzlos
+// gestrichen, weil die ODR-Plattform am 20.07.2025 eingestellt wurde
+// (Aufhebung der Verordnung (EU) Nr. 524/2013 durch Verordnung (EU) 2024/3228).
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer" data-sektion="footer">
+  <div class="container-page">
+    <div class="foot-grid">
+
+      <div class="foot-brand">
+        <div class="foot-wordmark">Proimma GmbH</div>
+        <p class="foot-claim">
+          Proimma GmbH. Inhabergeführt. Bremer Straße 12, 18057 Rostock.
+          Geführt von André Dieckmann mit mehr als zwanzig Jahren Branchenerfahrung in der Immobilienwirtschaft.
+        </p>
+        <div class="foot-brand-line" aria-hidden="true"></div>
+      </div>
+
+      <div class="foot-col">
+        <h3>Leistungen</h3>
+        <a href="/hausverwaltung">Hausverwaltung</a>
+        <a href="/maklerei">Maklerei</a>
+        <a href="/wissen">Wissen für Eigentümer</a>
+      </div>
+
+      <div class="foot-col">
+        <h3>Unternehmen</h3>
+        <a href="/ueber-proimma">Über Proimma</a>
+        <a href="/kontakt">Termin buchen</a>
+        <a href="mailto:info@proimma.de">Kontakt</a>
+      </div>
+
+      <div class="foot-col">
+        <h3>Rechtliches</h3>
+        <a href="/impressum">Impressum</a>
+        <a href="/datenschutz">Datenschutzerklärung</a>
+        <a href="/agb-hausverwaltung">AGB Hausverwaltung</a>
+      </div>
+
+      <div class="foot-erreich">
+        <strong>Werktags 9 bis 17 Uhr unter 0173 6335917 erreichbar.</strong>
+        Notfall-Erreichbarkeit für Mieter rund um die Uhr über die separate Notfall-Nummer im Mietvertrag.
+      </div>
+    </div>
+
+    <div class="foot-meta">
+      <div class="foot-row">
+        <span>Proimma GmbH&nbsp;&nbsp;·&nbsp;&nbsp;Amtsgericht Rostock HRB 16077&nbsp;&nbsp;·&nbsp;&nbsp;USt-IdNr DE359185515</span>
+        <span>info@proimma.de&nbsp;&nbsp;·&nbsp;&nbsp;0173 6335917</span>
+      </div>
+      <div class="foot-row">
+        <span>Erlaubnis nach &sect; 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 GewO der Hansestadt Rostock.</span>
+      </div>
+      <div class="foot-row">
+        <span>Vermögensschadenhaftpflicht-Versicherung gemäß &sect; 15 MaBV.</span>
+      </div>
+      <div class="foot-row foot-copy">
+        <span>&copy; {year} Proimma GmbH</span>
+      </div>
+      <div class="foot-cookie">
+        Diese Webseite verwendet ein cookieloses Analytics-Tool (Plausible) und keine Drittanbieter-Tracker.
+        Der eingebettete Termin-Buchungs-Dienst (Cal.com) setzt nach Aktivierung technisch erforderliche Session-Cookies.
+        Details in der Datenschutzerklärung.
+      </div>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    background: var(--color-footer-bg);
+    color: var(--color-footer-fg);
+    /* Korrektur 02.05.2026: Mehr Atem oberhalb der Wortmarke (240px statt 192px),
+       damit der Übergang vom hellen Hauptbereich zum dunklen Footer ruhiger wird. */
+    padding-block: var(--space-4xl) 56px;
+  }
+
+  .foot-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 56px;
+    margin-bottom: var(--space-2xl);
+  }
+
+  .foot-wordmark {
+    font-size: 4rem;
+    font-weight: 300;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--color-footer-fg);
+  }
+
+  .foot-claim {
+    font-size: 0.875rem;
+    line-height: 1.65;
+    color: rgba(250, 250, 248, 0.65);
+    margin-top: var(--space-m);
+    max-width: 36ch;
+  }
+
+  /* Editorial-Hairline unter Beschreibungstext der Wortmarke,
+     entkoppelt das Markenstatement optisch vom Spalten-Block. */
+  .foot-brand-line {
+    margin-top: 32px;
+    width: 64px;
+    height: 1px;
+    background: rgba(250, 250, 248, 0.35);
+  }
+
+  .foot-col h3 {
+    font-size: 0.6875rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(250, 250, 248, 0.5);
+    margin-bottom: 22px;
+    font-weight: 500;
+  }
+
+  .foot-col a {
+    display: block;
+    font-size: 0.9375rem;
+    color: var(--color-footer-fg);
+    padding-block: 8px;
+    min-height: 44px;
+    line-height: 1.5;
+  }
+  .foot-col a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-accent);
+    text-underline-offset: 6px;
+  }
+  .foot-col a:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  .foot-erreich {
+    grid-column: 1 / -1;
+    border-top: 1px solid rgba(250, 250, 248, 0.14);
+    padding-top: 32px;
+    font-size: 0.875rem;
+    line-height: 1.7;
+    color: rgba(250, 250, 248, 0.78);
+    max-width: 80ch;
+  }
+  .foot-erreich strong {
+    font-weight: 500;
+    color: var(--color-footer-fg);
+  }
+
+  .foot-meta {
+    border-top: 1px solid rgba(250, 250, 248, 0.14);
+    padding-top: 32px;
+    margin-top: 48px;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    color: rgba(250, 250, 248, 0.55);
+  }
+
+  .foot-row {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 16px;
+    margin-bottom: 6px;
+  }
+
+  .foot-copy { margin-top: 12px; }
+
+  .foot-cookie {
+    /* Korrektur 02.05.2026: max-width auf 60 Zeichen reduziert,
+       sodass der Hinweis-Kasten optisch ruhiger sitzt
+       und sich weniger über die volle Footer-Breite zieht. */
+    margin-top: 24px;
+    padding: 18px 22px;
+    border: 1px solid rgba(250, 250, 248, 0.18);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+    color: rgba(250, 250, 248, 0.72);
+    max-width: 60ch;
+  }
+
+  @media (max-width: 1024px) {
+    /* Korrektur 02.05.2026 (Mobile): Atem oberhalb der Wortmarke straffer,
+       damit der Übergang vom hellen Hauptbereich zum dunkelblauen Footer
+       auf Smartphones nicht überdimensioniert wirkt. */
+    .site-footer { padding-block: var(--space-2xl) 40px; }
+    .foot-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      margin-bottom: 60px;
+    }
+    .foot-brand { grid-column: 1 / -1; }
+    /* Korrektur 02.05.2026 (Mobile): Wortmarke etwas kleiner gesetzt,
+       sodass sie auf Smartphone-Breite ruhiger sitzt. */
+    .foot-wordmark { font-size: 2.5rem; }
+  }
+
+  @media (max-width: 560px) {
+    .foot-grid { grid-template-columns: 1fr; }
+  }
+</style>

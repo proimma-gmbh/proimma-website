@@ -1,0 +1,28 @@
+{
+  "name": "proimma-relaunch",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Webseiten-Relaunch www.proimma.de Phase 1, Astro 4 mit Tailwind CSS 3, Hanken Grotesk self-hosted.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.2.1",
+    "@astrojs/tailwind": "^5.1.4",
+    "@fontsource-variable/hanken-grotesk": "^5.1.1",
+    "astro": "^4.16.18",
+    "tailwindcss": "^3.4.17"
+  },
+  "devDependencies": {
+    "@fontsource/hanken-grotesk": "^5.2.8",
+    "@resvg/resvg-js": "^2.6.2",
+    "marked": "^15.0.0",
+    "pdf-parse": "^2.4.5",
+    "subset-font": "^2.5.0"
+  }
+}
