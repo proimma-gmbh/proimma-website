@@ -1,6 +1,6 @@
 // Astro-Konfiguration Proimma Relaunch
-// Statisches Build, Sitemap-Integration mit Priority und Changefreq pro
-// Seitentyp gemäß DESIGN.md Sektion 8, Tailwind als Styling-Engine.
+// Statisches Build mit Sitemap-Integration, Priority und Changefreq pro
+// Seitentyp und Tailwind als Styling-Engine.
 // site-URL wird vor Go-Live auf https://www.proimma.de umgestellt.
 
 import { defineConfig } from 'astro/config';
@@ -25,7 +25,7 @@ export default defineConfig({
       // API-Routen aus dem Sitemap ausschließen (Server-Endpoints, kein
       // SEO-Inhalt). robots.txt blockiert in der Bauphase ohnehin alles.
       filter: (page) => !page.includes('/api/'),
-      // Priority und Changefreq gemäß DESIGN.md Sektion 8:
+      // Priority und Changefreq pro Seitentyp:
       //   1.0 Startseite, 0.9 Hausverwaltung/Maklerei, 0.8 Über/Wissen,
       //   0.7 Wissens-Artikel, 0.5 Kontakt, 0.3 Impressum/Datenschutz.
       serialize(item) {

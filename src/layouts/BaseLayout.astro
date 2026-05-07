@@ -13,12 +13,12 @@
 //
 // OG-Bild-Default: /og-images/og-default.png (reine Typografie-Komposition,
 // Wortmarke "Proimma" plus Subline "Hausverwaltung und Maklerei in Rostock"
-// auf Off-White-Hintergrund, gemäß BRIEFS.md Sektion 1.15, Stand 06.05.2026).
+// auf Off-White-Hintergrund, Stand 06.05.2026).
 // Frühere Foto-OG-Variante (DSC01323 mit Vignette-Blur) am 06.05.2026 abgelöst.
 // Pro-Seite-Override per ogImage und ogImageAlt Props möglich.
 //
-// Sticky-Mobile-Bar wurde bereits in Phase 1 entfernt (WIREFRAMES.md
-// vom 29.04.2026 als bewusste Nicht-Übernahme).
+// Sticky-Mobile-Bar wurde bereits in Phase 1 als bewusste
+// Nicht-Übernahme verworfen (29.04.2026).
 
 import '@/styles/global.css';
 import Header from '@/components/Header.astro';
@@ -72,7 +72,7 @@ const {
 const articleAuthorUrl = articleAuthor ?? new URL('/ueber-proimma/', Astro.site).toString();
 
 const siteName = 'Proimma GmbH';
-// Title-Schema gemäß DESIGN.md Sektion 8: "Seitenfokus. Proimma GmbH Rostock"
+// Title-Schema "Seitenfokus. Proimma GmbH Rostock"
 // mit Punkt-Trenner. Der übergebene title ist die linke Hälfte ("Seitenfokus").
 // Wenn er bereits "Proimma" enthält, wird er unverändert übernommen.
 const fullTitle = title.includes('Proimma') ? title : `${title}. Proimma GmbH Rostock`;

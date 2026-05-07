@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  OG-Bild Themen-Hub-Übersicht gemäß BRIEFS.md Sektion 1.6 bis 1.10.
-  Editorial-Index "06", Headline aus dem Bauauftrag wörtlich übernommen.
+  OG-Bild Themen-Hub-Übersicht.
+  Editorial-Index "06".
   Wird im Frontmatter von src/pages/wissen/index.astro referenziert
   (Themen-Hub-Übersicht "Wissen für Eigentümer", Route /wissen).
-  Stand 06.05.2026, OG-Bilder-Bauauftrag.
+  Stand 06.05.2026.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#FAFAF8"/>
