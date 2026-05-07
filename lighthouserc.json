@@ -1,0 +1,36 @@
+{
+  "ci": {
+    "collect": {
+      "startServerCommand": "npx http-server ./dist -p 4321 --silent",
+      "startServerReadyPattern": "Available on",
+      "startServerReadyTimeout": 30000,
+      "url": [
+        "http://localhost:4321/",
+        "http://localhost:4321/hausverwaltung/",
+        "http://localhost:4321/maklerei/",
+        "http://localhost:4321/ueber-proimma/",
+        "http://localhost:4321/kontakt/",
+        "http://localhost:4321/impressum/",
+        "http://localhost:4321/datenschutz/",
+        "http://localhost:4321/wissen/",
+        "http://localhost:4321/wissen/verwalterwechsel/",
+        "http://localhost:4321/wissen/bestandsuebergabe/",
+        "http://localhost:4321/wissen/maklerprovision/",
+        "http://localhost:4321/wissen/verkauf-wohnimmobilie/",
+        "http://localhost:4321/404/"
+      ],
+      "numberOfRuns": 1,
+      "settings": {
+        "preset": "desktop"
+      }
+    },
+    "assert": {
+      "assertions": {
+        "categories:performance": ["error", { "minScore": 0.95 }],
+        "categories:accessibility": ["error", { "minScore": 0.95 }],
+        "categories:best-practices": ["error", { "minScore": 0.95 }],
+        "categories:seo": ["error", { "minScore": 0.95 }]
+      }
+    }
+  }
+}
