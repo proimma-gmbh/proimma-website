@@ -41,6 +41,9 @@ interface Props {
   noindex?: boolean;
   /** Optionales seiten-spezifisches JSON-LD-Schema (Service, Person, Article, BreadcrumbList). */
   pageSchema?: Record<string, unknown> | Record<string, unknown>[];
+  /** Unterdrückt das rootSchema- und pageSchema-Markup. Aktiv auf der 404-Fehler-Seite,
+   * damit Suchmaschinen das LocalBusiness-Schema nicht mit einer Fehler-Seite verbinden. */
+  suppressSchema?: boolean;
 }
 
 const DEFAULT_OG_IMAGE = '/og-images/og-default.png';
@@ -61,6 +64,7 @@ const {
   articleSection,
   noindex = true,
   pageSchema,
+  suppressSchema = false,
 } = Astro.props;
 
 // Default-Autor-URL für Article-Layouts: Inhaber-Seite, gebildet über Astro.site
@@ -271,8 +275,10 @@ const pageSchemas = pageSchema
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
-    <script type="application/ld+json" set:html={JSON.stringify(rootSchema)} />
-    {pageSchemas.map((schema) => (
+    {!suppressSchema && (
+      <script type="application/ld+json" set:html={JSON.stringify(rootSchema)} />
+    )}
+    {!suppressSchema && pageSchemas.map((schema) => (
       <script type="application/ld+json" set:html={JSON.stringify(schema)} />
     ))}
 

@@ -1,0 +1,79 @@
+---
+// Fehler-Seite Proimma — Editorial Bold
+//
+// Schlanke 404-Seite in Editorial-Bold-Tonalität. Headline in Hanken Grotesk
+// Light auf der gleichen clamp-Stufe wie die Hero-Headline der Startseite.
+// rootSchema-Markup wird über BaseLayout unterdrückt, weil eine Fehler-Seite
+// für Suchmaschinen kein LocalBusiness-Eintrag sein darf.
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const title = 'Seite nicht gefunden – Proimma GmbH';
+const description = 'Diese Adresse existiert auf www.proimma.de nicht.';
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  noindex={true}
+  suppressSchema={true}
+>
+
+  <section class="error-section" data-sektion="error-404">
+    <div class="container-page">
+      <div class="ed-strich" style="margin-bottom: 32px;"></div>
+      <h1 class="error-headline">Seite nicht gefunden</h1>
+      <p class="error-text">Diese Adresse existiert auf www.proimma.de nicht. Möglich ist eine veraltete Verknüpfung oder ein Tippfehler in der Adresszeile.</p>
+      <p class="error-link-row">
+        <a href="/" class="error-link">Zur Startseite</a>
+      </p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<!-- Stand 7. Mai 2026 -->
+
+<style>
+  .error-section {
+    padding-block: 96px 144px;
+    min-height: 60vh;
+  }
+  .error-headline {
+    font-size: clamp(2.75rem, 6.4vw, 6.5rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin: 0 0 32px 0;
+    max-width: 22ch;
+    color: var(--color-fg-primary);
+  }
+  .error-text {
+    font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+    line-height: 1.6;
+    margin: 0 0 48px 0;
+    max-width: 56ch;
+    color: var(--color-fg-secondary);
+  }
+  .error-link-row {
+    margin: 0;
+  }
+  .error-link {
+    display: inline-block;
+    font-size: 1.125rem;
+    color: #34AEEB;
+    border-bottom: 1px solid #34AEEB;
+    padding-bottom: 4px;
+    text-decoration: none;
+  }
+  .error-link:hover,
+  .error-link:focus-visible {
+    color: var(--color-fg-primary);
+    border-bottom-color: var(--color-fg-primary);
+  }
+  @media (max-width: 1024px) {
+    .error-section {
+      padding-block: 56px 96px;
+    }
+  }
+</style>
