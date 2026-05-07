@@ -17,7 +17,7 @@
         "http://localhost:4321/wissen/bestandsuebergabe/",
         "http://localhost:4321/wissen/maklerprovision/",
         "http://localhost:4321/wissen/verkauf-wohnimmobilie/",
-        "http://localhost:4321/404/"
+        "http://localhost:4321/404.html"
       ],
       "numberOfRuns": 1,
       "settings": {
