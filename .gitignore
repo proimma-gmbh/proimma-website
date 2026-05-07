@@ -1,0 +1,41 @@
+# Build outputs
+dist/
+upload-v*/
+probelauf-*/
+
+# Dependencies
+node_modules/
+
+# macOS
+.DS_Store
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# Editor
+.vscode/
+.idea/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Astro
+.astro/
+
+# Interne Konzept-, Briefing- und Bauauftrags-Dokumente (nicht öffentlich)
+BRIEFS.md
+Bau_Auswahl_*.md
+Bauauftrag_*.md
+DESIGN.md
+LUECKEN_AUDIT.md
+Premium_Inspirations_*.md
+WIREFRAMES.md
+Briefing/
+deep-research-report*.md
+
+# Interne Vorschau-Bilder (nicht öffentlich)
+og-vorschau-*.png

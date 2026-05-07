@@ -1,0 +1,143 @@
+---
+// Detail-Seite Impressum — Editorial Bold
+// Stand 03.05.2026, Phase 2 Bau-Block 6.
+//
+// Quelle eins-zu-eins (Verbot 7 strikt):
+//   10_Impressum_2026-04-28.md
+//
+// Pflichtwortlaute auf dieser Seite (Bauauftrag Sektion Pflichtwortlaute):
+//   - § 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 GewO der Hansestadt Rostock
+//   - Aktenzeichen gew-1270-2024-AD3231 (NUR hier sichtbar; nirgends sonst)
+//   - Ausstellungsdatum 31.03.2026
+//   - Police-Daten: andsafe AG, 2.000.000 Euro pauschal je Versicherungsfall,
+//     Jahreshöchstentschädigung das Zweifache, weltweiter Geltungsbereich
+//   - § 18 Absatz 2 MStV: André Dieckmann verantwortlich
+// ODR-Plattform-Verweis am 05.05.2026 (v25-Compliance) ersatzlos gestrichen,
+// weil die EU-ODR-Plattform am 20.07.2025 eingestellt wurde.
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const title = 'Impressum';
+const description = 'Impressum der Proimma GmbH, Bremer Straße 12, 18057 Rostock. Geschäftsführer André Dieckmann, Handelsregister HRB 16077, USt-IdNr DE359185515.';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.proimma.de/' },
+    { '@type': 'ListItem', position: 2, name: 'Impressum', item: 'https://www.proimma.de/impressum' },
+  ],
+};
+---
+
+<BaseLayout title={title} description={description} pageSchema={breadcrumbSchema}>
+
+  <section class="hero-rechts" data-sektion="hero-impressum">
+    <div class="container-page">
+      <div class="ed-strich" style="margin-bottom: 32px;"></div>
+      <div class="ed-index">Impressum</div>
+      <h1 class="rechts-headline">Impressum</h1>
+    </div>
+  </section>
+
+  <article class="rechts-text container-page" data-sektion="impressum-text">
+
+    <h2>Anbieter</h2>
+    <p>
+      Proimma GmbH<br />
+      Bremer Straße 12<br />
+      18057 Rostock
+    </p>
+
+    <h2>Geschäftsführer</h2>
+    <p>André Dieckmann, alleinvertretungsberechtigt</p>
+
+    <h2>Kontakt</h2>
+    <p>
+      Telefon: <a href="tel:+491736335917" data-cta="kontakt-tel">0173-6335917</a><br />
+      E-Mail: <a href="mailto:info@proimma.de" data-cta="kontakt-mail">info@proimma.de</a>
+    </p>
+
+    <h2>Handelsregister</h2>
+    <p>Amtsgericht Rostock, HRB 16077</p>
+
+    <h2>Umsatzsteuer-Identifikationsnummer</h2>
+    <p>DE359185515, gemäß § 27a Umsatzsteuergesetz.</p>
+
+    <h2>Berufsrechtliche Angaben</h2>
+    <p>Berufsbezeichnung: Immobilienmakler und Wohnimmobilienverwalter, verliehen in der Bundesrepublik Deutschland.</p>
+    <p>Erlaubnis: nach § 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 Gewerbeordnung (GewO) der Hanse- und Universitätsstadt Rostock, Stadtamt, Abteilung Gewerbeangelegenheiten, Aktenzeichen gew-1270-2024-AD3231, Ausstellungsdatum 31.03.2026.</p>
+    <p>
+      Aufsichtsbehörde:<br />
+      Hanse- und Universitätsstadt Rostock<br />
+      Stadtamt, Abteilung Gewerbeangelegenheiten<br />
+      Charles-Darwin-Ring 6<br />
+      18059 Rostock
+    </p>
+    <p>Maßgebliche berufsrechtliche Regelungen sind die Gewerbeordnung (GewO), die Makler- und Bauträgerverordnung (MaBV) und das Bürgerliche Gesetzbuch (BGB). Die Regelungen sind im Internet unter <a href="https://www.gesetze-im-internet.de" rel="noopener noreferrer">www.gesetze-im-internet.de</a> einsehbar.</p>
+
+    <h2>Vermögensschadenhaftpflichtversicherung</h2>
+    <p>
+      Versicherer:<br />
+      andsafe AG<br />
+      Provinzial-Allee 1<br />
+      48159 Münster
+    </p>
+    <p>Räumlicher Geltungsbereich: weltweit.</p>
+    <p>Versicherungssumme: 2.000.000 Euro pauschal für Vermögensschäden je Versicherungsfall. Jahreshöchstentschädigung: das Zweifache der jährlichen Versicherungssumme (4.000.000 Euro).</p>
+
+    <h2>Verbraucherstreitbeilegung</h2>
+    <p>Hinweis nach § 36 Absatz 1 Verbraucherstreitbeilegungsgesetz: Die Proimma GmbH ist weder bereit noch verpflichtet, an einem Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+    <h2>Verantwortlich für den Inhalt nach § 18 Absatz 2 Medienstaatsvertrag</h2>
+    <p>
+      André Dieckmann<br />
+      Bremer Straße 12<br />
+      18057 Rostock
+    </p>
+
+  </article>
+
+</BaseLayout>
+
+<style>
+  .hero-rechts { padding-block: 80px 64px; }
+  .rechts-headline {
+    font-size: clamp(2.5rem, 5.6vw, 5rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-top: 16px;
+    color: var(--color-fg-primary);
+  }
+  .rechts-text {
+    padding-block: 48px 144px;
+    max-width: 760px;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-primary);
+  }
+  .rechts-text h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-top: 56px;
+    margin-bottom: 16px;
+    color: var(--color-fg-primary);
+    letter-spacing: -0.005em;
+  }
+  .rechts-text h2:first-child { margin-top: 0; }
+  .rechts-text p {
+    margin: 0 0 20px 0;
+    color: var(--color-fg-secondary);
+  }
+  .rechts-text a {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .rechts-text a:hover { border-bottom-color: var(--color-fg-primary); }
+  @media (max-width: 1024px) {
+    .hero-rechts { padding-block: 56px 40px; }
+    .rechts-text { padding-block: 32px 80px; }
+  }
+</style>

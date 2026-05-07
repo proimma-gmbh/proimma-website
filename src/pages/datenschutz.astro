@@ -1,0 +1,189 @@
+---
+// Detail-Seite Datenschutzerklärung — Editorial Bold
+// Stand 03.05.2026, Phase 2 Bau-Block 6.
+//
+// Quelle eins-zu-eins (Verbot 7 strikt):
+//   12_Datenschutzerklaerung_2026-04-29.md
+//
+// Inhalte vollständig übernommen, Stand 29.04.2026, Cal.com-DPA beidseitig
+// unterzeichnet, ALL-INKL.COM-DPA abgeschlossen.
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const title = 'Datenschutzerklärung';
+const description = 'Datenschutzerklärung der Proimma GmbH gemäß DSGVO. Hosting bei ALL-INKL.COM in Deutschland, cookielose Analytics, Cal.eu-Buchung mit Zwei-Klick-Lösung.';
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.proimma.de/' },
+    { '@type': 'ListItem', position: 2, name: 'Datenschutzerklärung', item: 'https://www.proimma.de/datenschutz' },
+  ],
+};
+---
+
+<BaseLayout title={title} description={description} pageSchema={breadcrumbSchema}>
+
+  <section class="hero-rechts" data-sektion="hero-datenschutz">
+    <div class="container-page">
+      <div class="ed-strich" style="margin-bottom: 32px;"></div>
+      <div class="ed-index">Datenschutz</div>
+      <h1 class="rechts-headline">Datenschutzerklärung</h1>
+    </div>
+  </section>
+
+  <article class="rechts-text container-page" data-sektion="datenschutz-text">
+
+    <h2>Verantwortlicher</h2>
+    <p>Verantwortlicher im Sinne von Artikel 4 Nummer 7 der Datenschutz-Grundverordnung (DSGVO) ist:</p>
+    <p>
+      Proimma GmbH<br />
+      Bremer Straße 12<br />
+      18057 Rostock
+    </p>
+    <p>Vertreten durch den Geschäftsführer André Dieckmann.</p>
+    <p>
+      E-Mail: <a href="mailto:info@proimma.de">info@proimma.de</a><br />
+      Telefon: <a href="tel:+491736335917">0173-6335917</a>
+    </p>
+
+    <h2>Datenschutzbeauftragte oder -beauftragter</h2>
+    <p>Eine Pflicht zur Bestellung einer oder eines Datenschutzbeauftragten ergibt sich für die Proimma GmbH weder aus § 38 Bundesdatenschutzgesetz noch aus Artikel 37 DSGVO.</p>
+    <p>Nach § 38 Absatz 1 Satz 1 Bundesdatenschutzgesetz besteht die Bestellpflicht erst, wenn in der Regel mindestens zwanzig Personen ständig mit der automatisierten Verarbeitung personenbezogener Daten beschäftigt sind. Diese Schwelle ist bei der Proimma GmbH nicht erreicht.</p>
+    <p>Nach § 38 Absatz 1 Satz 2 Bundesdatenschutzgesetz besteht eine Bestellpflicht zusätzlich, wenn Verarbeitungen vorgenommen werden, die einer Datenschutz-Folgenabschätzung nach Artikel 35 DSGVO unterliegen, oder bei geschäftsmäßiger Datenverarbeitung zum Zweck der Übermittlung, der anonymisierten Übermittlung oder für Zwecke der Markt- oder Meinungsforschung. Auch diese Voraussetzungen treffen auf die Proimma GmbH nicht zu.</p>
+    <p>Nach Artikel 37 Absatz 1 DSGVO besteht eine Bestellpflicht insbesondere dann, wenn die Kerntätigkeit eine regelmäßige und systematische Überwachung von Betroffenen in großem Umfang erfordert oder eine umfangreiche Verarbeitung besonderer Kategorien personenbezogener Daten umfasst. Beide Voraussetzungen treffen auf die Proimma GmbH nicht zu.</p>
+    <p>Anfragen zum Datenschutz richten Sie bitte an <a href="mailto:info@proimma.de">info@proimma.de</a>.</p>
+
+    <h2>Hosting und Server-Logs</h2>
+    <p>Das Hosting der Webseite erfolgt bei ALL-INKL.COM, Neue Medien Münnich, Inhaber René Münnich, Hauptstraße 68, 02742 Friedersdorf, Deutschland.</p>
+    <p>Mit ALL-INKL.COM ist ein Auftragsverarbeitungsvertrag nach Artikel 28 DSGVO abgeschlossen. Vertragspartner sind die Proimma GmbH und ALL-INKL.COM Neue Medien Münnich; das Zustandekommen des Vertrags datiert auf den 29. April 2026.</p>
+    <p>Die Server von ALL-INKL.COM stehen in Deutschland an den Standorten Friedersdorf und Dresden. Die Datenverarbeitung im Rahmen des Webhosting-Vertrags erfolgt ausschließlich auf Datenspeichern in Deutschland (Anhang III Ziffer 1.1 des Auftragsverarbeitungsvertrags). Empfänger der im Hosting-Kontext verarbeiteten personenbezogenen Daten ist ausschließlich der Auftragsverarbeiter ALL-INKL.COM.</p>
+    <p>Beim Aufruf der Webseite werden automatisch personenbezogene Daten erfasst: IP-Adresse in vollständig anonymisierter Form (aus einer IP wie 11.22.33.44 wird 0.0.0.0), Datum und Uhrzeit, aufgerufene Seite, übertragene Datenmenge, Browser-Information, Betriebssystem, Referrer-URL.</p>
+    <p>Rechtsgrundlage ist Artikel 6 Absatz 1 Buchstabe f DSGVO (berechtigtes Interesse am sicheren und stabilen Betrieb der Webseite). Die nach dieser Norm erforderliche Interessenabwägung wurde vorgenommen; das Interesse am sicheren und stabilen Betrieb der Webseite überwiegt die schutzwürdigen Belange der Betroffenen, insbesondere weil die IP-Adresse vollständig anonymisiert verarbeitet wird.</p>
+    <p>Die ausgewertete Statistik der anonymisierten Zugriffsdaten ist ausschließlich intern und passwortgeschützt unter proimma.de/usage einsehbar, nicht öffentlich.</p>
+    <p>Die Logfiles werden spätestens nach sieben Tagen automatisch gelöscht. Diese Konfiguration gilt einheitlich für alle Domains und Subdomains des Accounts.</p>
+    <p>Unabhängig davon führt ALL-INKL.COM administrative Logs zur Abwehr von Cyberangriffen, die kurzzeitig die vollständige IP-Adresse enthalten. Auf diese administrativen Logs hat die Proimma GmbH als Kundin keinen Zugriff. Die Daten werden spätestens nach sieben Tagen automatisch gelöscht. Diese Verarbeitung dient ausschließlich dem Schutz der Hosting-Infrastruktur.</p>
+
+    <h2>Datensicherheit</h2>
+    <p>Die Proimma GmbH trifft technische und organisatorische Maßnahmen nach Artikel 32 DSGVO, um personenbezogene Daten gegen unberechtigten Zugriff, gegen unbefugte Veränderung sowie gegen Verlust oder Zerstörung zu schützen.</p>
+    <p>Die Übertragung der Webseiten-Inhalte ist durch SSL- bzw. TLS-Verschlüsselung gesichert; die aktive Verschlüsselung erkennen Sie am „https" in der Adresszeile und am Schloss-Symbol im Browser.</p>
+    <p>Auf Hosting-Ebene werden die Server von ALL-INKL.COM in Rechenzentren in Deutschland mit Zutrittskontrolle betrieben, der Datentransport ist verschlüsselt, eine regelmäßige Datensicherung der Hosting-Inhalte ist vereinbart.</p>
+    <p>Innerhalb der Proimma GmbH erfolgt der Zugriff auf personenbezogene Daten ausschließlich nach persönlicher Authentifizierung am jeweiligen Verwaltungssystem.</p>
+
+    <h2>Schriftarten</h2>
+    <p>Die Webseite verwendet ausschließlich self-hosted Schriftarten (Hanken Grotesk). Die Schriftdateien werden direkt vom eigenen Webspace ausgeliefert. Eine Verbindung zu Google Fonts oder zu anderen externen Schriftanbietern findet nicht statt; Ihre IP-Adresse wird damit nicht an einen externen Schriftdienst übermittelt.</p>
+
+    <h2>E-Mail-Kommunikation</h2>
+    <p>Wenn Sie per E-Mail Kontakt aufnehmen, werden die freiwillig übermittelten Daten (E-Mail-Adresse, Inhalt der Nachricht, gegebenenfalls Name, Telefonnummer und Objektdaten) zur Bearbeitung Ihrer Anfrage gespeichert.</p>
+    <p>Rechtsgrundlage ist Artikel 6 Absatz 1 Buchstabe b DSGVO bei Anbahnung eines Vertragsverhältnisses oder Artikel 6 Absatz 1 Buchstabe f DSGVO bei sonstigen Anliegen.</p>
+    <p>Die Daten werden gelöscht, sobald die Anfrage abschließend bearbeitet ist und keine gesetzlichen Aufbewahrungspflichten entgegenstehen. Maßgeblich sind insbesondere die sechsjährige Aufbewahrungsfrist für Geschäftsbriefe nach § 257 Handelsgesetzbuch und die zehnjährige Aufbewahrungsfrist für steuerlich relevante Unterlagen nach § 147 Abgabenordnung.</p>
+
+    <h2>Anleitungs-Anmeldung über Brevo (Doppelt-Opt-In)</h2>
+    <p>Die Anmeldung zum Bezug der PDF-Anleitung „Hausverwalter wechseln in fünf Schritten" wird über den Versand-Dienst Brevo der Brevo SAS, 9-17 rue Salneuve, 75017 Paris, Frankreich, abgewickelt. Die Datenverarbeitung erfolgt auf europäischen Servern in Frankfurt am Main.</p>
+    <p>Mit Brevo SAS ist ein Auftragsverarbeitungsvertrag (Data Processing Agreement) nach Artikel 28 DSGVO abgeschlossen; der Vertrag ist mit der Konto-Registrierung der Proimma GmbH am 4. Mai 2026 wirksam geworden, was nach Artikel 28 Absatz 9 DSGVO als zulässige elektronische Vertragsform gilt. Brevo SAS ist damit Auftragsverarbeiterin; die Proimma GmbH bleibt Verantwortliche im Sinne von Artikel 4 Nummer 7 DSGVO.</p>
+    <p>Der Anmelde-Vorgang läuft als Doppelt-Opt-In-Verfahren. Sie tragen Ihren Vor- und Nachnamen sowie Ihre E-Mail-Adresse im Anmelde-Formular ein, erhalten anschließend eine Bestätigungs-E-Mail an die angegebene Adresse, und erst nach Bestätigung des Links in dieser Mail wird Ihnen der Download-Link zur Anleitung zugesandt. Diese zweistufige Bestätigung schützt gegen Anmeldungen mit fremden E-Mail-Adressen und sichert Ihre Einwilligung beweisbar im Sinne von Artikel 7 DSGVO.</p>
+    <p>Bei der Anmeldung werden keine Cookies durch Brevo auf Ihrem Endgerät gesetzt; die Form-Daten werden im Server-Hintergrund an Brevo übermittelt.</p>
+    <p>Rechtsgrundlage ist Artikel 6 Absatz 1 Buchstabe a DSGVO (Einwilligung).</p>
+    <p>Verarbeitet werden folgende Datenkategorien: Vorname, Nachname, E-Mail-Adresse; optional Telefonnummer und freies Textfeld; technisch zusätzlich der Zeitpunkt und die IP-Adresse Ihrer Einwilligung zur Beweissicherung nach Artikel 7 DSGVO.</p>
+    <p>Die Speicherdauer der Anmelde-Daten in der Brevo-Plattform ergibt sich aus der Datenschutzerklärung von Brevo unter <a href="https://www.brevo.com/de/legal/privacypolicy/" rel="noopener noreferrer">https://www.brevo.com/de/legal/privacypolicy/</a>. Auf Seiten der Proimma GmbH werden Ihre Anmelde-Daten so lange gespeichert, wie zur Bearbeitung Ihrer Anmeldung und zum Versand der Anleitung erforderlich ist, längstens jedoch bis zum Widerruf Ihrer Einwilligung. Sie können Ihre Einwilligung jederzeit für die Zukunft formlos an <a href="mailto:info@proimma.de">info@proimma.de</a> widerrufen.</p>
+
+    <h2>Cal.eu Online-Terminbuchung mit Zwei-Klick-Lösung</h2>
+    <p>Die Online-Terminbuchung erfolgt über die europäische Hosting-Variante Cal.eu des Anbieters Cal.com Inc., 2261 Market Street #4382, San Francisco, CA 94114, Vereinigte Staaten. Der Buchungs-Account der Proimma GmbH ist unter cal.eu/proimma erreichbar; die Datenregion ist die Europäische Union.</p>
+    <p>Mit Cal.com Inc. ist ein Auftragsverarbeitungsvertrag (Data Processing Agreement) nach Artikel 28 DSGVO abgeschlossen, elektronisch unterzeichnet via Documenso am 29. April 2026. Cal.com Inc. ist damit Auftragsverarbeiter; die Proimma GmbH bleibt Verantwortliche im Sinne von Artikel 4 Nummer 7 DSGVO.</p>
+    <p>Cal.eu ist auf der Webseite nicht direkt per Standard-Iframe eingebettet, sondern als Zwei-Klick-Lösung umgesetzt. Beim ersten Aufruf des Buchungsbereichs ist nur ein Platzhalter mit dem Hinweis „Buchung über Cal.eu starten" sichtbar. Erst durch Ihren aktiven Klick wird die Cal.eu-Buchungsmaske geladen, womit Sie ausdrücklich in die Verbindung zum Buchungssystem einwilligen.</p>
+    <p>Rechtsgrundlage für das Laden ist Artikel 6 Absatz 1 Buchstabe a DSGVO (Einwilligung), für die anschließende Bearbeitung Ihrer Buchung Artikel 6 Absatz 1 Buchstabe b DSGVO (Anbahnung eines Vertragsverhältnisses).</p>
+    <p>Verarbeitet werden folgende Datenkategorien: Name, E-Mail-Adresse, gewählter Termin, Anliegen, optional Telefonnummer.</p>
+    <p>Die Speicherdauer der Buchungsdaten in der Plattform ergibt sich aus der Datenschutzerklärung von Cal.com unter <a href="https://cal.com/privacy" rel="noopener noreferrer">https://cal.com/privacy</a>.</p>
+    <p>Hinweis zum Drittland-Bezug: Auch wenn der Proimma-Kalender auf der europäischen Hosting-Variante Cal.eu mit Datenregion Europäische Union betrieben wird, kann eine Datenübermittlung an die Cal.com Inc. in den Vereinigten Staaten nicht ausgeschlossen werden, weil die US-Muttergesellschaft technisch und rechtlich auf die Daten zugreifen kann. Nach dem Schrems-II-Urteil des Europäischen Gerichtshofs vom 16. Juli 2020 (Rechtssache C-311/18) entspricht das Datenschutzniveau in den Vereinigten Staaten nicht dem in der Europäischen Union geltenden Niveau. US-Behörden können nach US-Recht unter bestimmten Voraussetzungen verlangen, auf in den Vereinigten Staaten verarbeitete oder dorthin übermittelte Daten zuzugreifen, ohne dass Betroffene effektive gerichtliche Rechtsschutzmöglichkeiten in der Europäischen Union geltend machen können.</p>
+    <p>Rechtsgrundlage für eine etwaige Drittland-Übermittlung sind die von der Europäischen Kommission genehmigten Standardvertragsklauseln nach Artikel 46 DSGVO. Die Proimma GmbH hat eine Risikobewertung vorgenommen und sieht die Standardvertragsklauseln im Kontext der konkreten Verarbeitung um die nötigen zusätzlichen Schutzmaßnahmen ergänzt: die Zwei-Klick-Lösung als ausdrückliche Einwilligung der Betroffenen vor jedem Verbindungsaufbau, die Beschränkung auf eine schlanke Datenkategorie für die Terminbuchung und die europäische Hosting-Variante Cal.eu mit Datenregion Europäische Union.</p>
+    <p>EU-Vertreter nach Artikel 27 DSGVO. Cal.com Inc. hat für Betroffene im Europäischen Wirtschaftsraum einen EU-Vertreter benannt: Peer Richelsen, erreichbar unter der E-Mail-Adresse <a href="mailto:legal+eu@cal.com">legal+eu@cal.com</a>. Die postalische Anschrift wird auf Anfrage per E-Mail mitgeteilt. Der EU-Vertreter ist Anlaufstelle für Aufsichtsbehörden und Betroffene innerhalb des Europäischen Wirtschaftsraums.</p>
+
+    <h2>Cookies</h2>
+    <p>Die Webseite selbst setzt keine eigenen Cookies, weder technisch notwendige noch funktionale noch analytische.</p>
+    <p>Cookies entstehen ausschließlich nach Ihrer aktiven Einwilligung über die Zwei-Klick-Lösung des Cal.eu-Schalters. Die Einbettung der Zwei-Klick-Lösung selbst liegt in der Verantwortung der Proimma GmbH. Die nach dem Klick gesetzten Cookies werden im Auftrag der Proimma GmbH durch Cal.com Inc. als Auftragsverarbeiter gesetzt und verwaltet.</p>
+
+    <h2>Automatisierte Entscheidungen einschließlich Profiling</h2>
+    <p>Die Proimma GmbH nimmt keine automatisierten Einzelfallentscheidungen einschließlich Profiling im Sinne von Artikel 22 DSGVO vor.</p>
+
+    <h2>Empfänger und Empfänger-Kategorien</h2>
+    <p>Personenbezogene Daten werden im Rahmen der vorstehenden Verarbeitungsvorgänge an die folgenden Empfänger oder Empfänger-Kategorien übermittelt.</p>
+    <p>Beim Hosting der Webseite an den Auftragsverarbeiter ALL-INKL.COM Neue Medien Münnich auf Grundlage des Auftragsverarbeitungsvertrags nach Artikel 28 DSGVO.</p>
+    <p>Bei der Online-Terminbuchung an die Cal.com Inc. als Auftragsverarbeiterin auf Grundlage des Auftragsverarbeitungsvertrags nach Artikel 28 DSGVO.</p>
+    <p>Bei der Anleitungs-Anmeldung an die Brevo SAS als Auftragsverarbeiterin auf Grundlage des Auftragsverarbeitungsvertrags nach Artikel 28 DSGVO.</p>
+    <p>Im Falle einer späteren Übernahme von Mietverwaltungs-Mandaten werden personenbezogene Daten an die jeweils eingesetzte Mietverwaltungs-Software und an die jeweils beauftragten Dienstleister (zum Beispiel Banken, Versicherer sowie Handwerks- und Wartungsunternehmen) auf Grundlage entsprechender Auftragsverarbeitungsverträge oder eigener Rechtsgrundlagen übermittelt; diese Datenschutzerklärung wird bei Aufnahme einer entsprechenden Tätigkeit erweitert.</p>
+
+    <h2>Verlinkungen auf externe Seiten</h2>
+    <p>Die Webseite enthält Verlinkungen auf externe Seiten, zum Beispiel auf die Datenschutzerklärung von Cal.com unter <a href="https://cal.com/privacy" rel="noopener noreferrer">https://cal.com/privacy</a>. Für die verlinkten Seiten gelten die jeweils dortigen Datenschutzregeln. Die Proimma GmbH übernimmt für die Inhalte der verlinkten Seiten keine Verantwortung im Sinne von Artikel 4 Nummer 7 DSGVO.</p>
+
+    <h2>Ihre Rechte als Betroffene</h2>
+    <p>Sie haben gegenüber der Proimma GmbH folgende Rechte hinsichtlich Sie betreffender personenbezogener Daten: Auskunft nach Artikel 15 DSGVO, Berichtigung nach Artikel 16 DSGVO, Löschung nach Artikel 17 DSGVO, Einschränkung der Verarbeitung nach Artikel 18 DSGVO, Datenübertragbarkeit nach Artikel 20 DSGVO und Widerspruch nach Artikel 21 DSGVO.</p>
+    <p>Wenden Sie sich für die Ausübung dieser Rechte an <a href="mailto:info@proimma.de">info@proimma.de</a>.</p>
+
+    <h2>Widerruf von Einwilligungen</h2>
+    <p>Erteilte Einwilligungen können Sie nach Artikel 7 Absatz 3 DSGVO jederzeit für die Zukunft widerrufen. Der Widerruf erfolgt formlos an <a href="mailto:info@proimma.de">info@proimma.de</a>.</p>
+
+    <h2>Beschwerderecht</h2>
+    <p>Sie haben nach Artikel 77 DSGVO das Recht zur Beschwerde bei einer Aufsichtsbehörde. Sie können sich an die für die Proimma GmbH zuständige Aufsichtsbehörde am Sitz des Verantwortlichen in Mecklenburg-Vorpommern wenden oder an die Aufsichtsbehörde an Ihrem Wohnsitz, an Ihrem Arbeitsplatz oder am Ort der mutmaßlichen Verletzung.</p>
+    <p>Für die Proimma GmbH zuständig ist:</p>
+    <p>
+      Der Landesbeauftragte für Datenschutz und Informationsfreiheit Mecklenburg-Vorpommern<br />
+      Werderstraße 74a<br />
+      19055 Schwerin<br />
+      Telefon: 0385 59494 0<br />
+      E-Mail: <a href="mailto:info@datenschutz-mv.de">info@datenschutz-mv.de</a><br />
+      Webseite: <a href="https://www.datenschutz-mv.de" rel="noopener noreferrer">www.datenschutz-mv.de</a>
+    </p>
+
+    <h2>Pflicht zur Bereitstellung von Daten</h2>
+    <p>Hinweis nach Artikel 13 Absatz 2 Buchstabe e DSGVO: Die Bereitstellung Ihrer personenbezogenen Daten ist weder gesetzlich noch vertraglich vorgeschrieben. Sie kann jedoch für die Bearbeitung Ihrer Anfrage oder die Anbahnung eines Vertragsverhältnisses notwendig sein.</p>
+
+    <h2>Aktualisierung der Datenschutzerklärung</h2>
+    <p>Diese Datenschutzerklärung bildet den aktuellen Stand der Webseiten-Funktionen ab: Telefon-Kontakt, E-Mail-Kontakt, Cal.eu-Buchung und Anleitungs-Anmeldung über Brevo. Bei Hinzufügung weiterer Webseiten-Elemente, etwa eines Kontaktformulars, einer Verlinkung auf Social-Media-Profile, eines Newsletters oder eines WhatsApp-Klick-Buttons, wird diese Datenschutzerklärung entsprechend erweitert. Eine Anpassung erfolgt ebenso bei geänderter Rechtslage oder bei geänderten Datenverarbeitungsprozessen.</p>
+    <p>Stand: 5. Mai 2026.</p>
+
+  </article>
+
+</BaseLayout>
+
+<style>
+  .hero-rechts { padding-block: 80px 64px; }
+  .rechts-headline {
+    font-size: clamp(2.5rem, 5.6vw, 5rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-top: 16px;
+    color: var(--color-fg-primary);
+  }
+  .rechts-text {
+    padding-block: 48px 144px;
+    max-width: 760px;
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-primary);
+  }
+  .rechts-text h2 {
+    font-size: 1.25rem;
+    font-weight: 500;
+    line-height: 1.3;
+    margin-top: 56px;
+    margin-bottom: 16px;
+    color: var(--color-fg-primary);
+    letter-spacing: -0.005em;
+  }
+  .rechts-text h2:first-child { margin-top: 0; }
+  .rechts-text p {
+    margin: 0 0 20px 0;
+    color: var(--color-fg-secondary);
+  }
+  .rechts-text a {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .rechts-text a:hover { border-bottom-color: var(--color-fg-primary); }
+  @media (max-width: 1024px) {
+    .hero-rechts { padding-block: 56px 40px; }
+    .rechts-text { padding-block: 32px 80px; }
+  }
+</style>

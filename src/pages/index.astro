@@ -1,0 +1,1086 @@
+---
+// Startseite Proimma — Editorial Bold
+// Stand 02.05.2026, Bau-Block 2.
+//
+// Inhalt dieser Etappe:
+//  01 Hero V2 mit XXL-Display-Headline (Bau-Block 1).
+//  02 Hero-Datenpunkte V3 mit drei Datenpunkten (Bau-Block 2).
+//  03 Editorial-Verzichtsblock V14 mit vier Verzichtsaussagen (Bau-Block 2).
+//
+// Andere Sektionen (Säule Mietenverwaltung, Säule Maklerei, Substanz-Vertrauensanker,
+// Personenprofil, Themen-Hub-Vorschau, Cal.eu-Termin-Sektion) folgen in den
+// späteren Bau-Blöcken.
+//
+// Quelle Wortlaute: /00_Projekt_Setup_2026/Webseiten-Texte/06_Startseite_2026-04-27.md
+// (vom Texter-Chat freigegeben am 28.04.2026) plus Probebau vom 30.04.2026.
+// Pflicht-Wortlaute § 34c-Erlaubnis und § 15 MaBV-Hinweis aus Auftrag eins zu eins.
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+
+const title = 'Hausverwaltung und Maklerei in Rostock. Proimma GmbH';
+const description = 'Mietenverwaltung und Vermarktung von Wohnimmobilien für Eigentümer in Rostock und Umgebung. Inhabergeführt, fokussiert. Erstgespräch online vereinbaren.';
+// Seitenspezifisches OG-Bild gemäß BRIEFS.md Sektion 1.5, Stand 06.05.2026.
+const ogImage = '/og-images/og-startseite.png';
+
+// Datenpunkte für Sektion 02
+// Wortlaute auf 02.05.2026 angeglichen an die freigegebenen Texte
+// (01_Hausverwaltung, 06_Startseite, 08_Über-Proimma).
+const datenpunkte = [
+  {
+    wert: '20+',
+    label: '01 Erfahrung',
+    text: 'Mehr als zwanzig Jahre Branchenerfahrung. Stationen als Immobilienkaufmann, Asset Manager für einen dänischen Fonds, Mitaufbau einer Hausverwaltung sowie als Hausverwalter und Bewirtschafter in Anstellung.',
+  },
+  {
+    wert: '1 Werktag',
+    label: '02 Reaktion',
+    text: 'Erste Rückmeldung auf Eigentümer-Anfragen innerhalb eines Werktages. Separate Notfall-Erreichbarkeit für Mieter rund um die Uhr.',
+  },
+  {
+    wert: '§ 34c',
+    label: '03 Erlaubnis',
+    text: 'Einheitliche gewerberechtliche Erlaubnis nach § 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 GewO der Hansestadt Rostock.',
+  },
+];
+
+// Verzichtsaussagen für Sektion 03
+// Wortlaute eins zu eins aus 06_Startseite_2026-04-27.md, Sektion 03.
+// Vier Aussagen final (Stand 03.05.2026, Workspace-Text 06_Startseite, Sektion 03);
+// der Vermittlungs-Hinweis steht als eigener Block direkt unter der Liste.
+const verzichtsaussagen = [
+  'Keine Eigentümergemeinschaften aus mehreren Einzeleigentümern.',
+  'Keine reinen Gewerbeimmobilien.',
+  'Keine Mandate, deren Bewirtschaftung sich auf eine kurzfristige Abwicklung beschränkt.',
+  'Kein Home Staging. Keine 360-Grad-Foto-Touren.',
+];
+
+// Themen-Hub-Karten für Sektion 08
+// Headlines und URLs aus den freigegebenen Artikel-Texten 02 bis 05.
+// Anrisse kondensiert aus den Volltexten, Lese-Dauern grob geschätzt
+// nach Wortanzahl der jeweiligen Datei (Andre: bitte prüfen).
+const themenKarten = [
+  {
+    nummer: '01',
+    titel: 'Wechsel der Hausverwaltung',
+    anriss: 'Welche Punkte Eigentümer vorab für sich klären, welche rechtlichen Mindeststandards eine Verwaltung erfüllen muss und wie eine saubere Übergabe abläuft.',
+    leseDauer: '7 min',
+    href: '/wissen/verwalterwechsel',
+  },
+  {
+    nummer: '02',
+    titel: 'Saubere Bestandsübergabe',
+    anriss: 'Stichtag-Logik, kaufmännische und technische Übergabe. Was im Übergabe-Schritt sauber dokumentiert wird, trägt die nächsten Jahre.',
+    leseDauer: '6 min',
+    href: '/wissen/bestandsuebergabe',
+  },
+  {
+    nummer: '03',
+    titel: 'Maklerprovision nach § 656c BGB',
+    anriss: 'Wie die Provision konkret gerechnet wird, für welche Geschäfte das Teilungsgebot gilt und wann die Provision fällig wird.',
+    leseDauer: '5 min',
+    href: '/wissen/maklerprovision',
+  },
+];
+
+// Pflicht-Aussagen für Sektion 06 Substanz-Vertrauensanker
+// Quelle: Übergabe-Prompt 02.05.2026, Pflicht-Wortlaute eins zu eins.
+// Korrektur 02.05.2026: Police-Zahlen aus Punkt 04 entfernt, weil die externe
+// Kommunikationsregel Proimma keine Zahlen in der Außendarstellung erlaubt.
+const substanzPunkte = [
+  'Mehr als zwanzig Jahre Branchenerfahrung des Inhabers.',
+  'Werktags 9 bis 17 Uhr unter 0173 6335917 erreichbar.',
+  'Notfall-Erreichbarkeit für Mieter rund um die Uhr über die separate Notfall-Nummer im Mietvertrag.',
+  'Vermögensschadenhaftpflicht-Versicherung gemäß § 15 MaBV.',
+  'Erlaubnis nach § 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 GewO der Hansestadt Rostock.',
+];
+---
+
+<BaseLayout title={title} description={description} ogImage={ogImage}>
+
+  <!-- 01 HERO V2 — Editorial-XXL-Headline ohne Foto, Hellblau-Akzentstrich
+       Bau-Block 2.1: Reveal-Animation entfernt (Above-the-Fold), Schrift kompakter,
+       max-width auf 22ch erweitert, Hero-Padding reduziert für ersten Sichtbereich. -->
+  <section class="hero" data-sektion="hero">
+    <div class="container-page hero-grid">
+      <div class="hero-strich"><div class="ed-strich"></div></div>
+      <h1 class="hero-headline">Hausverwaltung und Maklerei in Rostock. Inhabergeführt. Fokussiert.</h1>
+      <p class="hero-subline">Mietenverwaltung und Vermarktung von Wohnimmobilien für Eigentümer in Rostock und Umgebung.</p>
+      <div class="hero-cta">
+        <a class="btn-primary" href="/kontakt" data-cta="erstgespraech-cta-hero">Erstgespräch vereinbaren</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 HERO-DATENPUNKTE V3 — drei Datenpunkte mit Tabular Nums -->
+  <section class="data" data-sektion="datenpunkte">
+    <div class="container-page data-grid">
+      {datenpunkte.map((item) => (
+        <div class="data-item reveal">
+          <div class="data-strich" aria-hidden="true"></div>
+          <div class="data-value nums">{item.wert}</div>
+          <div class="data-label">{item.label}</div>
+          <p class="data-text">{item.text}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- 03 EDITORIAL-VERZICHTSBLOCK V14 — vier Verzichtsaussagen plus Vermittlungs-Hinweis
+       Wortlaute eins zu eins aus 06_Startseite_2026-04-27.md. -->
+  <section class="verzicht" data-sektion="verzicht">
+    <div class="container-page verzicht-grid">
+      <div class="reveal">
+        <div class="ed-index">03 Was bei Proimma nicht stattfindet</div>
+        <h2 class="verzicht-headline">Klares Profil. Auch durch Verzicht.</h2>
+        <p class="verzicht-lead">Diese Klarheit schützt die Qualität der Mandate, die wir tatsächlich führen.</p>
+      </div>
+      <div class="verzicht-list reveal">
+        {verzichtsaussagen.map((text, idx) => (
+          <div class="verzicht-row">
+            <span class="verzicht-num nums">{String(idx + 1).padStart(2, '0')}</span>
+            <span class="verzicht-text">{text}</span>
+          </div>
+        ))}
+        <p class="verzicht-hinweis">
+          Für Eigentümergemeinschaften, die einen Verwalter suchen, vermitteln wir auf Wunsch den Kontakt zu einer auf diesen Bereich spezialisierten Verwalterin in Rostock.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 SÄULE HAUSVERWALTUNG V4 — Magazin-Band mit Service-Punkten
+       Lead aus 06_Startseite_2026-04-27.md eins zu eins.
+       Body und Service-Punkte aus 01_Hausverwaltung_2026-04-27.md
+       gekürzt auf Startseiten-Format, Wortlaute aus dem Texter-Chat. -->
+  <section class="band" id="hausverwaltung" data-sektion="mietenverwaltung">
+    <div class="container-page band-grid">
+      <div class="band-meta reveal">
+        <div class="ed-index">04 Hausverwaltung</div>
+      </div>
+      <div class="band-content reveal">
+        <h2 class="band-headline">Mietenverwaltung für Mehrfamilienhäuser. Aus einer Hand.</h2>
+        <p class="band-lead">Mietenverwaltung von Mehrfamilienhäusern sowie von Wohn- und Geschäftshäusern für Eigentümer und Eigentümergesellschaften. Mit dokumentiertem Übernahme-Prozess und einem direkten Ansprechpartner ohne Weiterleitung über mehrere Mitarbeiter.</p>
+        <div class="band-body">
+          <p>Sie übertragen Proimma die laufende Verantwortung für das Objekt im vereinbarten Umfang. Verwaltet wird die Substanz und der Betrieb des Gebäudes für einen Eigentümer oder für eine Eigentümergesellschaft.</p>
+          <p>Bei jedem Auftrag bleibt der Inhaber Ansprechpartner. Für laufende Hausmeisterarbeit steht ein fester Hausmeisterdienst aus dem Rostocker Umland bereit, ergänzt durch ausgewählte Handwerker aus dem beruflichen Netzwerk des Inhabers.</p>
+        </div>
+        <div class="band-services">
+          <div class="svc">
+            <span class="svc-num nums">01</span>
+            <div>
+              <div class="svc-name">Kaufmännische Verwaltung</div>
+              <p class="svc-text">Sollstellung und laufende Buchung der Mieten, Mieterkonten und Mahnwesen, jährliche Betriebskostenabrechnung, Verwaltung von Mietkautionen mit getrennter Kontenführung auf Wunsch, Mietanpassungen im gesetzlich Zulässigen, Eigentümer-Reporting im vereinbarten Rhythmus.</p>
+            </div>
+          </div>
+          <div class="svc">
+            <span class="svc-num nums">02</span>
+            <div>
+              <div class="svc-name">Technische Verwaltung</div>
+              <p class="svc-text">Annahme und Bearbeitung von Mängelmeldungen, Begleitung größerer Instandsetzungen mit Angebotseinholung, Pflege wiederkehrender Wartungen und Prüfungen am Objekt, Begehungen nach Vereinbarung.</p>
+            </div>
+          </div>
+          <div class="svc">
+            <span class="svc-num nums">03</span>
+            <div>
+              <div class="svc-name">Übergaben und Abnahmen</div>
+              <p class="svc-text">Bei Mieterwechseln gesonderte Leistung mit Protokoll und Foto-Dokumentation.</p>
+            </div>
+          </div>
+          <div class="svc">
+            <span class="svc-num nums">04</span>
+            <div>
+              <div class="svc-name">Mieter-Erreichbarkeit</div>
+              <p class="svc-text">Werktägliche Bürozeit Montag bis Freitag 9 bis 17 Uhr, separate Notfall-Erreichbarkeit für Mieter rund um die Uhr, vollständige digitale Dokumentenablage in der Verwaltungssoftware Immocloud mit Eigentümer- und Mieterportal.</p>
+            </div>
+          </div>
+        </div>
+        <a href="/hausverwaltung" class="link-arrow band-link" data-cta="hausverwaltung-mehr">Wie der Wechsel der Hausverwaltung abläuft</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 SÄULE MAKLEREI V6 — Magazin-Band mit § 656c BGB-Provisionslogik
+       Lead aus 06_Startseite_2026-04-27.md.
+       Body 1 und Provisionslogik aus 07_Maklerei_2026-04-28.md eins zu eins. -->
+  <section class="band band-makler" id="maklerei" data-sektion="maklerei">
+    <div class="container-page band-grid">
+      <div class="band-meta reveal">
+        <div class="ed-index">05 Maklerei</div>
+      </div>
+      <div class="band-content reveal">
+        <h2 class="band-headline">Vermarktung von Wohnimmobilien. Mit eigenem Video. Im Videocall.</h2>
+        <p class="band-lead">Vermarktung von Einfamilienhäusern, Doppel- und Reihenhäusern, Eigentumswohnungen, Mehrfamilienhäusern und Grundstücken. Provisionslogik nach &sect; 656c BGB transparent, Maklervertrag in Textform vor Auftragserteilung zur Sichtung.</p>
+        <div class="band-body">
+          <p>Standard bei Proimma sind ein hochwertiges Exposé und professionelle Fotografie. Bei jedem Maklerauftrag wird zusätzlich ein eigenes Video von der Immobilie gedreht und Interessenten ausschließlich in einem Videocall präsentiert. Die Videos werden nicht auf Portalen veröffentlicht; sie sind Teil der direkten Käuferansprache.</p>
+          <p>Die Gesamtprovision für die Vermittlung einer Wohnimmobilie beträgt 7,14 Prozent inklusive gesetzlicher Mehrwertsteuer, bezogen auf den notariellen Kaufpreis. Geteilt wird zu gleichen Teilen zwischen Käufer und Verkäufer, also je 3,57 Prozent inklusive Mehrwertsteuer. Fällig wird die Provision ausschließlich im Erfolgsfall mit notarieller Beurkundung. Diese Logik gilt nach &sect; 656c BGB für Eigentumswohnungen und Einfamilienhäuser, wenn der Käufer Verbraucher ist. Bei Mehrfamilienhäusern, Gewerbeobjekten und reinen Grundstücken sind Höhe und Verteilung der Provision frei vereinbar.</p>
+        </div>
+        <a href="/maklerei" class="link-arrow band-link" data-cta="maklerei-mehr">Zur Maklerei-Seite</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 SUBSTANZ-VERTRAUENSANKER V7 — fünf Pflicht-Aussagen
+       Pflicht-Wortlaute aus Übergabe-Prompt 02.05.2026 eins zu eins.
+       Hellblau-Akzent ausschließlich bei den Editorial-Index-Nummern 01–05. -->
+  <section class="substanz" data-sektion="vertrauen">
+    <div class="container-page">
+      <div class="substanz-head reveal">
+        <div class="ed-index">06 Substanz</div>
+        <h2 class="substanz-headline">Was Sie wissen sollten.</h2>
+      </div>
+      <div class="substanz-list reveal">
+        {substanzPunkte.map((text, idx) => (
+          <div class="substanz-row">
+            <span class="substanz-num nums">{String(idx + 1).padStart(2, '0')}</span>
+            <p class="substanz-text">{text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 EDITORIAL-PERSONENPROFIL V9 — Foto plus Berufsbiografie
+       Pfad /img/andre-portrait.jpg, Astro-Build kopiert es ins dist/.
+       Foto in natürlicher Farbe (kein Schwarzweiß-Filter) gemäß
+       Korrektur Andre vom 02.05.2026. -->
+  <section class="person" id="proimma" data-sektion="personenprofil">
+    <div class="container-page person-grid">
+      <figure class="person-portrait reveal">
+        <img
+          src="/img/andre-portrait.jpg"
+          alt="André Dieckmann, Inhaber und Geschäftsführer der Proimma GmbH."
+          loading="lazy"
+        />
+      </figure>
+      <div class="person-content reveal">
+        <div class="ed-index">07 Inhaber</div>
+        <h2 class="person-headline">André Dieckmann</h2>
+        <div class="person-role">Inhaber und Geschäftsführer</div>
+        <p class="person-lead">Proimma wird geführt von André Dieckmann. Er ist seit mehr als zwanzig Jahren in der Immobilienwirtschaft tätig.</p>
+        <p class="person-bio">André Dieckmann ist ausgebildeter Immobilienkaufmann. Daran schloss langjährige Tätigkeit in Verkauf und Vermietung im Auftrag Dritter an. Mehrere Jahre war er Asset Manager für einen dänischen Fonds. Es folgten der Mitaufbau einer Hausverwaltung von der Gründungsphase bis in den laufenden Betrieb sowie mehrjährige Tätigkeit als Hausverwalter und Bewirtschafter in Anstellung.</p>
+        <p class="person-bio-secondary">Heute Inhaber und alleinvertretungsberechtigter Geschäftsführer der Proimma GmbH mit den beiden Geschäftsbereichen Mietenverwaltung und Maklerei in Rostock und Umgebung.</p>
+        <a href="/ueber-proimma" class="link-arrow band-link" data-cta="ueber-andre">Mehr über André</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 THEMEN-HUB-VORSCHAU V8 — Editorial-Karten zu den vier Wissens-Beiträgen
+       Quelle: freigegebener Startseiten-Text 06_Startseite_2026-04-27.md, Sektion 04. -->
+  <section class="themen" data-sektion="wissen-fuer-eigentuemer">
+    <div class="container-page">
+      <div class="themen-head reveal">
+        <div>
+          <div class="ed-index">08 Wissen für Eigentümer</div>
+          <h2 class="themen-headline">Wissen für Eigentümer.</h2>
+        </div>
+        <p class="themen-lead">Sachlich aufbereitete Beiträge zu Themen aus Hausverwaltung und Maklerei. Verwalterwechsel, Bestandsübergabe, Maklerprovision nach &sect; 656c BGB, Verkauf einer Wohnimmobilie in Rostock.</p>
+      </div>
+      <div class="themen-list reveal">
+        {themenKarten.map((karte) => (
+          <a href={karte.href} class="themen-item" data-cta={`wissen-${karte.nummer}`}>
+            <span class="themen-num nums">{karte.nummer}</span>
+            <div class="themen-body">
+              <div class="themen-title">{karte.titel}</div>
+              <p class="themen-anriss">{karte.anriss}</p>
+            </div>
+            <span class="themen-meta nums">{karte.leseDauer}</span>
+          </a>
+        ))}
+      </div>
+      <a href="/wissen" class="link-arrow themen-link" data-cta="wissen-alle">Alle Beiträge ansehen</a>
+    </div>
+  </section>
+
+  <!-- 09 CAL.EU-TERMIN-SEKTION V10 — Erstgespräch buchen
+       Eingebetteter Cal.eu-Kalender unter cal.eu/proimma/30min als Lazy-Load-iFrame
+       (Datenschutz-Zwei-Klick-Lösung gemäß tools-workflows.md, threshold 0.1, rootMargin 200px).
+       Klartext-Fallback an info@proimma.de und 0173 6335917. -->
+  <section class="termin" id="kontakt" data-sektion="cal-embed">
+    <div class="container-page termin-inner">
+      <div class="termin-head reveal">
+        <div class="ed-index">09 Erstgespräch</div>
+        <h2 class="termin-headline">Erstgespräch vereinbaren.</h2>
+      </div>
+      <div class="termin-points reveal">
+        <div class="termin-point">
+          <div class="termin-point-value nums">30 Min</div>
+          <div class="termin-point-label">Dauer</div>
+        </div>
+        <div class="termin-point">
+          <div class="termin-point-value">Kostenfrei</div>
+          <div class="termin-point-label">Investition</div>
+        </div>
+        <div class="termin-point">
+          <div class="termin-point-value">Online</div>
+          <div class="termin-point-label">Format</div>
+        </div>
+      </div>
+      <div class="termin-frame-wrap reveal" id="cal-mount" data-cal-url="https://cal.eu/proimma/30min">
+        <div class="termin-loading" id="cal-loading">Termin-Anzeige wird geladen.</div>
+      </div>
+      <p class="termin-fallback">Falls die Termin-Anzeige nicht lädt, schreiben Sie an <a href="mailto:info@proimma.de" data-cta="kontakt-mail">info@proimma.de</a> oder rufen Sie unter <a href="tel:+491736335917" data-cta="kontakt-tel">0173 6335917</a> an.</p>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* ---------- 01 HERO ----------
+     Korrektur 02.05.2026: Hero kompakter, sodass Headline plus Subline plus Button
+     auf üblichen Bildschirmen in den ersten Sichtbereich passen. Schrift Maximum
+     auf 6.5rem (104 Pixel) reduziert, max-width auf 22ch erweitert, Padding
+     reduziert. Reveal-Animation entfällt im Above-the-Fold. */
+  .hero { padding-block: 80px 96px; }
+
+  .hero-grid {
+    display: grid;
+    grid-template-columns: 1fr 11fr;
+    gap: 0;
+  }
+
+  .hero-strich,
+  .hero-headline,
+  .hero-subline,
+  .hero-cta { grid-column: 2; }
+
+  .hero-strich .ed-strich { margin-bottom: 32px; }
+
+  .hero-headline {
+    font-size: clamp(2.75rem, 6.4vw, 6.5rem); /* 44px Mobile bis 104px Desktop */
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 40px;
+    max-width: 22ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+
+  .hero-subline {
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem); /* 18px Mobile bis 24px Desktop */
+    line-height: 1.45;
+    font-weight: 300;
+    color: var(--color-fg-secondary);
+    max-width: 56ch;
+    margin-bottom: 48px;
+  }
+
+  @media (min-width: 1280px) {
+    .hero { padding-block: 96px 112px; }
+  }
+
+  @media (max-width: 1024px) {
+    /* Korrektur 02.05.2026 (Mobile): Padding nach oben kleiner, sodass die
+       Hauptaussage früher im ersten Sichtbereich startet. */
+    .hero { padding-block: 56px 80px; }
+    .hero-grid { grid-template-columns: 1fr; }
+    .hero-strich,
+    .hero-headline,
+    .hero-subline,
+    .hero-cta { grid-column: 1; }
+  }
+
+  /* ---------- 02 HERO-DATENPUNKTE ---------- */
+  .data {
+    padding-block: 96px 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+
+  .data-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+  }
+
+  .data-item {
+    padding: 0 40px;
+    border-right: 1px solid var(--color-line-faint);
+  }
+  .data-item:first-child { padding-left: 0; }
+  .data-item:last-child {
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .data-strich {
+    width: 64px;
+    height: 1px;
+    background: var(--color-line);
+    margin-bottom: 24px;
+  }
+
+  .data-value {
+    /* Korrekturen 02.05.2026:
+       - Schriftgröße reduziert, sodass „1 Werktag" einzeilig steht
+         und alle drei Werte optisch auf gleicher Höhe enden.
+       - Untergrenze von 32 auf 36 Pixel erhöht für bessere Mobile-Wirkung. */
+    font-size: clamp(2.25rem, 3.6vw, 3.5rem); /* 36px Mobile bis 56px Desktop */
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 16px;
+    white-space: nowrap;
+  }
+
+  .data-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-fg-secondary);
+    margin-bottom: 24px;
+  }
+
+  .data-text {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-fg-secondary);
+    max-width: 36ch;
+  }
+
+  @media (max-width: 1024px) {
+    /* Korrektur 02.05.2026 (Mobile): Padding nach unten kleiner, weil der
+       Übergang vom dritten Datenpunkt § 34c zum Verzichtsblock sonst
+       zu viel Leerraum hat. */
+    .data { padding-block: 64px 48px; }
+    .data-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    .data-item {
+      padding: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--color-line-faint);
+      padding-bottom: 40px;
+    }
+    .data-item:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+  }
+
+  /* ---------- 03 VERZICHTSBLOCK ---------- */
+  .verzicht {
+    padding-block: 160px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+
+  .verzicht-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .verzicht-headline {
+    font-size: clamp(2.5rem, 4.6vw, 4.5rem);
+    line-height: 1.0;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    max-width: 14ch;
+    color: var(--color-fg-primary);
+  }
+
+  .verzicht-lead {
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    color: var(--color-fg-secondary);
+    margin-top: 48px;
+    max-width: 42ch;
+  }
+
+  .verzicht-list { margin-top: 14px; }
+
+  .verzicht-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 24px;
+    border-bottom: 1px solid var(--color-line-faint);
+  }
+  .verzicht-row:first-child {
+    border-top: 1px solid var(--color-line-faint);
+  }
+
+  .verzicht-num {
+    font-size: 0.8125rem;
+    letter-spacing: 0.18em;
+    color: var(--color-fg-secondary);
+    font-weight: 500;
+    padding-top: 6px;
+  }
+
+  .verzicht-text {
+    font-size: 1.1875rem;
+    line-height: 1.55;
+    color: var(--color-fg-primary);
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  /* Vermittlungs-Hinweis unter den drei Verzichtsaussagen,
+     freigegebener Wortlaut aus 06_Startseite.
+     Optisch ruhig gesetzt, leicht gegenüber den Aussagen abgehoben. */
+  .verzicht-hinweis {
+    margin-top: 32px;
+    font-size: 1rem;
+    line-height: 1.6;
+    color: var(--color-fg-secondary);
+    max-width: 60ch;
+    font-style: normal;
+    text-wrap: pretty;
+  }
+
+  @media (max-width: 1024px) {
+    /* Korrektur 02.05.2026 (Mobile): Atem oben und unten reduziert,
+       sodass der Übergang von den Datenpunkten zum Verzichtsblock
+       und vom Verzichtsblock zum Footer nicht mehr durch übergroße
+       weiße Flächen unterbrochen wird. */
+    .verzicht { padding-block: 64px; }
+    .verzicht-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+    /* Nummern bleiben links neben dem Text, sodass der Verzichtsblock
+       kompakter und straffer wirkt statt vertikal gestreckt. */
+    .verzicht-row {
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+    }
+  }
+
+  /* ---------- 04 / 05 MAGAZIN-BÄNDER (Säulen Hausverwaltung und Maklerei) ----------
+     Asymmetrisches Editorial-Layout: schmale linke Spalte mit Editorial-Index,
+     breite rechte Spalte mit Headline, Lead, Klartext-Body und Service-Punkten.
+     Hairlines statt Karten-Schatten. */
+  .band {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+
+  .band-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .band-meta {
+    position: sticky;
+    top: 120px;
+  }
+
+  .band-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem); /* 36px Mobile bis 60px Desktop */
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 40px;
+    max-width: 18ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+
+  .band-lead {
+    font-size: clamp(1.125rem, 1.5vw, 1.4rem); /* 18px Mobile bis 22px Desktop */
+    line-height: 1.45;
+    font-weight: 400;
+    color: var(--color-fg-primary);
+    max-width: 54ch;
+    margin-bottom: 40px;
+  }
+
+  .band-body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-secondary);
+    max-width: 62ch;
+  }
+  .band-body p {
+    margin-bottom: 24px;
+  }
+  .band-body p:last-child {
+    margin-bottom: 0;
+  }
+
+  .band-services {
+    /* Korrektur 02.05.2026: Atem zwischen Klartext-Body und Service-Punkten
+       reduziert (von 80 auf 56 Pixel), sodass die Säule kompakter wirkt. */
+    margin-top: 56px;
+  }
+
+  .band-services .svc {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 24px;
+    border-top: 1px solid var(--color-line);
+  }
+  .band-services .svc:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .svc-num {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    color: var(--color-fg-secondary);
+    padding-top: 6px;
+  }
+
+  .svc-name {
+    font-size: 1.375rem;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--color-fg-primary);
+  }
+
+  .svc-text {
+    font-size: 1rem;
+    line-height: 1.55;
+    color: var(--color-fg-secondary);
+    margin-top: 8px;
+    max-width: 48ch;
+  }
+
+  .band-link {
+    margin-top: 48px;
+  }
+
+  @media (max-width: 1024px) {
+    .band {
+      padding-block: 80px;
+    }
+    .band-grid {
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+    .band-meta {
+      position: static;
+    }
+    .band-services {
+      margin-top: 56px;
+    }
+  }
+
+  /* ---------- 06 SUBSTANZ-VERTRAUENSANKER ----------
+     Editorial-Block mit fünf Pflicht-Aussagen.
+     Editorial-Index-Nummern 01–05 in Hellblau,
+     darunter die Pflicht-Aussagen in voller Lesefarbe.
+     Hairlines zwischen den Punkten. */
+  .substanz {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+    background: var(--color-bg-primary);
+  }
+
+  .substanz-head {
+    margin-bottom: 80px;
+    max-width: 32ch;
+  }
+
+  .substanz-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem); /* 36px Mobile bis 60px Desktop */
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    color: var(--color-fg-primary);
+  }
+
+  .substanz-list {
+    max-width: none;
+  }
+
+  .substanz-row {
+    display: grid;
+    grid-template-columns: 1fr 9fr;
+    gap: 48px;
+    padding-block: 28px;
+    border-top: 1px solid var(--color-line);
+    align-items: start;
+  }
+  .substanz-row:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .substanz-num {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    color: var(--color-accent);
+    padding-top: 8px;
+  }
+
+  .substanz-text {
+    font-size: clamp(1.125rem, 1.4vw, 1.4rem); /* 18px Mobile bis 22px Desktop */
+    line-height: 1.5;
+    color: var(--color-fg-primary);
+    font-weight: 400;
+    max-width: 64ch;
+    text-wrap: balance;
+  }
+
+  @media (max-width: 1024px) {
+    .substanz {
+      padding-block: 80px;
+    }
+    .substanz-head {
+      margin-bottom: 48px;
+    }
+    .substanz-row {
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+    }
+  }
+
+  /* ---------- 07 EDITORIAL-PERSONENPROFIL ----------
+     Foto links als Schwarzweiß-Editorial, Inhalt rechts.
+     Foto in 4:5-Format, Filter Grayscale plus dezenter Kontrast. */
+  .person {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+
+  .person-grid {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .person-portrait {
+    margin: 0;
+    aspect-ratio: 4 / 5;
+    background: var(--color-line-faint);
+    overflow: hidden;
+    position: relative;
+  }
+  .person-portrait img {
+    /* Korrektur 02.05.2026: Schwarzweiß-Filter entfernt, das Foto erscheint
+       jetzt in natürlicher Farbe (kein Trauer-Eindruck). */
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 28%;
+    display: block;
+  }
+
+  .person-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem); /* 36px Mobile bis 60px Desktop */
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    color: var(--color-fg-primary);
+  }
+
+  .person-role {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-fg-secondary);
+    margin-bottom: 40px;
+  }
+
+  .person-lead {
+    font-size: 1.25rem;
+    line-height: 1.55;
+    color: var(--color-fg-primary);
+    max-width: 54ch;
+    margin-bottom: 24px;
+    font-weight: 400;
+  }
+
+  .person-bio {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-secondary);
+    max-width: 60ch;
+    margin-bottom: 16px;
+  }
+
+  .person-bio-secondary {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-secondary);
+    max-width: 60ch;
+    margin-bottom: 40px;
+  }
+
+  @media (max-width: 1024px) {
+    .person {
+      padding-block: 80px;
+    }
+    .person-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+  }
+
+  /* ---------- 08 THEMEN-HUB-VORSCHAU ----------
+     Editorial-Karten als horizontale Zeilen mit Hairline-Trennern,
+     numerischer Editorial-Index, Lese-Dauer rechts in Tabular Nums. */
+  .themen {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+
+  .themen-head {
+    display: grid;
+    grid-template-columns: 5fr 7fr;
+    gap: 80px;
+    align-items: end;
+    margin-bottom: 96px;
+  }
+
+  .themen-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-top: 16px;
+    max-width: 14ch;
+    color: var(--color-fg-primary);
+  }
+
+  .themen-lead {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--color-fg-secondary);
+    max-width: 48ch;
+  }
+
+  .themen-list { margin: 0; }
+
+  .themen-item {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 48px;
+    padding-block: 36px;
+    border-top: 1px solid var(--color-line);
+    align-items: start;
+    transition: padding-left 0.3s ease, border-color 0.3s ease;
+  }
+  .themen-item:last-child {
+    border-bottom: 1px solid var(--color-line);
+  }
+  .themen-item:hover {
+    padding-left: 12px;
+    border-top-color: var(--color-fg-primary);
+  }
+  .themen-item:hover + .themen-item {
+    border-top-color: var(--color-fg-primary);
+  }
+  .themen-item:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 4px;
+  }
+
+  .themen-num {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    color: var(--color-accent);
+    padding-top: 6px;
+  }
+
+  .themen-title {
+    font-size: clamp(1.5rem, 2.2vw, 2rem);
+    line-height: 1.18;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--color-fg-primary);
+  }
+
+  .themen-anriss {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--color-fg-secondary);
+    margin-top: 12px;
+    max-width: 60ch;
+  }
+
+  .themen-meta {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    color: var(--color-fg-secondary);
+    padding-top: 10px;
+  }
+
+  .themen-link {
+    margin-top: 56px;
+  }
+
+  @media (max-width: 1024px) {
+    .themen { padding-block: 80px; }
+    .themen-head {
+      grid-template-columns: 1fr;
+      gap: 24px;
+      align-items: start;
+      margin-bottom: 56px;
+    }
+    .themen-item {
+      grid-template-columns: auto 1fr;
+      gap: 20px;
+    }
+    .themen-meta {
+      grid-column: 2;
+      padding-top: 0;
+    }
+  }
+
+  /* ---------- 09 CAL.EU-TERMIN-SEKTION ----------
+     Erstgespräch-Buchung mit drei Datenpunkten oben und Lazy-Load-iFrame.
+     Klartext-Fallback unter dem iFrame für den Fall, dass das Embed nicht lädt. */
+  .termin {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+    background: var(--color-bg-primary);
+  }
+
+  .termin-inner {
+    max-width: 880px;
+    margin-inline: auto;
+  }
+
+  .termin-head {
+    margin-bottom: 48px;
+  }
+
+  .termin-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-top: 8px;
+    color: var(--color-fg-primary);
+  }
+
+  .termin-points {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    margin-bottom: 48px;
+    padding-bottom: 48px;
+    border-bottom: 1px solid var(--color-line);
+  }
+
+  .termin-point {
+    padding-inline: 24px;
+    border-right: 1px solid var(--color-line-faint);
+  }
+  .termin-point:first-child { padding-left: 0; }
+  .termin-point:last-child {
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .termin-point-value {
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 6px;
+    color: var(--color-fg-primary);
+  }
+
+  .termin-point-label {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--color-fg-secondary);
+  }
+
+  .termin-frame-wrap {
+    aspect-ratio: 1 / 1;
+    min-height: 600px;
+    background: var(--color-line-faint);
+    position: relative;
+  }
+
+  .termin-loading {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-fg-secondary);
+    font-size: 0.9375rem;
+    text-align: center;
+    padding: 24px;
+  }
+
+  .termin-frame-wrap iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    display: block;
+    position: relative;
+    z-index: 2;
+  }
+
+  .termin-fallback {
+    margin-top: 24px;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-fg-secondary);
+  }
+  .termin-fallback a {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+    transition: border-color 0.2s ease;
+  }
+  .termin-fallback a:hover {
+    border-bottom-color: var(--color-fg-primary);
+  }
+
+  @media (max-width: 1024px) {
+    .termin { padding-block: 80px; }
+    .termin-points {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+    .termin-point {
+      padding-inline: 0;
+      border-right: none;
+      border-bottom: 1px solid var(--color-line-faint);
+      padding-bottom: 24px;
+    }
+    .termin-point:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .termin-frame-wrap { min-height: 720px; }
+  }
+</style>
+
+<script>
+  // Cal.eu-iFrame Lazy-Load: Sobald die Sektion in den sichtbaren Bereich
+  // kommt (Threshold 0.1, RootMargin 200px), wird der iFrame eingehängt.
+  // Datenschutz-Zwei-Klick-Lösung gemäß tools-workflows.md.
+  const calMount = document.getElementById('cal-mount');
+  if (calMount) {
+    const calIO = new IntersectionObserver((entries, obs) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          const url = calMount.dataset.calUrl;
+          const iframe = document.createElement('iframe');
+          iframe.src = url;
+          iframe.title = 'Termin-Buchung Erstgespräch';
+          iframe.loading = 'lazy';
+          iframe.allow = 'fullscreen';
+          calMount.appendChild(iframe);
+          iframe.addEventListener('load', () => {
+            const loading = document.getElementById('cal-loading');
+            if (loading) loading.style.display = 'none';
+          });
+          obs.unobserve(calMount);
+        }
+      });
+    }, { threshold: 0.1, rootMargin: '200px' });
+    calIO.observe(calMount);
+  }
+</script>

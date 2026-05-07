@@ -1,0 +1,532 @@
+---
+// Detail-Seite Maklerei — Editorial Bold
+// Stand 03.05.2026, Phase 2 Bau-Block 6.
+//
+// Quellen eins-zu-eins (Verbot 7 strikt):
+//   07_Maklerei_2026-04-28.md
+//   14_Marktwertfindung-Anfrage_2026-04-29.md
+//
+// Soll-Stack laut Bauauftrag Phase 2 bis 4 Stufe 2:
+//   01 Editorial-Hero
+//   02 Was Maklerei bei Proimma bedeutet
+//   03 Wir vermarkten das volle Spektrum
+//   04 Vermarktungsprozess in fünf Schritten (Editorial-Sequenz)
+//   05 § 656c BGB-Beispielrechnung als eigene Editorial-Sektion
+//   06 Drei wörtliche Google-Bewertungen aus 07 mit vollständigem Namen
+//      (Workspace-Text 15 existiert nicht; Bewertungen liegen in 07 selbst.
+//      Datum wird bewusst weggelassen, weil Zeitraum 2020 bis 2022 alt wirkt.)
+//   07 Marktwertfindungs-Anfrage als E-Mail an info@proimma.de mit Honeypot,
+//      Aria-Labels, Mikrocopy aus Workspace-Text 14. Phase-1b-Wechsel auf
+//      Versand-Dienst siehe TODO-Marker bei der Sektion 07 selbst.
+//   08 Direkter Ansprechpartner mit Backup-Netzwerk
+//   09 Schluss-Zeile "Wenn Ihr Fall nicht zu meinem Schwerpunkt passt..."
+//   10 Cross-Links auf /wissen/maklerprovision und /wissen/verkauf-wohnimmobilie
+//   11 Cal.eu-Termin-Sektion
+//   12 Footer (über BaseLayout)
+
+import BaseLayout from '@/layouts/BaseLayout.astro';
+import CalEmbed from '@/components/CalEmbed.astro';
+import CrossLinks from '@/components/CrossLinks.astro';
+
+const title = 'Maklerei Rostock';
+const description = 'Vermarktung von Wohnimmobilien für Eigentümer in Rostock und Umgebung. Provisionslogik nach § 656c BGB transparent dargestellt, Marktwertfindung als Vorstufe verfügbar.';
+// Seitenspezifisches OG-Bild gemäß BRIEFS.md Sektion 1.6 bis 1.10, Stand 06.05.2026.
+const ogImage = '/og-images/og-maklerei.png';
+
+const serviceSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  '@id': 'https://www.proimma.de/maklerei#service',
+  serviceType: 'Real Estate Sales',
+  name: 'Wohnimmobilien-Vermarktung Rostock',
+  description: 'Vermittlung von Einfamilienhäusern, Doppel- und Reihenhäusern, Eigentumswohnungen, Mehrfamilienhäusern und Grundstücken im Auftrag von Eigentümern in Rostock und Umgebung.',
+  provider: { '@id': 'https://www.proimma.de/#organization' },
+  termsOfService: 'https://www.proimma.de/wissen/maklerprovision',
+  areaServed: [
+    { '@type': 'City', name: 'Rostock' },
+    {
+      '@type': 'GeoCircle',
+      geoMidpoint: { '@type': 'GeoCoordinates', latitude: '54.08978', longitude: '12.09865' },
+      geoRadius: '100000',
+    },
+  ],
+};
+
+const breadcrumbSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Startseite', item: 'https://www.proimma.de/' },
+    { '@type': 'ListItem', position: 2, name: 'Maklerei', item: 'https://www.proimma.de/maklerei' },
+  ],
+};
+
+// Vermarktungsprozess-Sequenz aus 07 Sektion "Wie der Vermarktungsprozess abläuft"
+const sequenz = [
+  {
+    nummer: '01',
+    name: 'Vorbereitung',
+    text: 'Sichtkontrolle des Objekts, Bestandsaufnahme der Unterlagen, Wertorientierung als Teil der Vorbereitung bei Erteilung des Maklerauftrags. Wesentliche Unterlagen wie Grundbuchauszug, Flurkarte, Bauunterlagen oder Grundrisse, Wohnflächenberechnung und der Energieausweis nach § 80 Gebäudeenergiegesetz werden gesichtet, fehlende Unterlagen werden eingeplant und in der Vermarktung sichtbar gemacht. Der Maklervertrag wird in Textform vor Auftragserteilung zur Sichtung vorgelegt.',
+  },
+  {
+    nummer: '02',
+    name: 'Vermarktungsmaterial',
+    text: 'Standard bei Proimma sind ein hochwertiges Exposé und professionelle Fotografie. Bei jedem Maklerauftrag wird zusätzlich ein eigenes Video von der Immobilie gedreht und Interessenten ausschließlich in einem Videocall präsentiert. Die Videos werden nicht auf Portalen veröffentlicht; sie sind Teil der direkten Käuferansprache.',
+  },
+  {
+    nummer: '03',
+    name: 'Veröffentlichung',
+    text: 'Veröffentlicht wird auf den jeweils passenden Immobilienportalen, abgestimmt auf Objekt, Zielgruppe und Vermarktungsstrategie.',
+  },
+  {
+    nummer: '04',
+    name: 'Anfragebearbeitung und Verhandlung',
+    text: 'Interessenten werden vorqualifiziert, Besichtigungen organisiert, Rückfragen zu Objekt und Unterlagen beantwortet, Bonitätsnachweise von kaufwilligen Interessenten angefordert. Bei mehreren ernsthaften Interessenten wird verhandelt.',
+  },
+  {
+    nummer: '05',
+    name: 'Beurkundung und Übergabe',
+    text: 'Nach Klärung des Käufers wird der Notar ausgewählt, ein Vertragsentwurf erstellt und beiden Parteien zur Prüfung übergeben. Zwischen dem Erhalt des Entwurfs und dem Beurkundungstermin müssen für Verbraucher gesetzlich mindestens vierzehn Tage liegen. Nach Eingang des Kaufpreises folgt die Übergabe der Immobilie mit Protokoll, Schlüsselübergabe und Ablesung von Zählerständen.',
+  },
+];
+
+// Drei Original-Google-Bewertungen aus 07 wörtlich.
+// Datum bewusst weggelassen, weil Zeitraum 2020 bis 2022 inzwischen
+// in der Außendarstellung alt wirkt; Vollname als Quelle bleibt.
+const bewertungen = [
+  {
+    text: 'Herr Dieckmann hat den Verkauf unserer Immobilie sehr professionell durchgeführt, virtuelle Hausbesichtigungen sind gerade jetzt eine sehr gute Alternative. Vielen Dank, dass alles so reibungslos verlaufen ist.',
+    name: 'Franka Tode',
+  },
+  {
+    text: 'Transparente, vollumfängliche und ehrliche digitale Besichtigung. Super Idee in Zeiten von Corona so einen ersten Eindruck von einer Immobilie gewinnen zu können. Herr Dieckmann reagiert schnell, ist freundlich und sehr professionell. Herzlichen Dank!',
+    name: 'Christoph Schubert',
+  },
+  {
+    text: 'Top Makler. Alles lief schnell und problemlos ab. Die Kommunikation war super und wir haben uns sehr gut betreut gefühlt. Herrn Dieckmann können wir als Makler nur empfehlen!',
+    name: 'Florentine Dreier',
+  },
+];
+
+const objektarten = ['Einfamilienhaus', 'Doppel- oder Reihenhaus', 'Eigentumswohnung', 'Mehrfamilienhaus', 'Grundstück'];
+---
+
+<BaseLayout
+  title={title}
+  description={description}
+  ogImage={ogImage}
+  pageSchema={[serviceSchema, breadcrumbSchema]}
+>
+
+  <!-- 01 EDITORIAL-HERO -->
+  <section class="hero-detail" data-sektion="hero-maklerei">
+    <div class="container-page hero-detail-grid">
+      <div class="hero-detail-strich"><div class="ed-strich"></div></div>
+      <div class="ed-index">01 Maklerei</div>
+      <h1 class="hero-detail-headline">Wohnimmobilien-Vermarktung in Rostock und Umgebung.</h1>
+      <p class="hero-detail-subline">Einfamilienhäuser, Eigentumswohnungen, Mehrfamilienhäuser, Grundstücke. Eigenes Video pro Objekt, Präsentation im Videocall, Provisionslogik transparent.</p>
+    </div>
+  </section>
+
+  <!-- 02 WAS MAKLEREI BEI PROIMMA BEDEUTET -->
+  <section class="section-block" data-sektion="maklerei-bedeutet">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">02 Auftrag</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Was Maklerei bei Proimma bedeutet:</h2>
+        <div class="section-body">
+          <p>Proimma vermarktet Wohnimmobilien für Eigentümer vorrangig in Rostock und Umgebung, mit Schwerpunkt im Umkreis von etwa 100 Kilometern, Einzelmandate auch darüber hinaus auf Anfrage. Bei Proimma ist die Maklerei einer von zwei Geschäftsbereichen, sonst nichts. Diese Konzentration sorgt dafür, dass der Vermarktungsprozess für jedes Mandat mit derselben Tiefe geführt wird, ohne Ablenkung durch ein breites Sortiment angrenzender Dienstleistungen.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 SPEKTRUM -->
+  <section class="section-block" data-sektion="maklerei-spektrum">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">03 Spektrum</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Wir vermarkten das volle Spektrum.</h2>
+        <div class="section-body">
+          <p>Wir vermitteln Einfamilienhäuser, Doppel- und Reihenhäuser, Eigentumswohnungen, Mehrfamilienhäuser und Grundstücke. Reine Gewerbeobjekte vermitteln wir nur in Einzelfällen und nicht als Schwerpunkt unserer Tätigkeit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 PROVISIONSLOGIK § 656c BGB als eigene Editorial-Sektion mit Beispielrechnung -->
+  <section class="section-block" data-sektion="maklerei-provision">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">04 Provision</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Provisionslogik nach § 656c BGB.</h2>
+        <div class="section-body">
+          <p>Die Gesamtprovision für die Vermittlung einer Wohnimmobilie beträgt 7,14 Prozent inklusive gesetzlicher Mehrwertsteuer, bezogen auf den notariellen Kaufpreis. Geteilt wird zu gleichen Teilen zwischen Käufer und Verkäufer, also je 3,57 Prozent inklusive Mehrwertsteuer. Fällig wird die Provision ausschließlich im Erfolgsfall mit notarieller Beurkundung. Diese Logik gilt nach § 656c BGB für Eigentumswohnungen und Einfamilienhäuser, wenn der Käufer Verbraucher ist. Bei Mehrfamilienhäusern, Gewerbeobjekten und reinen Grundstücken sind Höhe und Verteilung der Provision frei vereinbar.</p>
+        </div>
+        <p class="provision-link-row">
+          <a href="/wissen/maklerprovision" class="link-arrow" data-cta="cross-link">Wie die Maklerprovision nach § 656c BGB gerechnet wird</a>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 VERMARKTUNGS-SEQUENZ -->
+  <section class="section-block sequenz" data-sektion="maklerei-sequenz">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">05 Mechanik</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Wie ein Maklerauftrag bei Proimma abläuft:</h2>
+        <p class="lead">Eine saubere Vermarktung folgt einer klaren Mechanik. Wir trennen den Prozess in fünf Schritte und machen jeden Schritt für Sie nachvollziehbar.</p>
+        <ol class="sequenz-list">
+          {sequenz.map((step) => (
+            <li class="sequenz-row">
+              <span class="sequenz-num nums">{step.nummer}</span>
+              <div>
+                <div class="sequenz-name">{step.name}</div>
+                <p class="sequenz-text">{step.text}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 BEWERTUNGEN drei Original-Stimmen aus dem Google-Profil
+       Datum bewusst weggelassen wegen Zeitraum 2020 bis 2022.
+       Wahrheitsregel-Pflicht: niemals erfundene Stimmen, niemals Stern-Sammlung allein. -->
+  <section class="bewertungen" data-sektion="maklerei-bewertungen">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">06 Stimmen</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Drei Stimmen aus dem öffentlichen Google-Profil.</h2>
+        <p class="lead">Wie es ist, Proimma als Makler zu beauftragen, beschreiben frühere Auftraggeber selbst. Drei dieser Stimmen lesen Sie wörtlich, alle weiteren direkt im Google-Profil.</p>
+        <ul class="bewertungen-list">
+          {bewertungen.map((b, idx) => (
+            <li class="bewertung-row">
+              <span class="bewertung-num nums">{String(idx + 1).padStart(2, '0')}</span>
+              <blockquote class="bewertung-quote">
+                <p>„{b.text}"</p>
+                <footer class="bewertung-name">{b.name}</footer>
+              </blockquote>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 MARKTWERTFINDUNGS-ANFRAGE (Phase 1: E-Mail-Versand an info@proimma.de)
+       TODO Phase-1b: Plunk-Anbindung einbauen, sobald Plunk-Auftragsverarbeitungs-
+       vertrag eintrifft. Aktuell E-Mail-Versand an info@proimma.de mit Betreff
+       "Marktwertfindungs-Anfrage [Vorname Nachname]" und allen Form-Inhalten
+       im Mail-Body. Server-Submission-Handler /api/marktwertfindung leitet die
+       Form-Daten an den All-Inkl-Mailer weiter (siehe API-Stub-Kommentar dort).
+       Felder aus Workspace-Text 14: Vorname, Nachname, E-Mail (Pflicht);
+       Objektart-Auswahl, Lage (Pflicht); Telefonnummer, Bearbeitungszeitraum (optional);
+       Hidden-Feld Anliegen=Marktwertfindung; Honeypot-Feld website. -->
+  <section class="markt" data-sektion="marktwertfindung-form">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">07 Marktwertfindung</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Marktwertfindung anfordern.</h2>
+        <div class="section-body">
+          <p>Überlegen Sie, Ihre Wohnimmobilie zu verkaufen, sind sich aber noch nicht sicher, in welchem Wertbereich Sie sich bewegen? Möchten Sie eine belastbare Einschätzung, bevor Sie ein Verkaufsmandat erteilen? Genau das leistet eine Marktwertfindung von Proimma.</p>
+          <p>Sie erhalten von Proimma einen aktuellen, realistischen Marktwert für Ihre Wohnimmobilie. Schriftlich, prüfbar, konkret. Keine Spanne und kein Korridor.</p>
+          <p>Die Marktwertfindung ist eine kostenpflichtige Einzelleistung. Den Preis nennen wir Ihnen nach Eingang Ihrer Anfrage, gemeinsam mit der Vorlauf-Zeit für die Erstellung. Beauftragen Sie Proimma im Anschluss mit dem Verkauf, verrechnen wir den für die Marktwertfindung bereits gezahlten Betrag in voller Höhe mit der späteren Provisions-Schlussrechnung. Die Marktwertfindung ist eine Vorstufe oder eine Alternative zum Verkaufsauftrag, ohne Verpflichtung zu einer späteren Beauftragung.</p>
+          <p>Tragen Sie die Eckdaten Ihrer Immobilie ein, dann melden wir uns innerhalb eines Werktages mit Preis und Vorlauf-Zeit.</p>
+        </div>
+
+        <form
+          class="form-grid"
+          method="POST"
+          action="/api/marktwertfindung"
+          aria-label="Anfrage Marktwertfindung"
+          novalidate
+        >
+          <div class="field">
+            <label for="markt-vorname">Vorname <span aria-hidden="true">*</span></label>
+            <input type="text" id="markt-vorname" name="vorname" required aria-required="true" autocomplete="given-name" />
+          </div>
+          <div class="field">
+            <label for="markt-nachname">Nachname <span aria-hidden="true">*</span></label>
+            <input type="text" id="markt-nachname" name="nachname" required aria-required="true" autocomplete="family-name" />
+          </div>
+          <div class="field field-full">
+            <label for="markt-mail">E-Mail-Adresse <span aria-hidden="true">*</span></label>
+            <input type="email" id="markt-mail" name="email" required aria-required="true" autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="markt-objektart">Objektart <span aria-hidden="true">*</span></label>
+            <select id="markt-objektart" name="objektart" required aria-required="true">
+              <option value="">Bitte wählen.</option>
+              {objektarten.map((o) => <option value={o}>{o}</option>)}
+            </select>
+          </div>
+          <div class="field">
+            <label for="markt-telefon">Telefonnummer</label>
+            <input type="tel" id="markt-telefon" name="telefon" aria-describedby="markt-telefon-hint" autocomplete="tel" />
+            <p id="markt-telefon-hint" class="field-hint">Telefon ist freiwillig, hilft aber bei dringenden Rückfragen.</p>
+          </div>
+          <div class="field field-full">
+            <label for="markt-lage">Lage der Immobilie <span aria-hidden="true">*</span></label>
+            <input type="text" id="markt-lage" name="lage" required aria-required="true" aria-describedby="markt-lage-hint" />
+            <p id="markt-lage-hint" class="field-hint">Bitte geben Sie die Immobilie oder mindestens den Ort an.</p>
+          </div>
+          <div class="field field-full">
+            <label for="markt-zeitraum">Gewünschter Bearbeitungszeitraum</label>
+            <input type="text" id="markt-zeitraum" name="zeitraum" autocomplete="off" />
+          </div>
+
+          {/* Hidden-Feld: Anliegen vorbelegt für E-Mail-Betreff-Generierung. */}
+          <input type="hidden" name="anliegen" value="Marktwertfindung" />
+
+          {/* Honeypot: Bots füllen es aus, echte Nutzer sehen es nicht. */}
+          <div class="honeypot" aria-hidden="true">
+            <label for="markt-website">Bitte leer lassen.</label>
+            <input type="text" id="markt-website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="field field-full">
+            <button type="submit" class="btn-primary" data-cta="marktwertfindung-anfrage">Marktwertfindung anfragen</button>
+          </div>
+          <p class="form-hint-row">Ihre Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht für Werbung Dritter weitergegeben. Details in der <a href="/datenschutz" class="inline-link">Datenschutzerklärung</a>.</p>
+          <p class="form-status" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 DIREKTER ANSPRECHPARTNER MIT BACKUP-NETZWERK -->
+  <section class="section-block" data-sektion="maklerei-ansprechpartner">
+    <div class="container-page section-grid">
+      <div class="section-meta reveal"><div class="ed-index">08 Direktheit</div></div>
+      <div class="section-content reveal">
+        <h2 class="section-headline">Direkter Ansprechpartner mit Backup-Netzwerk.</h2>
+        <div class="section-body">
+          <p>Eigentümer sprechen bei Proimma direkt mit André Dieckmann, ohne Sachbearbeiter-Ebene und ohne Weiterleitung über mehrere Mitarbeiter. Diese Direktheit ist gestützt auf ausgewählte Handwerker aus dem beruflichen Netzwerk des Inhabers. Im Vermarktungsprozess steht dieses Netzwerk für Renovierungs- und Reparaturempfehlungen am Objekt, kurzfristige Sichtkontrollen und ergänzende Begleitaufgaben bereit. Backup ist Teil der Struktur, nicht Reaktion auf den Einzelfall.</p>
+          <p>Für die Maklertätigkeit besteht eine Vermögensschadenhaftpflicht-Versicherung. Die einheitliche gewerberechtliche Erlaubnis nach § 34c Absatz 1 Satz 1 Nummer 1 und Nummer 4 GewO wurde der Proimma GmbH durch die Hanse- und Universitätsstadt Rostock am 31.03.2026 erteilt.</p>
+        </div>
+        <p class="abschluss-zeile">Wenn Ihr Fall nicht zu meinem Schwerpunkt passt, sage ich das offen.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 CROSS-LINKS auf Wissens-Cluster -->
+  <CrossLinks
+    edIndex="09 Wissen vertiefen"
+    headline="Lesen Sie weiter zum Thema Maklerei."
+    links={[
+      { href: '/wissen/maklerprovision', label: 'Wie die Maklerprovision nach § 656c BGB gerechnet wird' },
+      { href: '/wissen/verkauf-wohnimmobilie', label: 'Verkauf einer Wohnimmobilie in Rostock im Detail' },
+    ]}
+  />
+
+  <!-- 10 CAL.EU-TERMIN-SEKTION -->
+  <CalEmbed edIndex="10 Erstgespräch" mountId="cal-mount-maklerei" />
+
+</BaseLayout>
+
+<style>
+  /* HERO DETAIL und SECTION-BLOCK identische Tokens wie /hausverwaltung */
+  .hero-detail { padding-block: 96px 144px; }
+  .hero-detail-grid {
+    display: grid;
+    grid-template-columns: 1fr 11fr;
+  }
+  .hero-detail-strich,
+  .hero-detail .ed-index,
+  .hero-detail-headline,
+  .hero-detail-subline { grid-column: 2; }
+  .hero-detail-strich .ed-strich { margin-bottom: 32px; }
+  .hero-detail .ed-index { margin-bottom: 24px; }
+  .hero-detail-headline {
+    font-size: clamp(2.75rem, 6.4vw, 6.5rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    max-width: 18ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+  .hero-detail-subline {
+    font-size: clamp(1.125rem, 1.5vw, 1.5rem);
+    line-height: 1.45;
+    font-weight: 300;
+    color: var(--color-fg-secondary);
+    max-width: 56ch;
+  }
+  @media (max-width: 1024px) {
+    .hero-detail { padding-block: 56px 80px; }
+    .hero-detail-grid { grid-template-columns: 1fr; }
+    .hero-detail-strich,
+    .hero-detail .ed-index,
+    .hero-detail-headline,
+    .hero-detail-subline { grid-column: 1; }
+  }
+
+  .section-block {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+  .section-grid {
+    display: grid;
+    grid-template-columns: 4fr 8fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .section-meta { position: sticky; top: 120px; }
+  .section-headline {
+    font-size: clamp(2.25rem, 4.2vw, 3.75rem);
+    line-height: 1.05;
+    font-weight: 300;
+    letter-spacing: -0.025em;
+    margin-bottom: 32px;
+    max-width: 22ch;
+    color: var(--color-fg-primary);
+    text-wrap: balance;
+  }
+  .section-body {
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-secondary);
+    max-width: 62ch;
+  }
+  .section-body p { margin-bottom: 24px; }
+  .section-body p:last-child { margin-bottom: 0; }
+  .provision-link-row { margin-top: 32px; }
+  .abschluss-zeile {
+    margin-top: 48px;
+    font-size: 1.25rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--color-fg-primary);
+    max-width: 56ch;
+    border-left: 2px solid var(--color-accent);
+    padding-left: 24px;
+  }
+  @media (max-width: 1024px) {
+    .section-block { padding-block: 80px; }
+    .section-grid { grid-template-columns: 1fr; gap: 32px; }
+    .section-meta { position: static; }
+  }
+
+  /* SEQUENZ-LIST analog hausverwaltung */
+  .sequenz-list { list-style: none; padding: 0; margin-top: 56px; }
+  .sequenz-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 32px;
+    border-top: 1px solid var(--color-line);
+  }
+  .sequenz-row:last-child { border-bottom: 1px solid var(--color-line); }
+  .sequenz-num {
+    font-size: 0.875rem; font-weight: 500; letter-spacing: 0.18em;
+    color: var(--color-accent); padding-top: 8px;
+  }
+  .sequenz-name {
+    font-size: 1.5rem; font-weight: 400; line-height: 1.25;
+    color: var(--color-fg-primary);
+  }
+  .sequenz-text {
+    font-size: 1.0625rem; line-height: 1.6;
+    color: var(--color-fg-secondary); margin-top: 12px; max-width: 62ch;
+  }
+
+  /* BEWERTUNGEN */
+  .bewertungen {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+    background: var(--color-bg-elevated);
+  }
+  .bewertungen-list { list-style: none; padding: 0; margin-top: 56px; }
+  .bewertung-row {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 32px;
+    padding-block: 40px;
+    border-top: 1px solid var(--color-line);
+  }
+  .bewertung-row:last-child { border-bottom: 1px solid var(--color-line); }
+  .bewertung-num {
+    font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.18em;
+    color: var(--color-fg-secondary); padding-top: 8px;
+  }
+  .bewertung-quote { margin: 0; max-width: 62ch; }
+  .bewertung-quote p {
+    font-size: 1.25rem; line-height: 1.55;
+    font-weight: 300; color: var(--color-fg-primary);
+    margin: 0 0 16px 0;
+  }
+  .bewertung-name {
+    font-size: 0.875rem; font-weight: 500;
+    color: var(--color-fg-secondary);
+    letter-spacing: 0.04em;
+  }
+  @media (max-width: 1024px) {
+    .bewertungen { padding-block: 80px; }
+  }
+
+  /* MARKTWERTFINDUNG-FORM (Phase 1: E-Mail-Versand) */
+  .markt {
+    padding-block: 144px;
+    border-top: 1px solid var(--color-line-faint);
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 56px;
+    max-width: 56ch;
+  }
+  .field { display: flex; flex-direction: column; gap: 8px; }
+  .field-full { grid-column: 1 / -1; }
+  .field label {
+    font-size: 0.8125rem; font-weight: 500; letter-spacing: 0.06em;
+    color: var(--color-fg-primary);
+  }
+  .field input,
+  .field select {
+    font: inherit; font-size: 1rem;
+    padding: 14px 16px;
+    border: 1px solid var(--color-line);
+    background: var(--color-bg-primary);
+    color: var(--color-fg-primary);
+    min-height: 48px;
+    border-radius: 0;
+  }
+  .field input:focus-visible,
+  .field select:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+    border-color: var(--color-fg-primary);
+  }
+  .field-hint {
+    font-size: 0.8125rem; color: var(--color-fg-secondary); margin-top: 4px;
+  }
+  .form-hint-row {
+    grid-column: 1 / -1;
+    font-size: 0.8125rem; color: var(--color-fg-secondary);
+    margin: 0;
+  }
+  .inline-link {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .form-status {
+    grid-column: 1 / -1;
+    font-size: 0.9375rem; color: var(--color-fg-secondary);
+    margin: 0; min-height: 1.5em;
+  }
+  .honeypot {
+    position: absolute;
+    left: -9999px; top: -9999px;
+    height: 0; width: 0; overflow: hidden;
+  }
+  @media (max-width: 1024px) {
+    .markt { padding-block: 80px; }
+    .form-grid { grid-template-columns: 1fr; }
+  }
+</style>
