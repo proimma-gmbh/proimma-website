@@ -4,7 +4,6 @@
   der Bauphase einen "Cannot read properties of undefined (reading 'reduce')"-
   Fehler wirft (auch bei mehreren Routen, vor und nach Anpassung der Konfig).
   Vor Live-Gang Plugin-Version aktualisieren oder bei diesem Stand belassen.
-  Priority und Changefreq exakt nach DESIGN.md Sektion 8.
   Alle absoluten URLs auf der Live-Domain, weil Suchmaschinen sie verarbeiten.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">

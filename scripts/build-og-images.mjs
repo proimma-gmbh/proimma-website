@@ -1,8 +1,7 @@
 // OG-Bilder-Generator (Plural) — sieben Vorschau-Kacheln
-// Stand 06.05.2026, OG-Bilder-Bauauftrag.
+// Stand 06.05.2026.
 //
-// Reine Typografie-Komposition gemäß BRIEFS.md Sektion 1.5, 1.6 bis 1.10
-// und 1.15. Ersetzt das alte Foto-OG-Konzept (scripts/build-og-image.mjs,
+// Reine Typografie-Komposition für sieben OG-Vorschau-Kacheln. Ersetzt das alte Foto-OG-Konzept (scripts/build-og-image.mjs,
 // Singular) ab dem 06.05.2026 und liefert Vorschau-Kacheln für alle sechs
 // Hauptseiten plus ein Default-Fallback-Bild.
 //

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  OG-Bild Startseite gemäß BRIEFS.md Sektion 1.5.
+  OG-Bild Startseite.
   Editorial-Index "01" oben links Hellblau, kurzer Akzentstrich, Hauptclaim
   in display-l Hanken Grotesk Light auf vier Zeilen, Wortmarke "Proimma"
   unten links in 36 px Light. Off-White-Hintergrund.
-  Stand 06.05.2026, OG-Bilder-Bauauftrag.
+  Stand 06.05.2026.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <rect width="1200" height="630" fill="#FAFAF8"/>

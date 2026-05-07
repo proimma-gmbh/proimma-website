@@ -1,6 +1,6 @@
 // Tailwind-Konfiguration Proimma Relaunch
 // Stand 02.05.2026, Bau-Block 1.
-// Editorial-Designsystem nach DESIGN.md vom 29.04.2026.
+// Editorial-Designsystem mit Hanken Grotesk Variable und Hellblau-Akzent.
 // Farb-Tokens und Spacing leiten sich aus den CSS-Variablen
 // in src/styles/global.css ab, damit Tokens single source of truth bleiben.
 

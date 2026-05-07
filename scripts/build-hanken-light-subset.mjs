@@ -27,7 +27,7 @@ const MEDIUM_TTF = resolve(REPO_ROOT, 'scripts/fonts/HankenGrotesk-Medium.ttf');
 // Subset-Text: alle Zeichen die in Headline und Wortmarke vorkommen.
 // Conservativ: zusätzlich alle Buchstaben des Alphabets plus Ziffern,
 // damit zukünftige Headline-Varianten ohne Re-Subset funktionieren.
-// Erweitert am 06.05.2026 (OG-Bilder-Bauauftrag) um „é" für „André",
+// Erweitert am 06.05.2026 um „é" für „André",
 // um „&" und „@" als typografische Reserve und um Regular (wght=400)
 // für die Default-OG-Subline.
 const SUBSET_TEXT =
