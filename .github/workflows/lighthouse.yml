@@ -1,0 +1,59 @@
+name: Lighthouse CI
+
+# Hard-Fail-Qualitäts-Prüfung auf Pull-Requests gegen main.
+# Bauleitlinie verankert in 00_Headquarter/tools-workflows.md (29.04.2026).
+# Score-Schwelle 0.95 in den vier Kategorien Performance, Accessibility,
+# Best Practices, SEO laut lighthouserc.json. Verletzung führt zum Hard-Fail.
+# Stand 07.05.2026, Phase-5-Bau-Disziplin-Aktivierung.
+
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  lighthouse:
+    name: Lighthouse-CI Pull-Request-Check
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Repository auschecken
+        uses: actions/checkout@v4
+
+      - name: Node 20 einrichten
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Abhängigkeiten installieren
+        run: npm ci
+
+      - name: Astro-Build erzeugen
+        run: npm run build
+
+      - name: Pfad-Cleanup für relative Asset-Auflösung
+        run: node scripts/local-preview-pathfix.mjs
+
+      - name: Lighthouse-CI ausführen
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+      - name: Steuer-Dateien-Check (robots.txt und sitemap.xml als Status-200-Stichprobe)
+        run: |
+          npx --yes http-server ./dist -p 4322 --silent &
+          SERVER_PID=$!
+          sleep 3
+          ROBOTS_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4322/robots.txt)
+          SITEMAP_STATUS=$(curl -s -o /dev/null -w "%{http_code}" http://localhost:4322/sitemap.xml)
+          kill $SERVER_PID 2>/dev/null || true
+          echo "robots.txt: $ROBOTS_STATUS"
+          echo "sitemap.xml: $SITEMAP_STATUS"
+          if [ "$ROBOTS_STATUS" != "200" ] || [ "$SITEMAP_STATUS" != "200" ]; then
+            echo "Steuer-Datei nicht erreichbar, Workflow scheitert."
+            exit 1
+          fi
