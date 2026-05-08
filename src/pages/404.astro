@@ -61,15 +61,17 @@ const description = 'Diese Adresse existiert auf www.proimma.de nicht.';
   .error-link {
     display: inline-block;
     font-size: 1.125rem;
-    color: #34AEEB;
-    border-bottom: 1px solid #34AEEB;
+    color: var(--color-fg-primary);
+    text-decoration: underline;
+    text-decoration-color: #34AEEB;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 6px;
     padding-bottom: 4px;
-    text-decoration: none;
   }
   .error-link:hover,
   .error-link:focus-visible {
     color: var(--color-fg-primary);
-    border-bottom-color: var(--color-fg-primary);
+    text-decoration-color: var(--color-fg-primary);
   }
   @media (max-width: 1024px) {
     .error-section {
