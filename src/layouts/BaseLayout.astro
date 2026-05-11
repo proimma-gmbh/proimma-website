@@ -38,7 +38,6 @@ interface Props {
   articleAuthor?: string;
   /** Optional für ogType="article": Sektions-Bezeichnung (z. B. "Wissen für Eigentümer"). */
   articleSection?: string;
-  noindex?: boolean;
   /** Optionales seiten-spezifisches JSON-LD-Schema (Service, Person, Article, BreadcrumbList). */
   pageSchema?: Record<string, unknown> | Record<string, unknown>[];
   /** Unterdrückt das rootSchema- und pageSchema-Markup. Aktiv auf der 404-Fehler-Seite,
@@ -62,7 +61,6 @@ const {
   articlePublishedTime,
   articleAuthor,
   articleSection,
-  noindex = true,
   pageSchema,
   suppressSchema = false,
 } = Astro.props;
@@ -241,7 +239,6 @@ const pageSchemas = pageSchema
     </script>
     <title>{fullTitle}</title>
     <meta name="description" content={description} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
     <link rel="canonical" href={url} />
 
     {/* Open Graph Pflicht-Tag-Set v20 (OG-Bild-Einbau-Schritt) */}
@@ -283,12 +280,16 @@ const pageSchemas = pageSchema
     ))}
 
     {/*
-      Plausible-Script-Stub. data-domain wird in der Bauphase auf
-      relaunch.proimma.de gesetzt, vor Go-Live auf www.proimma.de umgestellt.
-      Während der Bauphase mit noindex=true bleibt das Script auskommentiert,
-      sodass keine Bau-Daten Plausible erreichen, bis Andre es freischaltet.
+      Plausible-Script-Stub. data-domain wird vor Aktivierung auf
+      proimma.de gesetzt. Aktivierung erst, wenn die Meta-Ads-Testkampagne
+      tatsächlich startet (Memory-Entscheidung vom 04.05.2026).
       <script defer data-domain="proimma.de" src="https://plausible.io/js/script.tagged-events.outbound-links.js"></script>
     */}
+
+    {/* Optionaler Slot für seitenspezifische Head-Tags (zum Beispiel
+        ein Inline-Robots-Tag auf der Fehler-Seite, fest verdrahtet,
+        unabhängig von Props. Andere Seiten lassen den Slot leer. */}
+    <slot name="head" />
   </head>
 
   <body data-page-slug={Astro.url.pathname.replace(/^\//, '').split('/')[0] || 'startseite'}>
