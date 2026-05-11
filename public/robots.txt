@@ -1,13 +1,5 @@
-# robots.txt für Bauphase auf relaunch.proimma.de
-# Belt-and-Suspenders zusätzlich zum serverseitigen Verzeichnisschutz.
-# Während der Bauphase wird die Webseite weder indiziert noch gecrawlt.
-
 User-agent: *
-Disallow: /
 
-# Live-Variante für www.proimma.de (wird vor Go-Live aktiviert):
-# User-agent: *
-# Allow: /
-# Disallow: /admin/
-# Disallow: /api/
-# Sitemap: https://www.proimma.de/sitemap-index.xml
+Allow: /
+
+Sitemap: https://www.proimma.de/sitemap.xml

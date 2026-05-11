@@ -3,6 +3,9 @@ dist/
 upload-v*/
 probelauf-*/
 
+# Lighthouse-CI-Reports (lokale Lauf-Artefakte)
+.lighthouseci/
+
 # Dependencies
 node_modules/
 

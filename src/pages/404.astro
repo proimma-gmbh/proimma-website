@@ -15,9 +15,12 @@ const description = 'Diese Adresse existiert auf www.proimma.de nicht.';
 <BaseLayout
   title={title}
   description={description}
-  noindex={true}
   suppressSchema={true}
 >
+
+  <Fragment slot="head">
+    <meta name="robots" content="noindex, nofollow" />
+  </Fragment>
 
   <section class="error-section" data-sektion="error-404">
     <div class="container-page">
