@@ -237,6 +237,11 @@ const objektarten = ['Einfamilienhaus', 'Doppel- oder Reihenhaus', 'Eigentumswoh
           <p>Tragen Sie die Eckdaten Ihrer Immobilie ein, dann melden wir uns innerhalb eines Werktages mit Preis und Vorlauf-Zeit.</p>
         </div>
 
+        <p class="form-anfrage-hinweis">Eine konkrete Marktwertfindung für Ihre Immobilie erstellen wir auf Anfrage per E-Mail an info@proimma.de oder telefonisch unter 0173-6335917. Wir melden uns innerhalb eines Werktages und besprechen mit Ihnen die nächsten Schritte.</p>
+
+        {/* Form-Strecke am 08.05.2026 für den Live-Gang vorübergehend deaktiviert; Live-Gang am 11.05.2026, Form bleibt deaktiviert bis Plunk-Anbindung in Phase 1b.
+            Vorläufiger Anfrage-Modus per E-Mail oder Telefon (siehe Hinweis oberhalb). Form-Felder, Honeypot und Submission-Logik sind als Kommentar erhalten und werden mit der Plunk-Anbindung (Domain-Verifikation per DNS-Eintrag bei All-Inkl, Plunk-API-Schlüssel) wieder scharf geschaltet, sobald der Plunk-Auftragsverarbeitungsvertrag eintrifft (Memory-Pendenz erwartet zwischen 14.05.2026 und 15.05.2026). Bis dahin bleibt der Code-Block unsichtbar im Build-Output.
+
         <form
           class="form-grid"
           method="POST"
@@ -260,7 +265,7 @@ const objektarten = ['Einfamilienhaus', 'Doppel- oder Reihenhaus', 'Eigentumswoh
             <label for="markt-objektart">Objektart <span aria-hidden="true">*</span></label>
             <select id="markt-objektart" name="objektart" required aria-required="true">
               <option value="">Bitte wählen.</option>
-              {objektarten.map((o) => <option value={o}>{o}</option>)}
+              (Objektarten-Map)
             </select>
           </div>
           <div class="field">
@@ -278,10 +283,8 @@ const objektarten = ['Einfamilienhaus', 'Doppel- oder Reihenhaus', 'Eigentumswoh
             <input type="text" id="markt-zeitraum" name="zeitraum" autocomplete="off" />
           </div>
 
-          {/* Hidden-Feld: Anliegen vorbelegt für E-Mail-Betreff-Generierung. */}
           <input type="hidden" name="anliegen" value="Marktwertfindung" />
 
-          {/* Honeypot: Bots füllen es aus, echte Nutzer sehen es nicht. */}
           <div class="honeypot" aria-hidden="true">
             <label for="markt-website">Bitte leer lassen.</label>
             <input type="text" id="markt-website" name="website" tabindex="-1" autocomplete="off" />
@@ -290,9 +293,11 @@ const objektarten = ['Einfamilienhaus', 'Doppel- oder Reihenhaus', 'Eigentumswoh
           <div class="field field-full">
             <button type="submit" class="btn-primary" data-cta="marktwertfindung-anfrage">Marktwertfindung anfragen</button>
           </div>
-          <p class="form-hint-row">Ihre Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht für Werbung Dritter weitergegeben. Details in der <a href="/datenschutz" class="inline-link">Datenschutzerklärung</a>.</p>
+          <p class="form-hint-row">Ihre Daten werden ausschließlich zur Bearbeitung Ihrer Anfrage verwendet und nicht für Werbung Dritter weitergegeben. Details in der Datenschutzerklärung.</p>
           <p class="form-status" role="status" aria-live="polite"></p>
         </form>
+
+        */}
       </div>
     </div>
   </section>
