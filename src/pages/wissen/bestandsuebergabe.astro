@@ -12,6 +12,7 @@ import ArticleLayout from '@/layouts/ArticleLayout.astro';
 
 const title = 'Wie eine saubere Bestandsübergabe kaufmännisch und technisch abläuft';
 const description = 'Stichtag-Logik, kaufmännische Übergabe von Mietverträgen bis Mietkautionen, technische Übergabe von Plänen bis Schlüsselbestand und der Umgang mit nicht-kooperativer Vor-Verwaltung.';
+const datePublished = '2026-05-11';
 ---
 
 <ArticleLayout
@@ -19,6 +20,7 @@ const description = 'Stichtag-Logik, kaufmännische Übergabe von Mietverträgen
   description={description}
   slug="bestandsuebergabe"
   leseDauer="6 min"
+  publishedTime={datePublished}
   crossLinks={[
     { href: '/wissen/verwalterwechsel', label: 'Was Eigentümer beim Wechsel der Hausverwaltung prüfen sollten' },
     { href: '/wissen/maklerprovision', label: 'Wie die Maklerprovision nach § 656c BGB konkret gerechnet wird' },

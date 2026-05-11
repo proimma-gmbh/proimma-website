@@ -9,7 +9,8 @@
 //   04 Article-Schema und BreadcrumbList als JSON-LD
 //
 // Cross-Link-Matrix wird pro Seite übergeben, sachlich-beschreibende Anker.
-// datePublished bleibt als TODO bis Live-Gang.
+// datePublished pro Artikel über Prop publishedTime gesetzt; Default ist
+// der Live-Gang-Tag 11.05.2026.
 
 import BaseLayout from '@/layouts/BaseLayout.astro';
 import CrossLinks from '@/components/CrossLinks.astro';
@@ -25,8 +26,7 @@ interface Props {
   slug: string;
   leseDauer: string;
   crossLinks: CrossLink[];
-  /** Optionales ISO-Datum der Erstveröffentlichung (Default: Bau-Stempel 2026-05-03,
-      wird beim Live-Gang pro Artikel auf das tatsächliche Datum gesetzt). */
+  /** Optionales ISO-Datum der Erstveröffentlichung; Default ist der Live-Gang-Tag. */
   publishedTime?: string;
 }
 
@@ -36,7 +36,7 @@ const {
   slug,
   leseDauer,
   crossLinks,
-  publishedTime = '2026-05-03',
+  publishedTime = '2026-05-11',
 } = Astro.props;
 
 const articleUrl = `https://www.proimma.de/wissen/${slug}`;
@@ -50,10 +50,6 @@ const articleSchema = {
   url: articleUrl,
   author: { '@id': 'https://www.proimma.de/ueber-proimma#person' },
   publisher: { '@id': 'https://www.proimma.de/#organization' },
-  // datePublished wird beim Live-Gang auf das tatsächliche Veröffentlichungs-
-  // Datum gesetzt; in der Bauphase als 2026-05-03 als Bau-Stempel verwendet,
-  // damit Schema-Validierer keine Pflichtfeld-Meldung werfen. Vor Live-Gang
-  // pro Artikel auf das tatsächliche Datum prüfen (TODO).
   datePublished: publishedTime,
   inLanguage: 'de-DE',
 };

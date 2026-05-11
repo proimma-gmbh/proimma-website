@@ -12,6 +12,7 @@ import ArticleLayout from '@/layouts/ArticleLayout.astro';
 
 const title = 'Was Eigentümer beim Verkauf einer Wohnimmobilie in Rostock erwarten dürfen';
 const description = 'Der Immobilienverkauf als Prozess in mehreren Phasen. Vorbereitung, Vermarktungsphase, Beurkundung, Übergabe, Nettoerlös und drei häufige Fehlannahmen.';
+const datePublished = '2026-05-11';
 ---
 
 <ArticleLayout
@@ -19,6 +20,7 @@ const description = 'Der Immobilienverkauf als Prozess in mehreren Phasen. Vorbe
   description={description}
   slug="verkauf-wohnimmobilie"
   leseDauer="6 min"
+  publishedTime={datePublished}
   crossLinks={[
     { href: '/wissen/maklerprovision', label: 'Wie die Maklerprovision nach § 656c BGB konkret gerechnet wird' },
     { href: '/wissen/bestandsuebergabe', label: 'Wie eine saubere Bestandsübergabe kaufmännisch und technisch abläuft' },
