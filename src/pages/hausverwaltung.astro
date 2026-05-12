@@ -263,18 +263,21 @@ const verzicht = [
           <p>Ein Verwalterwechsel ist eine Entscheidung mit Folgen für die nächsten Jahre. Welche Frist gilt für die Kündigung der bestehenden Verwaltung? Welche Unterlagen müssen Sie vom alten Verwalter anfordern? Wie sieht eine saubere Übergabe an die neue Verwaltung aus? Welche Information bekommen die Mieter und ab wann?</p>
           <p>Die Anleitung beantwortet diese Fragen in fünf konkreten Schritten. Sie geht jeden Schritt mit prüfbaren Hinweisen durch: zur Frist und Form der Kündigung, zu den Unterlagen, die der alte Verwalter herausgeben muss, zur Stichtag-Logik der Übergabe, zur sachlichen Mieter-Information und zur sauberen ersten Abrechnung nach dem Wechsel. Sachlich, ohne Werbung, ohne Versprechen, die wir nicht halten können.</p>
           <p>Wenn Sie nach der Lektüre der Anleitung mit uns sprechen möchten, finden Sie alle Kontaktwege auf der Kontakt-Seite. Wenn Sie sich nach der Lektüre für eine andere Verwaltung entscheiden, hat die Anleitung Ihnen trotzdem geholfen. Beides ist in Ordnung.</p>
-          <p>Tragen Sie Ihren Namen und Ihre E-Mail-Adresse ein, optional auch Telefonnummer und Anliegen, dann senden wir Ihnen die Anleitung als PDF zu. Eine Bestätigungs-Mail mit dem Download-Link wird im Doppelt-Opt-In-Verfahren versandt. Ihre Daten werden nicht für Werbung Dritter verwendet, Details in der <a href="/datenschutz" class="inline-link">Datenschutzerklärung</a>.</p>
+          <p>Tragen Sie Ihren Namen und Ihre E-Mail-Adresse ein, dann senden wir Ihnen die Anleitung als PDF zu. Eine Bestätigungs-Mail mit dem Download-Link wird im Doppelt-Opt-In-Verfahren versandt. Ihre Daten werden nicht für Werbung Dritter verwendet, Details in der <a href="/datenschutz" class="inline-link">Datenschutzerklärung</a>.</p>
         </div>
 
-        <p class="form-anfrage-hinweis">Die Anleitung „Hausverwalter wechseln in fünf Schritten" senden wir Ihnen auf Anfrage per E-Mail an info@proimma.de zu. Bitte schreiben Sie uns kurz, wir senden Ihnen die Anleitung als PDF an Ihre angegebene E-Mail-Adresse.</p>
-
-        {/* Form-Strecke am 08.05.2026 für den Live-Gang vorübergehend deaktiviert; Live-Gang am 11.05.2026, Form bleibt deaktiviert bis Brevo-Anbindung in Phase 1b.
-            Vorläufiger Anfrage-Modus per E-Mail (siehe Hinweis oberhalb). Form-Felder, Honeypot und Submission-Logik sind als Kommentar erhalten und werden in einem eigenen Folge-Auftrag mit der Brevo-Anbindung (Doppelt-Opt-In, DKIM/SPF im All-Inkl-DNS, Brevo-API-Schlüssel) wieder scharf geschaltet. Bis dahin bleibt der Code-Block unsichtbar im Build-Output.
-
+        <!-- Brevo-Anbindung seit 12.05.2026 nachmittags. Form POST-et direkt
+             an die Brevo-Public-Form-URL für die Liste „Anleitung Hausverwalter
+             wechseln in fünf Schritten" mit Doppelt-Opt-In. Nach Klick auf den
+             Bestätigungslink in der E-Mail erhält der Eigentümer die finale
+             Bestätigungs-Mail mit dem PDF-Download-Link. Brevo-Feld-Konvention:
+             FIRSTNAME, LASTNAME, EMAIL als Pflichtfelder, locale=de, html_type=simple,
+             email_address_check als Brevo-eigener Honeypot. -->
         <form
           class="form-grid"
           method="POST"
-          action="/api/anleitung"
+          action="https://b596ced0.sibforms.com/serve/MUIFAGzTcUFTuTrIX0TFYWYfg1Et9ZuaCBbZuPFkJhMjmA9XwLMSQzzSbi5P1dbGGs7huNrc41Xl4_8h1WYkXkjCFCO5Q0irVPSD-AiJ_TjNPmlbleL98dheTHDgABMYa7EEzWB-OhL4PnRmWX0GSV5xoeciZKqaSBXgy0uIKcdGamXI_wtrsyyacxguc8zLDCV9IhWKTR21SBL6PA=="
+          enctype="multipart/form-data"
           aria-label="Anmeldung Anleitung Hausverwalter wechseln"
           novalidate
         >
@@ -283,41 +286,32 @@ const verzicht = [
 
             <div class="field">
               <label for="anleitung-vorname">Vorname <span aria-hidden="true">*</span></label>
-              <input type="text" id="anleitung-vorname" name="vorname" required aria-required="true" autocomplete="given-name" />
+              <input type="text" id="anleitung-vorname" name="FIRSTNAME" required aria-required="true" autocomplete="given-name" />
             </div>
             <div class="field">
               <label for="anleitung-nachname">Nachname <span aria-hidden="true">*</span></label>
-              <input type="text" id="anleitung-nachname" name="nachname" required aria-required="true" autocomplete="family-name" />
+              <input type="text" id="anleitung-nachname" name="LASTNAME" required aria-required="true" autocomplete="family-name" />
             </div>
             <div class="field field-full">
               <label for="anleitung-mail">E-Mail-Adresse <span aria-hidden="true">*</span></label>
-              <input type="email" id="anleitung-mail" name="email" required aria-required="true" aria-describedby="anleitung-mail-hint" autocomplete="email" inputmode="email" />
+              <input type="email" id="anleitung-mail" name="EMAIL" required aria-required="true" aria-describedby="anleitung-mail-hint" autocomplete="email" inputmode="email" />
               <p id="anleitung-mail-hint" class="field-hint">Wir senden den Bestätigungslink an diese Adresse.</p>
             </div>
 
-            <div class="field field-full">
-              <label for="anleitung-telefon">Telefonnummer (optional)</label>
-              <input type="tel" id="anleitung-telefon" name="telefon" autocomplete="tel" inputmode="tel" />
-            </div>
-
-            <div class="field field-full">
-              <label for="anleitung-anliegen">Anliegen oder Frage (optional)</label>
-              <textarea id="anleitung-anliegen" name="anliegen" rows="4" maxlength="1000"></textarea>
-            </div>
+            <input type="hidden" name="locale" value="de" />
+            <input type="hidden" name="html_type" value="simple" />
 
             <div class="honeypot" aria-hidden="true">
-              <label for="anleitung-website">Bitte leer lassen.</label>
-              <input type="text" id="anleitung-website" name="website" tabindex="-1" autocomplete="off" />
+              <label for="anleitung-email-check">Bitte leer lassen.</label>
+              <input type="text" id="anleitung-email-check" name="email_address_check" tabindex="-1" autocomplete="off" value="" />
             </div>
 
             <div class="field field-full">
               <button type="submit" class="btn-primary" data-cta="anleitung-download">Anleitung anfordern</button>
             </div>
-            <p class="form-status" role="status" aria-live="polite"></p>
+            <p class="form-hint-after">Nach der Anmeldung erhalten Sie eine Bestätigungs-Mail an Ihre E-Mail-Adresse. Erst nach Klick auf den Bestätigungslink in dieser Mail wird Ihnen die Anleitung als PDF zugesandt (Doppelt-Opt-In nach DSGVO).</p>
           </fieldset>
         </form>
-
-        */}
       </div>
     </div>
   </section>
