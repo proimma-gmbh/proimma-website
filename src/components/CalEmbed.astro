@@ -1,14 +1,21 @@
 ---
 // Cal.eu-Termin-Sektion — Editorial Bold
 // Stand 03.05.2026, Phase 2 Bau-Block 6.
+// Phase-1b-Erweiterung 12.05.2026: konditionale Anzeige Mobile-Direkt-Link
+// neben Desktop-iFrame-Embed wegen Drittanbieter-Cookie-Block bei mobilen
+// Browsern. Trennung ausschließlich per CSS-Media-Query unter 768 Pixel.
 //
 // Wiederverwendbare Termin-Buchungs-Sektion für die drei Detail-Seiten
 // /hausverwaltung, /maklerei, /ueber-proimma sowie /kontakt. Auf der
 // Startseite ist der Termin-Block direkt in index.astro umgesetzt.
 //
-// IntersectionObserver lädt den iFrame erst beim Scroll in Sicht
-// (DSGVO-Zwei-Klick-Logik wird im Datenschutz-Text als Verarbeitung erklärt).
-// Klartext-Fallback unterhalb des iFrames mit data-cta-Tracking.
+// Desktop-Variante (ab 768px): IntersectionObserver lädt den iFrame erst
+// beim Scroll in Sicht (DSGVO-Zwei-Klick-Logik wird im Datenschutz-Text
+// als Verarbeitung erklärt).
+// Mobile-Variante (unter 768px): Direkt-Link-Button auf cal.eu/proimma/30min
+// in neuer Browser-Ansicht, weil mobile Browser den iFrame wegen
+// Drittanbieter-Cookie-Schutz blockieren.
+// Klartext-Fallback unterhalb beider Varianten mit data-cta-Tracking.
 
 interface Props {
   /** Editorial-Index der Sektion auf der jeweiligen Seite. */
@@ -41,15 +48,30 @@ const loadingId = `${mountId}-loading`;
         <div class="termin-point-label">Format</div>
       </div>
     </div>
-    <div
-      class="termin-frame-wrap reveal"
-      id={mountId}
-      data-cal-mount
-      data-cal-url="https://cal.eu/proimma/30min"
-      data-loading-id={loadingId}
-    >
-      <div class="termin-loading" id={loadingId}>Termin-Anzeige wird geladen.</div>
+
+    <div class="cal-desktop reveal">
+      <div
+        class="termin-frame-wrap"
+        id={mountId}
+        data-cal-mount
+        data-cal-url="https://cal.eu/proimma/30min"
+        data-loading-id={loadingId}
+      >
+        <div class="termin-loading" id={loadingId}>Termin-Anzeige wird geladen.</div>
+      </div>
     </div>
+
+    <div class="cal-mobile reveal">
+      <a
+        href="https://cal.eu/proimma/30min"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="btn-primary"
+        data-cta="termin-mobile-direktlink"
+      >Termin auf cal.eu öffnen</a>
+      <p class="cal-mobile-help">Auf dem Smartphone öffnet sich die Buchungsmaske in einer neuen Ansicht.</p>
+    </div>
+
     <p class="termin-fallback">
       Falls die Termin-Anzeige nicht lädt, schreiben Sie an
       <a href="mailto:info@proimma.de" data-cta="kontakt-mail">info@proimma.de</a>
@@ -136,6 +158,23 @@ const loadingId = `${mountId}-loading`;
   }
   .termin-fallback a:hover { border-bottom-color: var(--color-fg-primary); }
   .termin-cta-row { margin-top: 24px; }
+
+  /* Konditionale Anzeige Mobile / Desktop (Phase 1b, 12.05.2026).
+     Mobile-Standard: Direkt-Link sichtbar, iFrame-Wrap verborgen.
+     Ab 768px: iFrame-Wrap sichtbar, Direkt-Link verborgen. */
+  .cal-mobile { display: block; }
+  .cal-desktop { display: none; }
+  .cal-mobile-help {
+    margin-top: 12px;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-fg-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .cal-mobile { display: none; }
+    .cal-desktop { display: block; }
+  }
 
   @media (max-width: 1024px) {
     .termin-detail { padding-block: 80px; }
