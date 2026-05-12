@@ -294,6 +294,9 @@ const substanzPunkte = [
   <!-- 09 CAL.EU-TERMIN-SEKTION V10 — Erstgespräch buchen
        Eingebetteter Cal.eu-Kalender unter cal.eu/proimma/30min als Lazy-Load-iFrame
        (Datenschutz-Zwei-Klick-Lösung gemäß tools-workflows.md, threshold 0.1, rootMargin 200px).
+       Phase-1b-Erweiterung 12.05.2026: konditionale Anzeige Mobile-Direkt-Link
+       neben Desktop-iFrame-Embed wegen Drittanbieter-Cookie-Block bei mobilen
+       Browsern. Trennung ausschließlich per CSS-Media-Query unter 768 Pixel.
        Klartext-Fallback an info@proimma.de und 0173 6335917. -->
   <section class="termin" id="kontakt" data-sektion="cal-embed">
     <div class="container-page termin-inner">
@@ -315,9 +318,24 @@ const substanzPunkte = [
           <div class="termin-point-label">Format</div>
         </div>
       </div>
-      <div class="termin-frame-wrap reveal" id="cal-mount" data-cal-url="https://cal.eu/proimma/30min">
-        <div class="termin-loading" id="cal-loading">Termin-Anzeige wird geladen.</div>
+
+      <div class="cal-desktop reveal">
+        <div class="termin-frame-wrap" id="cal-mount" data-cal-url="https://cal.eu/proimma/30min">
+          <div class="termin-loading" id="cal-loading">Termin-Anzeige wird geladen.</div>
+        </div>
       </div>
+
+      <div class="cal-mobile reveal">
+        <a
+          href="https://cal.eu/proimma/30min"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="btn-primary"
+          data-cta="termin-mobile-direktlink"
+        >Termin auf cal.eu öffnen</a>
+        <p class="cal-mobile-help">Auf dem Smartphone öffnet sich die Buchungsmaske in einer neuen Ansicht.</p>
+      </div>
+
       <p class="termin-fallback">Falls die Termin-Anzeige nicht lädt, schreiben Sie an <a href="mailto:info@proimma.de" data-cta="kontakt-mail">info@proimma.de</a> oder rufen Sie unter <a href="tel:+491736335917" data-cta="kontakt-tel">0173 6335917</a> an.</p>
     </div>
   </section>
@@ -1035,6 +1053,23 @@ const substanzPunkte = [
   }
   .termin-fallback a:hover {
     border-bottom-color: var(--color-fg-primary);
+  }
+
+  /* Konditionale Anzeige Mobile / Desktop (Phase 1b, 12.05.2026).
+     Mobile-Standard: Direkt-Link sichtbar, iFrame-Wrap verborgen.
+     Ab 768px: iFrame-Wrap sichtbar, Direkt-Link verborgen. */
+  .cal-mobile { display: block; }
+  .cal-desktop { display: none; }
+  .cal-mobile-help {
+    margin-top: 12px;
+    font-size: 0.875rem;
+    line-height: 1.55;
+    color: var(--color-fg-secondary);
+  }
+
+  @media (min-width: 768px) {
+    .cal-mobile { display: none; }
+    .cal-desktop { display: block; }
   }
 
   @media (max-width: 1024px) {
