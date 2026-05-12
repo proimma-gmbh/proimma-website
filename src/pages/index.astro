@@ -1055,9 +1055,12 @@ const substanzPunkte = [
     border-bottom-color: var(--color-fg-primary);
   }
 
-  /* Konditionale Anzeige Mobile / Desktop (Phase 1b, 12.05.2026).
-     Mobile-Standard: Direkt-Link sichtbar, iFrame-Wrap verborgen.
-     Ab 768px: iFrame-Wrap sichtbar, Direkt-Link verborgen. */
+  /* Anzeige Direkt-Link plus iFrame-Wrap (Phase 1b zweite Stufe, 12.05.2026).
+     Mobile (unter 768px): nur der Direkt-Link, weil iFrame durch
+     Drittanbieter-Cookie-Schutz blockiert wird.
+     Ab 768px: Desktop-iFrame-Wrap sichtbar PLUS der Direkt-Link darunter
+     als Auffang-Lösung für moderne Chrome-Varianten, die den iFrame
+     ebenfalls blockieren. */
   .cal-mobile { display: block; }
   .cal-desktop { display: none; }
   .cal-mobile-help {
@@ -1068,8 +1071,8 @@ const substanzPunkte = [
   }
 
   @media (min-width: 768px) {
-    .cal-mobile { display: none; }
     .cal-desktop { display: block; }
+    .cal-mobile { margin-top: 24px; }
   }
 
   @media (max-width: 1024px) {
