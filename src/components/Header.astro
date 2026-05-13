@@ -39,21 +39,26 @@ const navItems = [
       </svg>
     </button>
   </div>
-
-  <div id="mobile-menu" hidden class="mobile-menu">
-    <nav aria-label="Mobile Navigation" class="container-page mobile-menu-inner">
-      <ul>
-        {navItems.map((item) => (
-          <li><a href={item.href}>{item.label}</a></li>
-        ))}
-      </ul>
-      <div class="mobile-menu-foot">
-        <a class="btn-primary" href="/kontakt">Erstgespräch vereinbaren</a>
-        <p class="meta mobile-menu-meta">Proimma GmbH · Bremer Straße 12 · 18057 Rostock</p>
-      </div>
-    </nav>
-  </div>
 </header>
+
+<!-- Mobile Menü als direkter Body-Geschwister-Eintrag des Headers, damit
+     position: fixed gegen das Viewport-Origin greift. Innerhalb des Headers
+     erzeugte der backdrop-filter einen eigenen Containing-Block und das Menü
+     wurde auf iOS-Safari unsichtbar auf null Pixel Höhe begrenzt (Befund
+     13.05.2026 mobile Sichtkontrolle). -->
+<div id="mobile-menu" hidden class="mobile-menu">
+  <nav aria-label="Mobile Navigation" class="container-page mobile-menu-inner">
+    <ul>
+      {navItems.map((item) => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+    </ul>
+    <div class="mobile-menu-foot">
+      <a class="btn-primary" href="/kontakt">Erstgespräch vereinbaren</a>
+      <p class="meta mobile-menu-meta">Proimma GmbH · Bremer Straße 12 · 18057 Rostock</p>
+    </div>
+  </nav>
+</div>
 
 <style>
   .site-header {
