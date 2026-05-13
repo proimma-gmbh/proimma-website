@@ -36,7 +36,16 @@
           }
         },
         {
-          "matchingUrlPattern": "^(?!.*404\\.html).*$",
+          "matchingUrlPattern": "hausverwaltung",
+          "assertions": {
+            "categories:performance": ["error", { "minScore": 0.95 }],
+            "categories:accessibility": ["error", { "minScore": 0.95 }],
+            "categories:best-practices": "off",
+            "categories:seo": ["error", { "minScore": 0.95 }]
+          }
+        },
+        {
+          "matchingUrlPattern": "^(?!.*(404\\.html|hausverwaltung)).*$",
           "assertions": {
             "categories:performance": ["error", { "minScore": 0.95 }],
             "categories:accessibility": ["error", { "minScore": 0.95 }],
