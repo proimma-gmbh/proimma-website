@@ -274,6 +274,7 @@ const verzicht = [
              FIRSTNAME, LASTNAME, EMAIL als Pflichtfelder, locale=de, html_type=simple,
              email_address_check als Brevo-eigener Honeypot. -->
         <form
+          id="anleitung-form"
           class="form-grid"
           method="POST"
           action="https://b596ced0.sibforms.com/serve/MUIFAGzTcUFTuTrIX0TFYWYfg1Et9ZuaCBbZuPFkJhMjmA9XwLMSQzzSbi5P1dbGGs7huNrc41Xl4_8h1WYkXkjCFCO5Q0irVPSD-AiJ_TjNPmlbleL98dheTHDgABMYa7EEzWB-OhL4PnRmWX0GSV5xoeciZKqaSBXgy0uIKcdGamXI_wtrsyyacxguc8zLDCV9IhWKTR21SBL6PA=="
@@ -312,6 +313,31 @@ const verzicht = [
             <p class="form-hint-after">Nach der Anmeldung erhalten Sie eine Bestätigungs-Mail an Ihre E-Mail-Adresse. Erst nach Klick auf den Bestätigungslink in dieser Mail wird Ihnen die Anleitung als PDF zugesandt (Doppelt-Opt-In nach DSGVO).</p>
           </fieldset>
         </form>
+
+        <!-- Zustands-Blöcke für den JavaScript-Submit ab 13.05.2026. Beide Blöcke
+             sind im Ausgangszustand mit hidden ausgeblendet und werden vom
+             Skript am Ende der Datei sichtbar gemacht. aria-live=polite, damit
+             Screen-Reader die Rückmeldung beim Wechsel mitlesen, ohne den
+             gerade laufenden Vorlesefluss zu unterbrechen. -->
+        <div
+          id="anleitung-form-success"
+          class="form-result form-result-success"
+          role="status"
+          aria-live="polite"
+          hidden
+        >
+          <p class="form-result-headline">Vielen Dank.</p>
+          <p>Wir haben Ihnen eine Bestätigungs-Mail an die angegebene Adresse gesendet. Bitte klicken Sie auf den Bestätigungs-Link in der Mail, dann erhalten Sie die Anleitung als PDF zugesandt.</p>
+        </div>
+        <div
+          id="anleitung-form-error"
+          class="form-result form-result-error"
+          role="alert"
+          aria-live="polite"
+          hidden
+        >
+          <p>Die Anmeldung konnte nicht versendet werden. Bitte versuchen Sie es in einigen Minuten erneut oder erreichen Sie uns werktags unter <a href="tel:+491736335917" class="inline-link">0173 6335917</a> oder per Mail an <a href="mailto:info@proimma.de" class="inline-link">info@proimma.de</a>.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -611,8 +637,90 @@ const verzicht = [
     overflow: hidden;
   }
 
+  /* ---------- ZUSTANDSBLÖCKE JAVASCRIPT-SUBMIT (Stand 13.05.2026) ----------
+     Editorial-Bold-Tonalität für Erfolgs- und Fehler-Rückmeldung der
+     Anleitungs-Anmeldung. Eine zarte Hairline trennt die Rückmeldung vom
+     Form-Bereich, die Headline greift die Schrift-Hierarchie der Section auf. */
+  .form-result {
+    margin-top: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-line);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    color: var(--color-fg-primary);
+    max-width: 62ch;
+  }
+  .form-result[hidden] { display: none; }
+  .form-result-headline {
+    font-size: clamp(1.5rem, 2.4vw, 2rem);
+    line-height: 1.15;
+    font-weight: 300;
+    letter-spacing: -0.015em;
+    margin-bottom: 16px;
+    color: var(--color-fg-primary);
+  }
+  .form-result p { margin-bottom: 16px; }
+  .form-result p:last-child { margin-bottom: 0; }
+  .form-result .inline-link {
+    color: var(--color-fg-primary);
+    border-bottom: 1px solid var(--color-line);
+  }
+  .form-result .inline-link:hover {
+    border-bottom-color: var(--color-accent);
+  }
+
   @media (max-width: 1024px) {
     .anleitung { padding-block: 80px; }
     .form-fieldset { grid-template-columns: 1fr; }
   }
 </style>
+
+<!-- JavaScript-Submit der Anleitungs-Anmeldung (Stand 13.05.2026). Fängt den
+     Submit ab, schickt die Formulardaten im Hintergrund an die Brevo-Public-Form-URL
+     und zeigt eine eigene Rückmeldung an, ohne dass der Eigentümer die Webseite
+     verlässt. mode no-cors ist nötig, weil Brevos serve-Endpunkt keinen erlaubenden
+     CORS-Header sendet; die Antwort ist dadurch opaque, der POST kommt bei Brevo
+     dennoch an. Bei Netz-Fehler bleibt das Formular sichtbar und die Fehler-Meldung
+     erscheint, der Knopf kehrt in den Ausgangszustand zurück. -->
+<script>
+  const form = document.getElementById('anleitung-form');
+  if (form) {
+    const submitButton = form.querySelector('button[type="submit"]');
+    const originalLabel = submitButton ? submitButton.textContent : '';
+    const successBlock = document.getElementById('anleitung-form-success');
+    const errorBlock = document.getElementById('anleitung-form-error');
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      if (errorBlock) errorBlock.hidden = true;
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = 'Wird gesendet ...';
+      }
+
+      try {
+        const formData = new FormData(form);
+        await fetch(form.action, {
+          method: 'POST',
+          mode: 'no-cors',
+          body: formData,
+        });
+        form.hidden = true;
+        if (successBlock) {
+          successBlock.hidden = false;
+          successBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+      } catch (err) {
+        if (errorBlock) {
+          errorBlock.hidden = false;
+          errorBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
+      }
+    });
+  }
+</script>
