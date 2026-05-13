@@ -279,6 +279,7 @@ const verzicht = [
           method="POST"
           action="https://b596ced0.sibforms.com/serve/MUIFAGzTcUFTuTrIX0TFYWYfg1Et9ZuaCBbZuPFkJhMjmA9XwLMSQzzSbi5P1dbGGs7huNrc41Xl4_8h1WYkXkjCFCO5Q0irVPSD-AiJ_TjNPmlbleL98dheTHDgABMYa7EEzWB-OhL4PnRmWX0GSV5xoeciZKqaSBXgy0uIKcdGamXI_wtrsyyacxguc8zLDCV9IhWKTR21SBL6PA=="
           enctype="multipart/form-data"
+          target="anleitung-target"
           aria-label="Anmeldung Anleitung Hausverwalter wechseln"
           novalidate
         >
@@ -314,10 +315,27 @@ const verzicht = [
           </fieldset>
         </form>
 
-        <!-- Zustands-Blöcke für den JavaScript-Submit ab 13.05.2026. Beide Blöcke
-             sind im Ausgangszustand mit hidden ausgeblendet und werden vom
-             Skript am Ende der Datei sichtbar gemacht. aria-live=polite, damit
-             Screen-Reader die Rückmeldung beim Wechsel mitlesen, ohne den
+        <!-- Unsichtbares Hintergrund-Fenster für die native Brevo-Anmeldung
+             (Stand 13.05.2026, Korrektur nach CORB-Befund vom selben Tag). Das
+             Formular postet nativ in dieses Fenster, sodass Brevos serve-Endpunkt
+             den Submit als regulären Browser-Submit akzeptiert und den
+             Doppelt-Opt-In-Versand auslöst. Der Eigentümer bleibt sichtbar auf
+             proimma.de, weil das Fenster optisch außerhalb des Sicht-Bereichs
+             positioniert und für Screen-Reader und Tab-Reihenfolge ausgeblendet
+             ist. -->
+        <iframe
+          name="anleitung-target"
+          id="anleitung-target"
+          aria-hidden="true"
+          tabindex="-1"
+          title="Verarbeitung der Anmeldung"
+          style="position:absolute;left:-9999px;top:-9999px;width:1px;height:1px;border:0;visibility:hidden"
+        ></iframe>
+
+        <!-- Zustands-Blöcke für die Rückmeldung an den Eigentümer (Stand 13.05.2026).
+             Beide Blöcke sind im Ausgangszustand mit hidden ausgeblendet und werden
+             vom Begleit-Skript am Ende der Datei sichtbar gemacht. aria-live=polite,
+             damit Screen-Reader die Rückmeldung beim Wechsel mitlesen, ohne den
              gerade laufenden Vorlesefluss zu unterbrechen. -->
         <div
           id="anleitung-form-success"
@@ -675,51 +693,56 @@ const verzicht = [
   }
 </style>
 
-<!-- JavaScript-Submit der Anleitungs-Anmeldung (Stand 13.05.2026). Fängt den
-     Submit ab, schickt die Formulardaten im Hintergrund an die Brevo-Public-Form-URL
-     und zeigt eine eigene Rückmeldung an, ohne dass der Eigentümer die Webseite
-     verlässt. mode no-cors ist nötig, weil Brevos serve-Endpunkt keinen erlaubenden
-     CORS-Header sendet; die Antwort ist dadurch opaque, der POST kommt bei Brevo
-     dennoch an. Bei Netz-Fehler bleibt das Formular sichtbar und die Fehler-Meldung
-     erscheint, der Knopf kehrt in den Ausgangszustand zurück. -->
+<!-- Begleit-JavaScript der Anleitungs-Anmeldung (Stand 13.05.2026, Korrektur 2
+     nach CORB-Befund am selben Tag). Die eigentliche Anmeldung läuft als
+     nativer HTML-Submit ins unsichtbare Hintergrund-Fenster „anleitung-target",
+     weil Brevos serve-Endpunkt fetch-Anfragen mit no-cors-Modus stillschweigend
+     als verdächtigen Bot-Versuch verwirft. Das Skript verhindert hier nicht
+     mehr den Submit, sondern steuert nur den Knopf-Lade-Zustand, fängt das
+     Lade-Ereignis des unsichtbaren Fensters ab und blendet nach Brevos Antwort
+     die eigene Erfolgsmeldung ein. Wenn das Fenster innerhalb von zehn Sekunden
+     keine Antwort empfängt, wird die Fehler-Meldung gezeigt und der Knopf
+     kehrt in den Ausgangszustand zurück. -->
 <script>
   const form = document.getElementById('anleitung-form');
-  if (form) {
+  const iframe = document.getElementById('anleitung-target');
+  if (form && iframe) {
     const submitButton = form.querySelector('button[type="submit"]');
     const originalLabel = submitButton ? submitButton.textContent : '';
     const successBlock = document.getElementById('anleitung-form-success');
     const errorBlock = document.getElementById('anleitung-form-error');
+    let submitInProgress = false;
 
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault();
-
+    form.addEventListener('submit', () => {
       if (errorBlock) errorBlock.hidden = true;
       if (submitButton) {
         submitButton.disabled = true;
         submitButton.textContent = 'Wird gesendet ...';
       }
+      submitInProgress = true;
 
-      try {
-        const formData = new FormData(form);
-        await fetch(form.action, {
-          method: 'POST',
-          mode: 'no-cors',
-          body: formData,
-        });
-        form.hidden = true;
-        if (successBlock) {
-          successBlock.hidden = false;
-          successBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      setTimeout(() => {
+        if (submitInProgress) {
+          submitInProgress = false;
+          if (errorBlock) {
+            errorBlock.hidden = false;
+            errorBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+          }
+          if (submitButton) {
+            submitButton.disabled = false;
+            submitButton.textContent = originalLabel;
+          }
         }
-      } catch (err) {
-        if (errorBlock) {
-          errorBlock.hidden = false;
-          errorBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        if (submitButton) {
-          submitButton.disabled = false;
-          submitButton.textContent = originalLabel;
-        }
+      }, 10000);
+    });
+
+    iframe.addEventListener('load', () => {
+      if (!submitInProgress) return;
+      submitInProgress = false;
+      form.hidden = true;
+      if (successBlock) {
+        successBlock.hidden = false;
+        successBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
       }
     });
   }
