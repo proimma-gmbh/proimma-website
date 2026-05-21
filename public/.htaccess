@@ -15,10 +15,12 @@ ErrorDocument 404 /404.html
 
 # Block 2 Schritt 2.1b: 301-Weiterleitungen alter WordPress-Pfade auf die
 # neue Astro-Struktur, gemäß WordPress-URL-Inventur vom 04.05.2026.
+# Hinweis: Die Zeile für /impressum wurde am 18.05.2026 entfernt, weil alter
+# WordPress-Pfad und neuer Astro-Pfad identisch sind. Eine RedirectMatch-Regel
+# auf /impressum/?$ mit Ziel /impressum/ verursachte ERR_TOO_MANY_REDIRECTS.
 RedirectMatch 301 ^/leistungen/?$ https://www.proimma.de/hausverwaltung/
 RedirectMatch 301 ^/ueber-uns/?$ https://www.proimma.de/ueber-proimma/
 RedirectMatch 301 ^/termin/?$ https://www.proimma.de/kontakt/
-RedirectMatch 301 ^/impressum/?$ https://www.proimma.de/impressum/
 RedirectMatch 301 ^/elementor-seite-18/?$ https://www.proimma.de/
 
 # Block 2 Schritt 2.2: sechs OWASP-HTTP-Sicherheitsheader.
