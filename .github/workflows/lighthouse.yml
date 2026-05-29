@@ -19,12 +19,12 @@ jobs:
 
     steps:
       - name: Repository auschecken
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
-      - name: Node 20 einrichten
-        uses: actions/setup-node@v4
+      - name: Node 22 einrichten
+        uses: actions/setup-node@v6       
         with:
-          node-version: '20'
+          node-version: '22'
           cache: 'npm'
 
       - name: Abhängigkeiten installieren
